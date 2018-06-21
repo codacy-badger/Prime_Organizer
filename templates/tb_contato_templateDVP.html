@@ -1,0 +1,131 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(id)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Empresa</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="empresa_id<%%RND1%%>"><%%COMBOTEXT(empresa_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Primeiro nome</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_primeiro_nome)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Sobrenome</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_sobrenome)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">N&#237;vel hier&#225;rquico</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_nivel)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Relacionamento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="tipo_id<%%RND1%%>"><%%COMBOTEXT(tipo_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">E-mail 1</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_email1)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">E-mail 2</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_email2)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Telefone 1</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_telefone1)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Telefone 2</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_telefone2)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Telefone 3</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_telefone3)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Cidade</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(cidade)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">UF</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(uf)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data de cadastro</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_cadastro)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<!-- child records -->
+<div class="panel-body">
+	<div id="tb_contato-children"></div>
+</div>
+
+<script>
+	$j(function(){
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=tb_contato-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'tb_contato',
+				SelectedID: '<%%VALUE(id)%%>',
+				Operation: 'show-children-printable'
+			},
+			'tb_contato-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function(){
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

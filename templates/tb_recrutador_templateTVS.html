@@ -1,0 +1,11 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_recrutador_init() hook (in hooks/tb_recrutador.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_recrutador-str_nome-<%%VALUE(id)%%>" class="tb_recrutador-str_nome"><%%VALUE(str_nome)%%></td>
+		<td id="tb_recrutador-bol_status-<%%VALUE(id)%%>" class="tb_recrutador-bol_status text-right"><%%VALUE(bol_status)%%></td>
+		<td id="tb_recrutador-bol_recrutador-<%%VALUE(id)%%>" class="tb_recrutador-bol_recrutador text-right"><%%VALUE(bol_recrutador)%%></td>
+		<td id="tb_recrutador-bol_comercial-<%%VALUE(id)%%>" class="tb_recrutador-bol_comercial text-right"><%%VALUE(bol_comercial)%%></td>

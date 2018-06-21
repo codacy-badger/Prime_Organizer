@@ -1,0 +1,16 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_contrato_init() hook (in hooks/tb_contrato.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_contrato-empresa_id-<%%VALUE(id)%%>" class="tb_contrato-empresa_id"><%%SELECT%%><%%VALUE(empresa_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_contrato-str_nome-<%%VALUE(id)%%>" class="tb_contrato-str_nome"><%%SELECT%%><%%VALUE(str_nome)%%><%%ENDSELECT%%></td>
+		<td id="tb_contrato-dta_inicio-<%%VALUE(id)%%>" class="tb_contrato-dta_inicio"><%%SELECT%%><%%VALUE(dta_inicio)%%><%%ENDSELECT%%></td>
+		<td id="tb_contrato-dta_termino-<%%VALUE(id)%%>" class="tb_contrato-dta_termino"><%%SELECT%%><%%VALUE(dta_termino)%%><%%ENDSELECT%%></td>
+		<td id="tb_contrato-str_anexo-<%%VALUE(id)%%>" class="tb_contrato-str_anexo"><a href="link.php?t=tb_contrato&f=str_anexo&i=<%%VALUE(id)%%>" target="_blank" title="<%%VALUE(str_anexo)%%>" class="btn btn-default"><i class="glyphicon glyphicon-file text-info"></i></a></td>
+		<td id="tb_contrato-bol_status-<%%VALUE(id)%%>" class="tb_contrato-bol_status text-right"><%%SELECT%%><%%VALUE(bol_status)%%><%%ENDSELECT%%></td>
+		<script>$j(function(){
+			var e_str_anexo = '<%%VALUE(str_anexo)%%>'; if(e_str_anexo == '' || e_str_anexo == '&nbsp;') $j(/*<*/ '#tb_contrato-str_anexo-<%%VALUE(id)%%>' /*>*/).html('');
+		});</script>

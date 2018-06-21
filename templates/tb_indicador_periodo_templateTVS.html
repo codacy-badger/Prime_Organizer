@@ -1,0 +1,16 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the  and  formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_indicador_periodo_init() hook (in hooks/tb_indicador_periodo.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_indicador_periodo-indicador_id-<%%VALUE(id)%%>" class="tb_indicador_periodo-indicador_id"><%%VALUE(indicador_id)%%></td>
+		<td id="tb_indicador_periodo-str_unidade-<%%VALUE(id)%%>" class="tb_indicador_periodo-str_unidade"><%%VALUE(str_unidade)%%></td>
+		<td id="tb_indicador_periodo-str_vertical-<%%VALUE(id)%%>" class="tb_indicador_periodo-str_vertical"><%%VALUE(str_vertical)%%></td>
+		<td id="tb_indicador_periodo-str_responsavel-<%%VALUE(id)%%>" class="tb_indicador_periodo-str_responsavel"><%%VALUE(str_responsavel)%%></td>
+		<td id="tb_indicador_periodo-dta-<%%VALUE(id)%%>" class="tb_indicador_periodo-dta"><%%VALUE(dta)%%></td>
+		<td id="tb_indicador_periodo-flo_sazonalidade-<%%VALUE(id)%%>" class="tb_indicador_periodo-flo_sazonalidade text-right"><%%VALUE(flo_sazonalidade)%%></td>
+		<td id="tb_indicador_periodo-int_meta-<%%VALUE(id)%%>" class="tb_indicador_periodo-int_meta text-right"><%%VALUE(int_meta)%%></td>
+		<td id="tb_indicador_periodo-int_meta_ajustada-<%%VALUE(id)%%>" class="tb_indicador_periodo-int_meta_ajustada text-right"><%%VALUE(int_meta_ajustada)%%></td>
+		<td id="tb_indicador_periodo-int_realizado-<%%VALUE(id)%%>" class="tb_indicador_periodo-int_realizado text-right"><%%VALUE(int_realizado)%%></td>

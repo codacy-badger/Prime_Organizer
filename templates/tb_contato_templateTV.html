@@ -1,0 +1,17 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_contato_init() hook (in hooks/tb_contato.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_contato-empresa_id-<%%VALUE(id)%%>" class="tb_contato-empresa_id"><%%SELECT%%><%%VALUE(empresa_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_primeiro_nome-<%%VALUE(id)%%>" class="tb_contato-str_primeiro_nome"><%%SELECT%%><%%VALUE(str_primeiro_nome)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_sobrenome-<%%VALUE(id)%%>" class="tb_contato-str_sobrenome"><%%SELECT%%><%%VALUE(str_sobrenome)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_nivel-<%%VALUE(id)%%>" class="tb_contato-str_nivel"><%%SELECT%%><%%VALUE(str_nivel)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-tipo_id-<%%VALUE(id)%%>" class="tb_contato-tipo_id"><%%SELECT%%><%%VALUE(tipo_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_email1-<%%VALUE(id)%%>" class="tb_contato-str_email1"><%%SELECT%%><%%VALUE(str_email1)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_telefone1-<%%VALUE(id)%%>" class="tb_contato-str_telefone1"><%%SELECT%%><%%VALUE(str_telefone1)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-str_telefone2-<%%VALUE(id)%%>" class="tb_contato-str_telefone2"><%%SELECT%%><%%VALUE(str_telefone2)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-cidade-<%%VALUE(id)%%>" class="tb_contato-cidade"><%%SELECT%%><%%VALUE(cidade)%%><%%ENDSELECT%%></td>
+		<td id="tb_contato-uf-<%%VALUE(id)%%>" class="tb_contato-uf"><%%SELECT%%><%%VALUE(uf)%%><%%ENDSELECT%%></td>

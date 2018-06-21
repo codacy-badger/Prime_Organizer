@@ -1,0 +1,237 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<a name="detail-view"></a>
+<div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
+
+<div class="panel-body" id="tb_indicador_periodo_dv_container">
+	<!-- child links -->
+	<div class="row vspacer-md">
+		<div class="col-xs-12">
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<hr class="hidden-xs hidden-sm">
+
+	<div class="row">
+		<!-- form inputs -->
+		<div class="col-md-8 col-lg-10" id="tb_indicador_periodo_dv_form">
+			<fieldset class="form-horizontal">
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="id" class="control-label col-lg-3">ID</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="indicador_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Indicador<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(indicador_id)%%><%%PLINK(indicador_id)%%><%%ADDNEW(tb_indicador)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_unidade" class="control-label col-lg-3">Unidade</label>
+					<div class="col-lg-9">
+						<%%COMBO(str_unidade)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_vertical" class="control-label col-lg-3">Vertical</label>
+					<div class="col-lg-9">
+						<%%COMBO(str_vertical)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_responsavel" class="control-label col-lg-3">Respons&#225;vel</label>
+					<div class="col-lg-9">
+						<input maxlength="150" type="text" class="form-control" name="str_responsavel" id="str_responsavel" value="<%%VALUE(str_responsavel)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta" class="control-label col-lg-3">Data<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<%%COMBO(dta)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="flo_sazonalidade" class="control-label col-lg-3">Sazonalidade <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#flo_sazonalidade-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="flo_sazonalidade-description"><div class="alert alert-info">Em decimal.</div></span>
+
+						<input maxlength="8" type="text" class="form-control" name="flo_sazonalidade" id="flo_sazonalidade" value="<%%VALUE(flo_sazonalidade)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_meta" class="control-label col-lg-3">Meta</label>
+					<div class="col-lg-9">
+						<input maxlength="" type="text" class="form-control" name="int_meta" id="int_meta" value="<%%VALUE(int_meta)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_meta_ajustada" class="control-label col-lg-3">Meta ajustada <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#int_meta_ajustada-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="int_meta_ajustada-description"><div class="alert alert-info">Considerando a performance acumulada, defina a meta.</div></span>
+
+						<input maxlength="" type="text" class="form-control" name="int_meta_ajustada" id="int_meta_ajustada" value="<%%VALUE(int_meta_ajustada)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_realizado" class="control-label col-lg-3">Realizado</label>
+					<div class="col-lg-9">
+						<input maxlength="" type="text" class="form-control" name="int_realizado" id="int_realizado" value="<%%VALUE(int_realizado)%%>">
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+
+		<!-- DV action buttons -->
+		<hr class="hidden-md hidden-lg">
+		<div class="col-md-4 col-lg-2" id="tb_indicador_periodo_dv_action_buttons">
+			<div class="btn-toolbar">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%UPDATE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%DESELECT_BUTTON%%>
+					<%%DELETE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%INSERT_BUTTON%%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div><!-- /div class="panel-body" -->
+	<script>
+		$j(function() {
+			var add_new_mode = (!$j('input[name=SelectedID]').val());
+			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
+
+			/* auto-close embedded page? */
+			var autoclose_mode = ($j('input[name=AutoClose]').val() == 1);
+			var record_added_ok = (location.search.split('record-added-ok=').length == 2);
+			var record_updated_ok = (location.search.split('record-updated-ok=').length == 2);
+			if((record_added_ok || record_updated_ok) && embedded_mode && autoclose_mode){
+				setTimeout(AppGini.closeParentModal, 2000);
+			}
+
+			/* enable DV action buttons to float on scrolling down the form */
+			enable_dvab_floating();
+
+			if(!(embedded_mode && AppGini.mobileDevice())){
+				$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
+			}
+
+			$j('form').eq(0).change(function(){
+				if($j(this).data('already_changed')) return;
+				if($j('#deselect').length) $j('#deselect').removeClass('btn-default').addClass('btn-warning').get(0).lastChild.data = " <%%TRANSLATION(Cancel)%%>";
+				$j(this).data('already_changed', true);
+			});
+
+			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
+
+
+			if(!embedded_mode){
+				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
+
+				$j('.add_new_parent').click(function(){
+					var pt = $j(this).attr('id').replace(/_add_new$/, '');
+					modal_window({
+						url: pt + '_view.php?addNew_x=1&Embedded=1',
+						close: function(){
+							var field_id = $j('#' + pt + '_add_new').prevAll('input:hidden').eq(0).attr('id');
+							$j('#' + field_id + '-container').select2('focus').select2('focus');
+						},
+						size: 'full',
+						title: $j(this).attr('title')
+					});
+				});
+			}
+
+			AppGini.hideViewParentLinks();
+
+			$j('form').on('click', '.view_parent', function(){
+				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
+
+				/* handle radio lookups */
+				if($j(this).prevAll('[type=radio]').length){
+					parent_id = $j(this).prevAll('[type=radio]').eq(0).val();
+				}
+
+				if(parent_id != '{empty_value}' && parent_id != undefined && parent_id != ''){
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
+				}
+			});
+
+
+			/* load admin tools for admin user */
+			if(!add_new_mode){
+				$j('body').append('<div id="admin-tools-appendix"></div>');
+				$j('#admin-tools-appendix').load(
+					'ajax_admin_tools.php?table=tb_indicador_periodo&id=<%%URLVALUE(id)%%>',
+					function(resp){
+						if(!resp.length) return;
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=tb_indicador_periodo&id=<%%URLVALUE(id)%%>');
+					}
+				);
+			}
+
+			/* warn user if 'add new' clicked while unsaved changes exist */
+			$j('#addNew').click(function(){
+				if($j('#deselect.btn-warning').length){
+					return confirm('<%%TRANSLATION(discard changes confirm)%%>');
+				}
+			});
+
+		});
+	</script>

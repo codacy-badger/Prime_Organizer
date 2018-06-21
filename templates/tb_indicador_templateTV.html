@@ -1,0 +1,11 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_indicador_init() hook (in hooks/tb_indicador.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_indicador-str_departamento-<%%VALUE(id)%%>" class="tb_indicador-str_departamento"><%%SELECT%%><%%VALUE(str_departamento)%%><%%ENDSELECT%%></td>
+		<td id="tb_indicador-str_nome-<%%VALUE(id)%%>" class="tb_indicador-str_nome"><%%SELECT%%><%%VALUE(str_nome)%%><%%ENDSELECT%%></td>
+		<td id="tb_indicador-str_descricao-<%%VALUE(id)%%>" class="tb_indicador-str_descricao"><%%SELECT%%><%%VALUE(str_descricao)%%><%%ENDSELECT%%></td>
+		<td id="tb_indicador-str_unidade_medida-<%%VALUE(id)%%>" class="tb_indicador-str_unidade_medida"><%%SELECT%%><%%VALUE(str_unidade_medida)%%><%%ENDSELECT%%></td>

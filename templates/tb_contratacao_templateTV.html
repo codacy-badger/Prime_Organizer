@@ -1,0 +1,11 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_contratacao_init() hook (in hooks/tb_contratacao.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_contratacao-str_candidato_nome-<%%VALUE(id)%%>" class="tb_contratacao-str_candidato_nome"><%%SELECT%%><%%VALUE(str_candidato_nome)%%><%%ENDSELECT%%></td>
+		<td id="tb_contratacao-dta_contratacao-<%%VALUE(id)%%>" class="tb_contratacao-dta_contratacao"><%%SELECT%%><%%VALUE(dta_contratacao)%%><%%ENDSELECT%%></td>
+		<td id="tb_contratacao-dta_demissao-<%%VALUE(id)%%>" class="tb_contratacao-dta_demissao"><%%SELECT%%><%%VALUE(dta_demissao)%%><%%ENDSELECT%%></td>
+		<td id="tb_contratacao-bol_gestor-<%%VALUE(id)%%>" class="tb_contratacao-bol_gestor text-right"><%%SELECT%%><%%VALUE(bol_gestor)%%><%%ENDSELECT%%></td>

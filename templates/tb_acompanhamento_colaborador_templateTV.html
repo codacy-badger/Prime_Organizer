@@ -1,0 +1,12 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_acompanhamento_colaborador_init() hook (in hooks/tb_acompanhamento_colaborador.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_acompanhamento_colaborador-dta_data-<%%VALUE(id)%%>" class="tb_acompanhamento_colaborador-dta_data"><%%SELECT%%><%%VALUE(dta_data)%%><%%ENDSELECT%%></td>
+		<td id="tb_acompanhamento_colaborador-acompanhamento_id-<%%VALUE(id)%%>" class="tb_acompanhamento_colaborador-acompanhamento_id"><%%SELECT%%><%%VALUE(acompanhamento_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_acompanhamento_colaborador-colaborador_id-<%%VALUE(id)%%>" class="tb_acompanhamento_colaborador-colaborador_id"><%%SELECT%%><%%VALUE(colaborador_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_acompanhamento_colaborador-str_tipo-<%%VALUE(id)%%>" class="tb_acompanhamento_colaborador-str_tipo"><%%SELECT%%><%%VALUE(str_tipo)%%><%%ENDSELECT%%></td>
+		<td id="tb_acompanhamento_colaborador-str_responsavel-<%%VALUE(id)%%>" class="tb_acompanhamento_colaborador-str_responsavel"><%%SELECT%%><%%VALUE(str_responsavel)%%><%%ENDSELECT%%></td>

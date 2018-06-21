@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_fatura_init() hook (in hooks/tb_fatura.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_fatura-empresa_id-<%%VALUE(id)%%>" class="tb_fatura-empresa_id"><%%SELECT%%><%%VALUE(empresa_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_fatura-dta_emissao-<%%VALUE(id)%%>" class="tb_fatura-dta_emissao"><%%SELECT%%><%%VALUE(dta_emissao)%%><%%ENDSELECT%%></td>
+		<td id="tb_fatura-dta_competencia-<%%VALUE(id)%%>" class="tb_fatura-dta_competencia"><%%SELECT%%><%%VALUE(dta_competencia)%%><%%ENDSELECT%%></td>
+		<td id="tb_fatura-flo_valor-<%%VALUE(id)%%>" class="tb_fatura-flo_valor text-right"><%%SELECT%%><%%VALUE(flo_valor)%%><%%ENDSELECT%%></td>
+		<td id="tb_fatura-int_nf-<%%VALUE(id)%%>" class="tb_fatura-int_nf text-right"><%%SELECT%%><%%VALUE(int_nf)%%><%%ENDSELECT%%></td>
+		<td id="tb_fatura-str_observacoes-<%%VALUE(id)%%>" class="tb_fatura-str_observacoes"><%%SELECT%%><%%VALUE(str_observacoes)%%><%%ENDSELECT%%></td>

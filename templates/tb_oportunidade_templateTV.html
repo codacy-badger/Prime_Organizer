@@ -1,0 +1,20 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_oportunidade_init() hook (in hooks/tb_oportunidade.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_oportunidade-tipo_id-<%%VALUE(id)%%>" class="tb_oportunidade-tipo_id"><%%SELECT%%><%%VALUE(tipo_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-estagio_id-<%%VALUE(id)%%>" class="tb_oportunidade-estagio_id"><%%SELECT%%><%%VALUE(estagio_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-empresa_id-<%%VALUE(id)%%>" class="tb_oportunidade-empresa_id"><%%SELECT%%><%%VALUE(empresa_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-contato_id-<%%VALUE(id)%%>" class="tb_oportunidade-contato_id"><%%SELECT%%><%%VALUE(contato_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-str_demanda-<%%VALUE(id)%%>" class="tb_oportunidade-str_demanda"><%%SELECT%%><%%VALUE(str_demanda)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-dta_inicio-<%%VALUE(id)%%>" class="tb_oportunidade-dta_inicio"><%%SELECT%%><%%VALUE(dta_inicio)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-dta_prev_fechamento-<%%VALUE(id)%%>" class="tb_oportunidade-dta_prev_fechamento"><%%SELECT%%><%%VALUE(dta_prev_fechamento)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-int_valor-<%%VALUE(id)%%>" class="tb_oportunidade-int_valor text-right"><%%SELECT%%><%%VALUE(int_valor)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-int_parcelas-<%%VALUE(id)%%>" class="tb_oportunidade-int_parcelas text-right"><%%SELECT%%><%%VALUE(int_parcelas)%%><%%ENDSELECT%%></td>
+		<td id="tb_oportunidade-str_proposta-<%%VALUE(id)%%>" class="tb_oportunidade-str_proposta"><a href="link.php?t=tb_oportunidade&f=str_proposta&i=<%%VALUE(id)%%>" target="_blank" title="<%%VALUE(str_proposta)%%>" class="btn btn-default"><i class="glyphicon glyphicon-file text-info"></i></a></td>
+		<script>$j(function(){
+			var e_str_proposta = '<%%VALUE(str_proposta)%%>'; if(e_str_proposta == '' || e_str_proposta == '&nbsp;') $j(/*<*/ '#tb_oportunidade-str_proposta-<%%VALUE(id)%%>' /*>*/).html('');
+		});</script>

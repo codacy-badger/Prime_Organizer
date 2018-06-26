@@ -1,12 +1,26 @@
 <?php
+    include __DIR__ . '/vendor/autoload.php';  
 
-    // @todo check if the request is sent from user with admin rights
+    use Mautic\Auth\ApiAuth;
+
+    session_start();
+
+    // ApiAuth->newAuth() will accept an array of Auth settings
+    $settings = array(
+        'userName'   => '',             // Create a new user       
+        'password'   => ''              // Make it a secure password
+    );
+
+    // Initiate the auth object specifying to use BasicAuth
+    $initAuth = new ApiAuth();
+    $auth = $initAuth->newAuth($settings, 'BasicAuth');
     
     // check if Base URL, Consumer/Client Key and Consumer/Client secret are not empty
     if(!isset($_POST['mauticBaseUrl']) || !isset($_POST['clientKey']) || !isset($_POST['clientSecret'])){
         header('HTTP/1.0 401 Unauthorized');
         exit;
     }
+
     // @todo load this array from database / config file
     $accessTokenData = array(
         'accessToken' => '',
@@ -41,8 +55,8 @@
             $_GLOBALS['accessTokenData'] = $accessTokenData;
             
             // @todo Display success authorization message
-            header('Authorization: Basic '. $accessTokenData);
-            exit;
+            echo('Authorization: Basic '. $accessTokenData);
+            // exit;
         } else {
             // @todo Display info message that this app is already authorized.
             

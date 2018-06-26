@@ -1,0 +1,22 @@
+{
+    "repositories": {
+        "mautic": {
+            "type": "package",
+            "package": {
+                "name": "mautic/api-library",
+                "version": "1.0.0",
+                "source": {
+                    "url": "https://github.com/mautic/api-library",
+                    "type": "git",
+                    "reference": "325f0d9ec7ef191f6f8b3513b4ae5558beb9b724"
+                }
+            }
+        }
+    },
+    "require": {
+        "mautic/api-library": "1.0.0"
+    },
+    "autoload": {
+        "files": ["vendor/mautic/api-library/lib/Mautic/MauticApi.php"]
+    }
+}

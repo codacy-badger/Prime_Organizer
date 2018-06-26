@@ -22,3 +22,11 @@
     echo $res;
     
 ?>
+
+<form action="api-mautic.php" method="POST">
+    <input hidden type="text" name="clientKey" value="4uaxpgcn756okw8wk4ss8ggc0kosg0084w4occ84kcskskgc04">
+    <input hidden type="text" name="clientSecret" value="587mnnsz8bwok8ccwcwkck88ww4sk84gk8wgg4sgck84kwcowo">
+    <input hidden type="text" name="mauticBaseUrl" value="http://localhost/conteudo">
+    
+    <input type="submit">
+</form>

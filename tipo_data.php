@@ -77,7 +77,7 @@
             [0] => NULL,
             [1] => 'teste@teste.com'
         ),
-
+        
         'mobile' => array(
             [0] => NULL,
             [1] => '41 9 9999 9999'
@@ -102,7 +102,7 @@
             [0] => NULL,
             [1] => 'Parana'
         ),
-
+        
         'country' => array(
             [0] => NULL,
             [1] => 'Brazil'

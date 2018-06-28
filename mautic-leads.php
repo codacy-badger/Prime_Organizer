@@ -1,7 +1,7 @@
 <?php
     
     // Integração do Organizer
-    require('organizer-func.php');
+    require 'organizer-func.php';
 
     $id = intval($_REQUEST['SelectedID']);
         
@@ -10,15 +10,19 @@
     $res = db_fetch_assoc($query);
     
     var_dump($res);
+    echo '<br/><br/>';
 
     //Recebimento das variáveis do Organizer
     $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
     $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
     
     $nome = $res["str_primeiro_nome"];
-    $sobrenome $res["str_sobrenome]";
-    $empresa = empresa($res["empresa_id"]);
-    $relacionamento = rel($res["tipo_id"]);
+    $sobrenome = $res["str_sobrenome"];
+    $empresa = valida_empresa(empresa($res["empresa_id"]));
+    echo($empresa);
+    
+    /*
+    $relacionamento = relacao($res["tipo_id"]);
     $email = $res["str_email"];
     $tel1 = $res["str_telefone1"];
     $tel2 = $res["str_telefone2"];
@@ -36,7 +40,7 @@
     // Inicio da Query
     require('mautic-conn.php');
     
-    $stmt = $conn->prepare("INSERT INTO `leads`(`owner_id`, `is_published`, `date_added`, `created_by`, `created_by_user`, `date_modified`, `modified_by`, `modified_by_user`, `checked_out`, `checked_out_by`, `checked_out_by_user`, `points`, `internal`, `social_cache`, `date_identified`, `preferred_profile_image`, `firstname`, `lastname`, `company`, `position`, `email`, `phone`, `mobile`, `city`, `state`, `country`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, date_modified, modified_by, modified_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
     $stmt->bind_param("iisississisissssssssssssss", $owner_id, $is_published, $date_added, $create_by, $create_by_user, $date_modified, $modified_by, $modified_by_user, $checked_out, $checked_out_by, $checked_out_by_user, $points, $internal, $social_cache, $date_identified, $preferred_profile_image, $firstname, $lastname, $company, $position, $email, $phone, $mobile, $city, $state, $country);
     
@@ -67,5 +71,14 @@
     $state = $estado;
     $country = $pais;
 
+    var_dump($stmt);
 
+    if($stmt -> execute()){
+        echo "Ok";
+    } else{
+        echo "$stmt->error";
+    }
+                    
+    $stmt -> close();
+    */
 ?>

@@ -317,7 +317,7 @@
                     '<p></p>' +
                     '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
                         '<button type="button" class="btn btn-default btn-lg" onclick="teste()">' +
-                            '<i class="glyphicon glyphicon-print"></i> Testar funcao' +
+                            '<i class="glyphicon glyphicon-send"></i> Mautic' +
                         '</button>' +
                     '</div>' +
                 '<p></p>'
@@ -327,7 +327,7 @@
 
             function teste(){
                 var selectedID = '<?php echo urlencode($selectedID); ?>';
-                window.location = 'teste.php?SelectedID=' + selectedID;
+                window.location = 'mautic-leads.php?SelectedID=' + selectedID;
             }
             
         </script><?php

@@ -153,7 +153,7 @@
 	*/
 
 	function tb_contato_before_insert(&$data, $memberInfo, &$args){
-
+        // include 'mautic-leads-create.php';
 		return TRUE;
 	}
 
@@ -179,7 +179,6 @@
 	*/
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
-
 		return TRUE;
 	}
 
@@ -206,7 +205,8 @@
 	*/
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
-
+        // include 'mautic-leads-update.php';
+        
 		return TRUE;
 	}
 
@@ -231,7 +231,6 @@
 	*/
 
 	function tb_contato_after_update($data, $memberInfo, &$args){
-
 		return TRUE;
 	}
 
@@ -257,7 +256,8 @@
 	*/
 
 	function tb_contato_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
-
+        // include 'mautic-leads-delete.php';
+        
 		return TRUE;
 	}
 
@@ -305,7 +305,36 @@
 	*/
 
 	function tb_contato_dv($selectedID, $memberInfo, &$html, &$args){
+        if(isset($_REQUEST['dvprint_x'])) return;
+
+		ob_start(); ?>
+
+		<script>
+            $j(function(){
+                <?php if($selectedID){ ?>
+                $j('#tb_contato_dv_action_buttons .btn-toolbar').append(
+                    '<p></p>' +
+                    '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
+                        '<button type="button" class="btn btn-default btn-lg" onclick="teste()">' +
+                            '<i class="glyphicon glyphicon-send"></i> Mautic' +
+                        '</button>' +
+                    '</div>' +
+                '<p></p>'
+                );
+                <?php } ?>
+            });
+
+            function teste(){
+                var selectedID = '<?php echo urlencode($selectedID); ?>';
+                window.location = 'mautic-redirect.php?SelectedID=' + selectedID;
+            }
+            
+        </script><?php
         
+        $botao = ob_get_contents();
+		ob_end_clean();
+
+		$html .= $botao;
 	}
 
 	/**

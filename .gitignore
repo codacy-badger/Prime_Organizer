@@ -1,3 +1,4 @@
 # Lista de ignorados
 *.sql
 installer
+vendor/mautic/api-library/

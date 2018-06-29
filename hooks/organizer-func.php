@@ -84,38 +84,38 @@
         $uf = strtoupper($uf);
         
         $estados = array(
-            [0] => array('AC','Acre'),
-            [1] => array('AL','Alagoas'),
-            [2] => array('AP','Amapa'),
-            [3]'AM'=>'Amazonas',
-            [3]'BA'=>'Bahia',
-            [3]'CE'=>'Ceara',
-            [3]'DF'=>'Distrito Federal',
-            [3]'ES'=>'Espirito Santo',
-            [3]'GO'=>'Goias',
-            [3]'MA'=>'Maranhao',
-            [3]'MT'=>'Mato Grosso',
-            [3]'MS'=>'Mato Grosso do Sul',
-            [3]'MG'=>'Minas Gerais',
-            [3]'PA'=>'Para',
-            [3]'PB'=>'Paraiba',
-            [3]'PR'=>'Parana',
-            [3]'PE'=>'Pernambuco',
-            [3]'PI'=>'Piaui',
-            [3]'RJ'=>'Rio de Janeiro',
-            [3]'RN'=>'Rio Grande do Norte',
-            [3]'RS'=>'Rio Grande do Sul',
-            [3]'RO'=>'Rondonia',
-            [3]'RR'=>'Roraima',
-            [3]'SC'=>'Santa Catarina',
-            [3]'SP'=>'Sao Paulo',
-            [3]'SE'=>'Sergipe',
-            [3]'TO'=>'Tocantins'
+            'AC'=>'Acre',
+            'AL'=>'Alagoas',
+            'AP'=>'Amapa',
+            'AM'=>'Amazonas',
+            'BA'=>'Bahia',
+            'CE'=>'Ceara',
+            'DF'=>'Distrito Federal',
+            'ES'=>'Espirito Santo',
+            'GO'=>'Goias',
+            'MA'=>'Maranhao',
+            'MT'=>'Mato Grosso',
+            'MS'=>'Mato Grosso do Sul',
+            'MG'=>'Minas Gerais',
+            'PA'=>'Para',
+            'PB'=>'Paraiba',
+            'PR'=>'Parana',
+            'PE'=>'Pernambuco',
+            'PI'=>'Piaui',
+            'RJ'=>'Rio de Janeiro',
+            'RN'=>'Rio Grande do Norte',
+            'RS'=>'Rio Grande do Sul',
+            'RO'=>'Rondonia',
+            'RR'=>'Roraima',
+            'SC'=>'Santa Catarina',
+            'SP'=>'Sao Paulo',
+            'SE'=>'Sergipe',
+            'TO'=>'Tocantins'
         );
         
-        foreach($estado as $campo => $valor){
-            if($uf == $estado[$campo]){
-                return $valor;
+        foreach($estado as $part => $key){
+            if($uf == $part){
+                return $key;
             }
         }
     }

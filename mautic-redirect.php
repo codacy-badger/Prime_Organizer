@@ -5,11 +5,12 @@
         
     $query = sql("SELECT str_primeiro_nome, str_sobrenome, empresa_id FROM `tb_contato` WHERE id='{$id}'", $eo);
     
-    $res = db_fetch_assoc($query);
+    $data = db_fetch_assoc($query);
 
-    $nome = $res["str_primeiro_nome"];
-    $sobrenome = $res["str_sobrenome"];
-    $empresa = valida_empresa(empresa($res["empresa_id"]));
+    $nome = str_replace($vogais, $subs, $data["str_primeiro_nome"]);
+    $sobrenome = str_replace($vogais, $subs, $data["str_sobrenome"]);
+    $empresa = str_replace($vogais, $subs, $data["empresa_id"]);
+    $empresa = valida_empresa(empresa($empresa));
 
     $id_func = funcionario_id($nome, $sobrenome, $empresa);
 

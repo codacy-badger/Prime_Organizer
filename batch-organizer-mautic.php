@@ -13,16 +13,16 @@
         $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
         $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
 
-        $nome = $res["str_primeiro_nome"];
-        $sobrenome = $res["str_sobrenome"];
-        $empresa = valida_empresa(empresa($res["empresa_id"]));
-        $relacionamento = relacao($res["tipo_id"]);
-        $email = $res["str_email1"];
-        $tel1 = $res["str_telefone1"];
-        $tel2 = $res["str_telefone2"];
-        $cidade = str_replace($subs, $vogais, $res["cidade"]);
-        $estado = str_replace($subs, $vogais, $res["uf"]);
-        $pais = 'Brazil';
+        $nome = str_replace($vogais, $subs, $data["str_primeiro_nome"]);
+        $sobrenome = str_replace($vogais, $subs, $data["str_sobrenome"]);
+        $empresa = str_replace($vogais, $subs, $data["empresa_id"]);
+        $empresa = valida_empresa(empresa($empresa));
+        $relacionamento = relacao($data["tipo_id"]);
+        $email = $data["str_email1"];
+        $tel1 = $data["str_telefone1"];
+        $tel2 = $data["str_telefone2"];
+        $cidade = str_replace($vogais, $subs, $data["cidade"]);
+        $estado = estado($data["uf"]);
 
         // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
         $timestamp = date('Y-m-d H:i:s', time());

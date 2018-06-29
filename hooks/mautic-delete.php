@@ -1,14 +1,18 @@
 <?php    
     require 'organizer-func.php';
 
+    $query = sql("SELECT srt_primeiro_nome, str_sobrenome, empresa_id FROM tb_contatos WHERE id = '{$selectedID}'", $eo);
+    $data = db_fetch_assoc($query);
+
     //Recebimento das variáveis do Organizer
     $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
     $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
     
-    $nome = $data["str_primeiro_nome"];
-    $sobrenome = $data["str_sobrenome"];
-    $empresa = valida_empresa(empresa($data["empresa_id"]));
-
+    $nome = str_replace($vogais, $subs, $data["str_primeiro_nome"]);
+    $sobrenome = str_replace($vogais, $subs, $data["str_sobrenome"]);
+    $empresa = str_replace($vogais, $subs, $data["empresa_id"]);
+    $empresa = valida_empresa(empresa($empresa));
+    
     // Inicio da Query
     require('mautic-conn.php');
     
@@ -22,5 +26,7 @@
     $id_empr = empresa_id($empresa);
     $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$id_empr}' AND lead_id = '{$id_func}'";
 
-    $conn -> query($sql);
+    if($conn -> query($sql)){
+        header('Location: http://localhost/prime_organizer/tb_contato_view.php')
+    }
 ?>

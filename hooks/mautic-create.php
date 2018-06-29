@@ -1,21 +1,22 @@
 <?php
     
     // Integração do Organizer
-    include 'organizer-func.php';
+    require 'organizer-func.php';
 
     //Recebimento das variáveis do Organizer
-    $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
-    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
+    $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú", "Ç", "ç");
+    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u", "C", "c");
     
-    $nome = $data["str_primeiro_nome"];
-    $sobrenome = $data["str_sobrenome"];
-    $empresa = valida_empresa(empresa($data["empresa_id"]));
+    $nome = str_replace($vogais, $subs, $data["str_primeiro_nome"]);
+    $sobrenome = str_replace($vogais, $subs, $data["str_sobrenome"]);
+    $empresa = str_replace($vogais, $subs, $data["empresa_id"]);
+    $empresa = valida_empresa(empresa($empresa));
     $relacionamento = relacao($data["tipo_id"]);
     $email = $data["str_email1"];
     $tel1 = $data["str_telefone1"];
     $tel2 = $data["str_telefone2"];
-    $cidade = str_replace($subs, $vogais, $data["cidade"]);
-    $estado = str_replace($subs, $vogais, estado($data["uf"]));
+    $cidade = str_replace($vogais, $subs, $data["cidade"]);
+    $estado = estado($data["uf"]);
 
     // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
     $hora = date('Y-m-d H:i:s', time());

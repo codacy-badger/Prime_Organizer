@@ -153,7 +153,6 @@
 	*/
 
 	function tb_contato_before_insert(&$data, $memberInfo, &$args){
-        // include 'mautic-leads-create.php';
 		return TRUE;
 	}
 
@@ -179,6 +178,7 @@
 	*/
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
+        require 'mautic-create.php';
 		return TRUE;
 	}
 
@@ -205,8 +205,6 @@
 	*/
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
-        // include 'mautic-leads-update.php';
-        
 		return TRUE;
 	}
 
@@ -231,7 +229,8 @@
 	*/
 
 	function tb_contato_after_update($data, $memberInfo, &$args){
-		return TRUE;
+        require 'mautic-update.php';
+		return FALSE;
 	}
 
 	/**
@@ -256,7 +255,6 @@
 	*/
 
 	function tb_contato_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
-        // include 'mautic-leads-delete.php';
         
 		return TRUE;
 	}
@@ -279,6 +277,7 @@
 	*/
 
 	function tb_contato_after_delete($selectedID, $memberInfo, &$args){
+        require 'mautic-delete.php';
 
 	}
 
@@ -326,7 +325,7 @@
 
             function teste(){
                 var selectedID = '<?php echo urlencode($selectedID); ?>';
-                window.location = 'mautic-redirect.php?SelectedID=' + selectedID;
+                window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
             }
             
         </script><?php

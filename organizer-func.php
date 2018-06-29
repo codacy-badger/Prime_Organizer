@@ -16,61 +16,69 @@
 
     function relacao($id){
         $rel = sqlValue("SELECT `str_nome` FROM `tb_contato_tipo` WHERE id='{$id}'", $eo);
-        return rel;
+        return $rel;
     }
 
     function valida_empresa($nome_empresa){
         require 'mautic-conn.php';
-                
-        $stmt = $conn->prepare("SELECT companyname FROM companies WHERE companyname LIKE ?");
-        $stmt -> bind_param('s', $nome_emp);
         
-        $nome_emp = $nome_empresa;
+        $sql = "SELECT companyname FROM companies WHERE companyname LIKE '{$nome_empresa}'";
         
-        $stmt -> execute();
-        $stmt -> bind_result($empresa_existe);
-        $stmt -> fetch();
-        
-        $stmt -> close();
-        
+        $query = $conn -> query($sql);
+            
         // Se a empresa existe, retorna o nome da mesma de acordo com o Mautic
-        if($empresa_existe){
-            return $empresa_existe["companyname"];
-            echo "Compania já existe<br/>";
-        // Senão, cria a empresa no Mautic
-        } else{            
-            // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
-            $timestamp = new DateTime();
-            $timestamp -> format('Y-m-d H:i:s');
+        if($res = $query -> fetch_array(MYSQLI_BOTH)){
+            $conn -> close();
+            
+            return $res["companyname"];
 
+        // Senão, cria a empresa no Mautic
+        } else{
+
+            // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
             $empt = array();
             $empt = serialize($empt);
-            
+
+            $timestamp = date('Y-md H:i:s', time());
+
             // Inicio da Query
-            $insert = $conn->prepare("INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-            $insert -> bind_param("iisississis", $owner_id, $is_published, $date_added, $created_by, $created_by_user, $checked_out, $checked_out_by, $checked_out_by_user, $social_cache, $score, $comapanyname);
-                        
-            $owner_id = 1;
-            $is_published = 1;
-            $date_added = $timestamp;
-            $created_by = 1;
-            $created_by_user = 'admin admin';
-            $checked_out = $timestamp;
-            $checked_out_by = 1;
-            $checked_out_by_user = 'admin admin';
-            $social_cache = $empt;
-            $score = 0;
-            $companyname = $nome_empresa;
-            var_dump($insert);
-            $insert -> execute();
-            echo "Executou<br/>";
-            
-            $insert -> close();
-            
-            echo $nome_empresa."<br/>";
+            $sql = "INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`) VALUES (1, 1, '{$timestamp}', 1, 'admin admin', '{$timestamp}', 1, 'admin admin', '{$empt}', 0, '{$nome_empresa}')";
+
+            $conn -> query($sql);
+            $conn -> close();
+
             return $nome_empresa;
+
         }
     }
+    
+    function empresa_id($nome_empresa){
+        require 'mautic-conn.php';
         
+        $sql = "SELECT id FROM companies WHERE companyname LIKE '{$nome_empresa}'";
         
+        $query = $conn -> query($sql);
+            
+        // Se a Empresa existe, retorna o ID da mesma de acordo com o Mautic
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $conn -> close();
+        
+        return $res["id"];
+    }
+
+    function funcionario_id($nome_func, $snome_func, $empr_func){
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT id FROM leads WHERE firstname LIKE '{$nome_func}' AND lastname LIKE '{$snome_func}' AND company LIKE '{$empr_func}'";
+        
+        $query = $conn -> query($sql);
+            
+        // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $conn -> close();
+        
+        return $res["id"];
+    }
+
+
 ?>

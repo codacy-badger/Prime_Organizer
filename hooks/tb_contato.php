@@ -179,7 +179,43 @@
 	*/
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
-        require 'mautic-create.php';
+        // IntegraÁ„o do Organizer
+        require 'organizer-func.php';
+
+        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
+        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
+        $empresa = empresa($data['empresa_id']);
+        $empresa = preg_replace($vogais, $subs, $empresa);
+        $empresa = valida_empresa($empresa);
+        $relacionamento = relacao($data['tipo_id']);
+        $email = $data['str_email1'];
+        $tel1 = $data['str_telefone1'];
+        $tel2 = $data['str_telefone2'];
+        $cidade = preg_replace($vogais, $subs, $data['cidade']);
+        $estado = estado($data["uf"]);
+
+        // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
+        $hora = date('Y-m-d H:i:s', time());
+
+        $vazio = array();
+        $vazio = serialize($vazio);
+
+        // Inicio da Query
+        require('mautic-conn.php');
+
+        $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
+        VALUES (1,1,'".$hora."',1,'admin admin','".$hora."',1,'admin admin',0,'".$vazio."','".$vazio."','gravatar','".$nome."','".$sobrenome."','".$empresa."','".$relacionamento."', '".$email."', '".$tel1."','".$tel2."','".$cidade."', '".$estado."','Brazil')";
+
+        $conn -> query($sql);
+
+        $id_func = funcionario_id($nome, $sobrenome, $empresa);
+
+        $id_empr = empresa_id($empresa);
+
+        $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary) VALUES ('".$id_empr."','".$id_func."', '".$hora."', 1)";
+
+        $conn -> query($sql);
+
 		return TRUE;
 	}
 
@@ -206,6 +242,53 @@
 	*/
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
+        require 'organizer-func.php';
+        
+        // Identifica o usu·rio no Mautic antes de alter·-lo
+        $id = makeSafe($data['id']);
+        
+        $query = sql("SELECT * FROM tb_contato WHERE id = '{$id}'", $eo);
+        $res = db_fetch_assoc($query);
+
+        $nome_old = preg_replace($vogais, $subs, $res['str_primeiro_nome']);
+        $sobrenome_old = preg_replace($vogais, $subs, $res['str_sobrenome']);
+        $empresa_old = empresa($res['empresa_id']);
+        $empresa_old = preg_replace($vogais, $subs, $empresa_old);
+        $empresa_old = valida_empresa($empresa_old);
+        
+        $id_func = funcionario_id($nome_old, $sobrenome_old, $empresa_old);
+        
+        //Recebimento das vari·veis do Organizer
+        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
+        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
+        $empresa = empresa($data['empresa_id']);
+        $empresa = preg_replace($vogais, $subs, $empresa);
+        $empresa = valida_empresa($empresa);
+
+        $relacionamento = relacao($data['tipo_id']);
+        $email = $data['str_email1'];
+        $tel1 = $data['str_telefone1'];
+        $tel2 = $data['str_telefone2'];
+        $cidade = preg_replace($vogais, $subs, $data['cidade']);
+        $estado = estado($data['uf']);
+
+        // Inicio da Query
+        require 'mautic-conn.php';
+
+        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$relacionamento}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
+
+        $conn->query($sql);
+        
+        if($empresa != $empresa_old){
+            $empresa_id = empresa_id($empresa);
+            
+            $sql = "UPDATE companies_leads
+            SET company_id = '{$empresa_id}'
+            WHERE lead_id = '{$id_func}'";
+            
+            $conn -> query($sql);
+        }
+        
 		return TRUE;
 	}
 
@@ -230,7 +313,7 @@
 	*/
 
 	function tb_contato_after_update($data, $memberInfo, &$args){
-        require 'mautic-update.php';
+        
 		return FALSE;
 	}
 
@@ -256,7 +339,34 @@
 	*/
 
 	function tb_contato_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
+        require 'organizer-func.php';
+
+        $query = sql("SELECT * FROM tb_contato WHERE id = '{$selectedID}'", $eo);
+        $data = db_fetch_assoc($query);
+
+        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
+        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
+        $empresa = empresa($data['empresa_id']);
+        $empresa = preg_replace($vogais, $subs, $empresa);
+        $empresa = valida_empresa($empresa);
+
+        // Inicio da Query
+        // Se o funcion·rio existe no Mautic, ele ser· apagado
+        $id_func = funcionario_id($nome, $sobrenome, $empresa);
         
+        if($id_func){
+            require('mautic-conn.php');    
+
+            // Deleta o registro do Funcion·rio
+            $sql = "DELETE FROM leads WHERE id = '{$id_func}'";
+            $conn->query($sql);
+
+            // Retira o funcion·rio da tabela que liga Funcion·rio-Empresa
+            $id_empr = empresa_id($empresa);
+            $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$id_empr}' AND lead_id = '{$id_func}'";
+
+            $conn -> query($sql);
+        }
 		return TRUE;
 	}
 
@@ -278,8 +388,6 @@
 	*/
 
 	function tb_contato_after_delete($selectedID, $memberInfo, &$args){
-        require 'mautic-delete.php';
-
 	}
 
 	/**
@@ -326,11 +434,7 @@
 
             function teste(){
                 var selectedID = '<?php echo urlencode($selectedID); ?>';
-<<<<<<< HEAD
                 window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
-=======
-                window.location = 'mautic-leads.php?SelectedID=' + selectedID;
->>>>>>> parent of 6551978... Primeira integra√ß√£o funcional
             }
             
         </script><?php

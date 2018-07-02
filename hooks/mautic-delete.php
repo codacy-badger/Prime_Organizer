@@ -8,14 +8,13 @@
     $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
     $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
     
-    $nome = str_replace($vogais, $subs, $data["str_primeiro_nome"]);
-    $sobrenome = str_replace($vogais, $subs, $data["str_sobrenome"]);
-    $empresa = str_replace($vogais, $subs, $data["empresa_id"]);
+    $nome = str_replace($vogais, $subs, $data['str_primeiro_nome']);
+    $sobrenome = str_replace($vogais, $subs, $data['str_sobrenome']);
+    $empresa = str_replace($vogais, $subs, $data['empresa_id']);
     $empresa = valida_empresa(empresa($empresa));
     
     // Inicio da Query
-    require('mautic-conn.php');
-    
+    require('mautic-conn.php');    
     
     // Deleta o registro do Funcionário
     $id_func = funcionario_id($nome, $sobrenome, $empresa);
@@ -26,7 +25,5 @@
     $id_empr = empresa_id($empresa);
     $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$id_empr}' AND lead_id = '{$id_func}'";
 
-    if($conn -> query($sql)){
-        header('Location: http://localhost/prime_organizer/tb_contato_view.php')
-    }
+    $conn -> query($sql);
 ?>

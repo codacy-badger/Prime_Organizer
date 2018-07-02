@@ -1,12 +1,7 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
-    define('PREPEND_PATH', '');
-	$hooks_dir = dirname(__FILE__);
-	include("$hooks_dir/defaultLang.php");
-	include("$hooks_dir/language.php");
-	include("$hooks_dir/lib.php");
+    
+    $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/");
+    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
 
     function empresa($id){
         $nome_empresa = sqlValue("SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'", $eo);
@@ -21,7 +16,7 @@
 
     function valida_empresa($nome_empresa){
         require 'mautic-conn.php';
-        
+                
         $sql = "SELECT companyname FROM companies WHERE companyname LIKE '{$nome_empresa}'";
         
         $query = $conn -> query($sql);
@@ -48,10 +43,9 @@
             $conn -> close();
 
             return $nome_empresa;
-
         }
     }
-    
+
     function empresa_id($nome_empresa){
         require 'mautic-conn.php';
         
@@ -83,42 +77,69 @@
     function estado($uf){
         $uf = strtoupper($uf);
         
-        $estados = array(
-            'AC'=>'Acre',
-            'AL'=>'Alagoas',
-            'AP'=>'Amapa',
-            'AM'=>'Amazonas',
-            'BA'=>'Bahia',
-            'CE'=>'Ceara',
-            'DF'=>'Distrito Federal',
-            'ES'=>'Espirito Santo',
-            'GO'=>'Goias',
-            'MA'=>'Maranhao',
-            'MT'=>'Mato Grosso',
-            'MS'=>'Mato Grosso do Sul',
-            'MG'=>'Minas Gerais',
-            'PA'=>'Para',
-            'PB'=>'Paraiba',
-            'PR'=>'Parana',
-            'PE'=>'Pernambuco',
-            'PI'=>'Piaui',
-            'RJ'=>'Rio de Janeiro',
-            'RN'=>'Rio Grande do Norte',
-            'RS'=>'Rio Grande do Sul',
-            'RO'=>'Rondonia',
-            'RR'=>'Roraima',
-            'SC'=>'Santa Catarina',
-            'SP'=>'Sao Paulo',
-            'SE'=>'Sergipe',
-            'TO'=>'Tocantins'
-        );
+        $sigla = array();
+        $sigla[] = 'AC';
+        $sigla[] = 'AL';
+        $sigla[] = 'AP';
+        $sigla[] = 'AM';
+        $sigla[] = 'BA';
+        $sigla[] = 'CE';
+        $sigla[] = 'DF';
+        $sigla[] = 'ES';
+        $sigla[] = 'GO';
+        $sigla[] = 'MA';
+        $sigla[] = 'MT';
+        $sigla[] = 'MS';
+        $sigla[] = 'MG';
+        $sigla[] = 'PA';
+        $sigla[] = 'PB';
+        $sigla[] = 'PR';
+        $sigla[] = 'PE';
+        $sigla[] = 'PI';
+        $sigla[] = 'RJ';
+        $sigla[] = 'RN';
+        $sigla[] = 'RS';
+        $sigla[] = 'RO';
+        $sigla[] = 'RR';
+        $sigla[] = 'SC';
+        $sigla[] = 'SP';
+        $sigla[] = 'SE';
+        $sigla[] = 'TO';
         
-        foreach($estado as $part => $key){
-            if($uf == $part){
-                return $key;
+        $nome = array();
+        $nome[] = 'Acre';
+        $nome[] = 'Alagoas';
+        $nome[] = 'Amapa';
+        $nome[] = 'Amazonas';
+        $nome[] = 'Bahia';
+        $nome[] = 'Ceara';
+        $nome[] = 'Distrito Federal';
+        $nome[] = 'Espirito Santo';
+        $nome[] = 'Goias';
+        $nome[] = 'Maranhao';
+        $nome[] = 'Mato Grosso';
+        $nome[] = 'Mato Grosso do Sul';
+        $nome[] = 'Minas Gerais';
+        $nome[] = 'Para';
+        $nome[] = 'Paraiba';
+        $nome[] = 'Parana';
+        $nome[] = 'Pernambuco';
+        $nome[] = 'Piaui';
+        $nome[] = 'Rio de Janeiro';
+        $nome[] = 'Rio Grande do Norte';
+        $nome[] = 'Rio Grande do Sul';
+        $nome[] = 'Rondonia';
+        $nome[] = 'Roraima';
+        $nome[] = 'Santa Catarina';
+        $nome[] = 'Sao Paulo';
+        $nome[] = 'Sergipe';
+        $nome[] = 'Tocantins';
+        
+        for($i = 0; $i < count($nome); $i++){
+            if($uf == $sigla[$i]){
+                return $nome[$i];
             }
         }
     }
-
 
 ?>

@@ -22,23 +22,22 @@
     $hora = date('Y-m-d H:i:s', time());
 
     $vazio = array();
-    $vazio = serialize($empt);
+    $vazio = serialize($vazio);
 
     // Inicio da Query
     require('mautic-conn.php');
     
-    $query = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
-    VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$relacionamento}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
+    $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
+    VALUES (1,1,'".$hora."',1,'admin admin','".$hora."',1,'admin admin',0,'".$vazio."','".$vazio."','gravatar','".$nome."','".$sobrenome."','".$empresa."','".$relacionamento."', '".$email."', '".$tel1."','".$tel2."','".$cidade."', '".$estado."','Brazil')";
 
-    $conn->query($query);
+    $conn -> query($sql);
 
     $id_func = funcionario_id($nome, $sobrenome, $empresa);
 
     $id_empr = empresa_id($empresa);
 
-    $query = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary) VALUES ('{$id_empr}','{$id_func}', '{$timestamp}', 1)";
-
-    $conn -> query($query);
-    $conn -> close();
+    $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary) VALUES ('".$id_empr."','".$id_func."', '".$hora."', 1)";
+    
+    $conn -> query($sql);
     
 ?>

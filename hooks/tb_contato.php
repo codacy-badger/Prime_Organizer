@@ -255,7 +255,7 @@
         $empresa_old = empresa($res['empresa_id']);
         $empresa_old = preg_replace($vogais, $subs, $empresa_old);
         $empresa_old = valida_empresa($empresa_old);
-        
+
         $id_func = funcionario_id($nome_old, $sobrenome_old, $empresa_old);
         
         //Recebimento das variáveis do Organizer
@@ -275,6 +275,8 @@
         // Inicio da Query
         require 'mautic-conn.php';
 
+        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$relacionamento}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
+        
         $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$relacionamento}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
 
         $conn->query($sql);

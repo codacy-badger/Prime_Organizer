@@ -26,6 +26,7 @@
 	*/
 
 	function tb_contato_init(&$options, $memberInfo, &$args){
+
 		return TRUE;
 	}
 
@@ -325,7 +326,11 @@
 
             function teste(){
                 var selectedID = '<?php echo urlencode($selectedID); ?>';
+<<<<<<< HEAD
                 window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
+=======
+                window.location = 'mautic-leads.php?SelectedID=' + selectedID;
+>>>>>>> parent of 6551978... Primeira integração funcional
             }
             
         </script><?php
@@ -373,6 +378,6 @@
 	*/
 
 	function tb_contato_batch_actions(&$args){
-        
+
 		return array();
 	}

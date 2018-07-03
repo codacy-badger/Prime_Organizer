@@ -179,42 +179,57 @@
 	*/
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
-        // Integração do Organizer
+        // Funções para a integração Organizer-Mautic
         require 'organizer-func.php';
-
-        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
-        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
-        $empresa = empresa($data['empresa_id']);
-        $empresa = preg_replace($vogais, $subs, $empresa);
-        $empresa = valida_empresa($empresa);
-        $relacionamento = relacao($data['tipo_id']);
+        
+        // Captura dos dados do Organizer
+        $nome = retira_caracter_especial($data['str_primeiro_nome']);
+        $sobrenome = retira_caracter_especial($data['str_sobrenome']);
+        
+        $empresa = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa = retira_caracter_especial($empresa);
+        $empresa = check_company_existe_mautic($empresa);
+        
+        $cargo = retira_caracter_especial($data['str_nivel']);
+        $relacionamento = check_tag_mautic($data['tipo_id']);
+        
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
         $tel2 = $data['str_telefone2'];
-        $cidade = preg_replace($vogais, $subs, $data['cidade']);
-        $estado = estado($data["uf"]);
+        
+        $cidade = retira_caracter_especial($data['cidade']);
+        $estado = get_estado($data["uf"]);
 
         // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
         $hora = date('Y-m-d H:i:s', time());
-
         $vazio = array();
         $vazio = serialize($vazio);
 
         // Inicio da Query
         require('mautic-conn.php');
-
+        
+        // Insere o contato como lead no Mautic
         $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
-        VALUES (1,1,'".$hora."',1,'admin admin','".$hora."',1,'admin admin',0,'".$vazio."','".$vazio."','gravatar','".$nome."','".$sobrenome."','".$empresa."','".$relacionamento."', '".$email."', '".$tel1."','".$tel2."','".$cidade."', '".$estado."','Brazil')";
+        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
 
         $conn -> query($sql);
+        
+        // Recupera o id no Mautic do contato criado
+        $lead_id = get_lead_id_by_email_mautic($email);
+        $company_id = get_company_id_mautic($empresa);
 
-        $id_func = funcionario_id($data['selectedID']);
-
-        $id_empr = empresa_id($empresa);
-
-        $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary) VALUES ('".$id_empr."','".$id_func."', '".$hora."', 1)";
+        // Insere o relacionamento do Organizer como uma tag no Mautic
+        $sql = "INSERT INTO `lead_tags_xref` (lead_id, tag_id)
+        VALUES ('{$lead_id}','{$relacionamento}')";
 
         $conn -> query($sql);
+        
+        // Faz o link do contato com uma empresa no Mautic para que o mesmo seja exibido
+        $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary)
+        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1)";
+        
+        $conn -> query($sql);
+        
 
 		return TRUE;
 	}
@@ -242,41 +257,57 @@
 	*/
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
+        // Funções para a integração Organizer-Mautic
         require 'organizer-func.php';
         
         // Identifica o usuário no Mautic antes de alterá-lo
-        $id = $data['selectedID'];
-        $id_func = funcionario_id($id);
+        $selectedID = $data['selectedID'];
+        $lead_id = get_lead_id_by_selectedID_mautic($selectedID);
+        $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
+        $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
         
-        //Recebimento das variáveis do Organizer
-        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
-        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
-        $empresa = empresa($data['empresa_id']);
-        $empresa = preg_replace($vogais, $subs, $empresa);
-        $empresa = valida_empresa($empresa);
-
-        $relacionamento = relacao($data['tipo_id']);
+        // Captura dos dados do Organizer
+        $nome = retira_caracter_especial($data['str_primeiro_nome']);
+        $sobrenome = retira_caracter_especial($data['str_sobrenome']);
+        
+        $empresa = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa = retira_caracter_especial($empresa);
+        $empresa = check_company_existe_mautic($empresa);
+        
+        $cargo = retira_caracter_especial($data['str_nivel']);
+        $relacionamento = check_tag_mautic($data['tipo_id']);
+        
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
         $tel2 = $data['str_telefone2'];
-        $cidade = preg_replace($vogais, $subs, $data['cidade']);
-        $estado = estado($data['uf']);
+        
+        $cidade = retira_caracter_especial($data['cidade']);
+        $estado = get_estado($data["uf"]);
 
         // Inicio da Query
         require 'mautic-conn.php';
 
-        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$relacionamento}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
+        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$cargo}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$lead_id}'";
         
-        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$relacionamento}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
-
         $conn->query($sql);
         
-        if($empresa != $empresa_old){
-            $empresa_id = empresa_id($empresa);
+        // Revisa se o contato trocou de empresa e atualiza no Mautic        
+        if($empresa_old != $empresa){
+            $nova_empresa = get_company_id_mautic($empresa);
             
             $sql = "UPDATE companies_leads
-            SET company_id = '{$empresa_id}'
-            WHERE lead_id = '{$id_func}'";
+            SET company_id = '{$nova_empresa}'
+            WHERE lead_id = '{$lead_id}'";
+            
+            $conn -> query($sql);
+        }
+        
+        // Revisa se o contato trocou de relacionamento e atualiza no Mautic        
+        if($relacionamento_old != $relacionamento){
+            
+            $sql = "UPDATE lead_tags_xref
+            SET tag_id = '{$relacionamento}'
+            WHERE lead_id = '{$lead_id}'";
             
             $conn -> query($sql);
         }
@@ -335,19 +366,24 @@
         
         // Inicio da Query
         // Se o funcionário existe no Mautic, ele será apagado
-        $id_func = funcionario_id($selectedID);
+        $lead_id = get_lead_id_by_selectedID_mautic($selectedID);
+        $empresa = get_companyname_by_lead_id_mautic($lead_id);
         
-        if($id_func){
+        if($lead_id){
             require('mautic-conn.php');    
 
-            // Deleta o registro do Funcionário
-            $sql = "DELETE FROM leads WHERE id = '{$id_func}'";
+            // Deleta o registro do contato
+            $sql = "DELETE FROM leads WHERE id = '{$lead_id}'";
+            $conn->query($sql);
+            
+            // Deleta o registro de relacionamento do contato
+            $sql = "DELETE FROM lead_tags_xref WHERE lead_id = '{$lead_id}'";
             $conn->query($sql);
 
-            // Retira o funcionário da tabela que liga Funcionário-Empresa
-            $id_empr = empresa_id($empresa);
-            $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$id_empr}' AND lead_id = '{$id_func}'";
-
+            // Retira o funcionário da tabela que liga Contato-Empresa
+            $company_id = get_company_id_mautic($empresa);
+            
+            $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$company_id}' AND lead_id = '{$lead_id}'";
             $conn -> query($sql);
         }
 		return TRUE;
@@ -397,8 +433,8 @@
 
 	function tb_contato_dv($selectedID, $memberInfo, &$html, &$args){
         if(isset($_REQUEST['dvprint_x'])) return;
-
-		ob_start(); ?>
+        
+        ob_start(); ?>
 
 		<script>
             $j(function(){
@@ -416,7 +452,7 @@
             });
 
             function teste(){
-                var selectedID = '<?php echo urlencode($selectedID); ?>';
+                var selectedID = '<?php echo $selectedID; ?>';
                 window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
             }
             

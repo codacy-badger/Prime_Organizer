@@ -1,4 +1,6 @@
 # Lista de ignorados
 *.sql
 installer
-vendor/mautic/api-library/
+hooks/mautic-conn.php
+hooks/organizer-conn.php
+hooks/mautic-redirect.php

@@ -10,9 +10,10 @@
 
     require 'organizer-func.php';
     
-    $id = intval($_REQUEST['SelectedID']);
-        
-    $id_func = funcionario_id($id);
+    $selectedID = $_REQUEST['SelectedID'];
+    $lead_id = get_lead_id_by_selectedID_mautic($selectedID);
+    
+    echo get_lead_id_by_selectedID_mautic($id);
 
-    header('Location: http://localhost/conteudo/s/contacts/view/'.$id_func);
+    header('Location: http://localhost/conteudo/s/contacts/view/'.$lead_id);
 ?>

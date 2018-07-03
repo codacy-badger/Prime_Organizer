@@ -1,20 +1,38 @@
 <?php
     
-    $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/", "/Ç/", "/ç/");
-    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u", "C", "c");
+    // Retira catracteres especial da String
+    function retira_caracter_especial($texto){
+        $encontre = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/", "/Ç/", "/ç/");
+        $corrija = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u", "C", "c");
+        
+        $novo_texto = preg_replace($encontre, $corrija, $texto);
+        
+        return $novo_texto;
+    }
     
-    function empresa($id){
-        $nome_empresa = sqlValue("SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'", $eo);
+    // Retorna o nome da empresa no Organizer de acordo com a id
+    function get_empresa_nome_organizer($id){
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'";
+        $query = $org -> query($sql);
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $nome_empresa = $res['str_nome_fantasia'];
     
         return $nome_empresa;
     }
-
-    function relacao($id){
+    
+    // Retorna o campo Relacionamento do Organizer de acordo com a id
+    function get_relacionamento_organizer($id){
         $rel = sqlValue("SELECT `str_nome` FROM `tb_contato_tipo` WHERE id='{$id}'", $eo);
+        
         return $rel;
     }
-
-    function valida_empresa($nome_empresa){
+    
+    // Retorna o nome da empresa no Mautic
+    //   Se ela existe, retorna o nome correspondente;
+    //   Se não, cria a empresa e retorna o nome correspondente
+    function check_company_existe_mautic($nome_empresa){
         require 'mautic-conn.php';
                 
         $sql = "SELECT companyname FROM companies WHERE companyname LIKE '{$nome_empresa}'";
@@ -45,8 +63,9 @@
             return $nome_empresa;
         }
     }
-
-    function empresa_id($nome_empresa){
+    
+    // Retorna a id da empresa correspondente no Mautic
+    function get_company_id_mautic($nome_empresa){
         require 'mautic-conn.php';
         
         $sql = "SELECT id FROM companies WHERE companyname LIKE '{$nome_empresa}'";
@@ -59,30 +78,24 @@
         
         return $res["id"];
     }
+    
+    // Retorna o nome da empresa no cadastro do contato antes do update no Mautic
+    function get_companyname_by_lead_id_mautic($id_lead){
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT company FROM leads WHERE id = '{$id_lead}'";
+        $query = $conn -> query($sql);
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        
+        return $res['company'];
+    }
 
-    function funcionario_id($id){
-        // Retira os dados do Organizer antes do Update
-        require 'organizer-conn.php';
-        
-        $sql = "SELECT * FROM tb_contato WHERE id = '{$id}'";
-        $query = $org -> query($sql);
-        $data = $query -> fetch_array(MYSQLI_BOTH);
-        $org -> close();
-        
-        $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/");
-        $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
-        
-        $nome_func = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
-        $snome_func = preg_replace($vogais, $subs, $data['str_sobrenome']);
-        
-        $empr_func = empresa($data['empresa_id']);
-        $empr_func = preg_replace($vogais, $subs, $empr_func);
-        $empr_func = valida_empresa($empr_func);
-        
+    // Retorna a id do contato no Mautic de acordo com o email do contato correspondente no Organizer
+    function get_lead_id_by_email_mautic($email){
         // Inicia a query
         require 'mautic-conn.php';
         
-        $sql = "SELECT id FROM leads WHERE firstname LIKE '{$nome_func}' AND lastname LIKE '{$snome_func}' AND company LIKE '{$empr_func}'";
+        $sql = "SELECT id FROM leads WHERE email LIKE '{$email}'";
         
         $query = $conn -> query($sql);
             
@@ -90,10 +103,56 @@
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $conn -> close();
         
-        return $res["id"];
+        return $res['id'];
     }
     
-    function estado($uf){
+    // Retorna a id do contato no Mautic de acordo com o id do contato correspondente no Organizer
+    function get_lead_id_by_selectedID_mautic($id){
+        // Inicia a query
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
+        
+        $query = $org -> query($sql);
+            
+        // Se o contato existe, retorna o email do mesmo
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        $email = $res['str_email1'];
+        
+        // Inicia a query
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT id FROM leads WHERE email LIKE '{$email}'";
+        
+        $query = $conn -> query($sql);
+            
+        // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $conn -> close();
+        
+        return $res['id'];
+    }
+
+    // Retorna a tag/relacionamento do contato no Mautic de acordo com o id do contato no Mautic
+    function get_lead_tag_by_lead_id_mautic($lead_id){
+        // Inicia a query
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT tag FROM lead_tags WHERE id = '{$lead_id}'";
+        
+        $query = $conn -> query($sql);
+            
+        // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $conn -> close();
+        
+        return $res['tag'];
+    }
+    
+    // Retorna o nome completo do estado de acordo com a UF do contato no Organizer
+    function get_estado($uf){
         $uf = strtoupper($uf);
         
         $sigla = array();
@@ -161,14 +220,65 @@
         }
     }
     
-    function id_org($nome, $sobrenome, $empresa){
+    // Retorna a id do contato no Organizer de acordo com o email correspondente
+    function get_contato_id_organizer($email){
         require 'organizer-conn.php';
         
-        $sql = "SELECT id FROM tb_contato WHERE str_primeiro_nome LIKE '{$nome}' AND str_sobrenome LIKE '{$sobrenome}' AND empresa_id = '{$empresa}'";
+        $sql = "SELECT id FROM tb_contato WHERE str_email1 LIKE '{$email}'";
         $query = $org -> query($sql);
         $data = $query -> fetch_array(MYSQLI_BOTH);
         $org -> close();
         
         return $data['id'];
     }
+
+    // Retorna o email do contato no Organizer de acordo com o id correspondente
+    function get_contato_email_organizer($id){
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
+        $query = $org -> query($sql);
+        $data = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        return $data['str_email1'];
+    }
+    
+    // Retorna a tag do Mautic correspondente ao relacionamento do contato no Organizer
+    //    Se a tag/relacionamento existe, retorna o id dela no Mautic
+    //    Senão, cria a tag e retorna a id correspondente
+    function check_tag_mautic($relacionamento){
+        require 'organizer-conn.php';
+        
+        // Recupera o tipo de relacionamento no Organizer de acordo com o id correspondente
+        $sql = "SELECT str_nome FROM tb_contato_tipo WHERE id = '{$relacionamento}'";
+        $query = $org -> query($sql);
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        $tag = $res['str_nome'];
+        
+        // Inicia a query
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
+        $query = $conn -> query($sql);
+        
+        // Se a tag/relacionamento existe no Mautic
+        if($res = $query -> fetch_array(MYSQLI_BOTH)){
+            // Retorna a id da mesma 
+            return $res['id'];
+        // Senão, cria a tag/relacionamento
+        } else{
+            $sql = "INSERT INTO lead_tags (tag) VALUES('{$tag}')";
+            $query = $conn -> query($sql);
+            
+            $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
+            $query = $conn -> query($sql);
+            $res = $query -> fetch_array(MYSQLI_BOTH);
+            
+            return $res['id'];
+        }
+    }
+
 ?>

@@ -12,5 +12,5 @@
         die("Connection failed: " . $org->connect_error);
     }
 
-    $org -> set_charset('utf8_unicode_ci');
+    $org -> set_charset('utf8_general_ci');
 ?>

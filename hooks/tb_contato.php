@@ -287,7 +287,7 @@
         // Inicio da Query
         require 'mautic-conn.php';
 
-        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$cargo}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$id_func}'";
+        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$cargo}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$lead_id}'";
         
         $conn->query($sql);
         

@@ -191,7 +191,7 @@
         $empresa = check_company_existe_mautic($empresa);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
-        $relacionamento = $data['tipo_id'];
+        $relacionamento = check_tag_mautic($data['tipo_id']);
         
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
@@ -275,7 +275,7 @@
         $empresa = check_company_existe_mautic($empresa);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
-        $relacionamento = $data['tipo_id'];
+        $relacionamento = check_tag_mautic($data['tipo_id']);
         
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
@@ -377,7 +377,7 @@
             $conn->query($sql);
             
             // Deleta o registro de relacionamento do contato
-            $sql = "DELETE FROM lead_tags WHERE id = '{$lead_id}'";
+            $sql = "DELETE FROM lead_tags_xref WHERE lead_id = '{$lead_id}'";
             $conn->query($sql);
 
             // Retira o funcionário da tabela que liga Contato-Empresa

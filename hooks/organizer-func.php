@@ -244,4 +244,41 @@
         return $data['str_email1'];
     }
     
+    // Retorna a tag do Mautic correspondente ao relacionamento do contato no Organizer
+    //    Se a tag/relacionamento existe, retorna o id dela no Mautic
+    //    Senão, cria a tag e retorna a id correspondente
+    function check_tag_mautic($relacionamento){
+        require 'organizer-conn.php';
+        
+        // Recupera o tipo de relacionamento no Organizer de acordo com o id correspondente
+        $sql = "SELECT str_nome FROM tb_contato_tipo WHERE id = '{$relacionamento}'";
+        $query = $org -> query($sql);
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        $tag = $res['str_nome'];
+        
+        // Inicia a query
+        require 'mautic-conn.php';
+        
+        $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
+        $query = $conn -> query($sql);
+        
+        // Se a tag/relacionamento existe no Mautic
+        if($res = $query -> fetch_array(MYSQLI_BOTH)){
+            // Retorna a id da mesma 
+            return $res['id'];
+        // Senão, cria a tag/relacionamento
+        } else{
+            $sql = "INSERT INTO lead_tags (tag) VALUES('{$tag}')";
+            $query = $conn -> query($sql);
+            
+            $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
+            $query = $conn -> query($sql);
+            $res = $query -> fetch_array(MYSQLI_BOTH);
+            
+            return $res['id'];
+        }
+    }
+
 ?>

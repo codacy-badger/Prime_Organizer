@@ -32,7 +32,7 @@
         $empresa = check_company_existe_mautic($empresa);
         
         $cargo = retira_caracter_especial($data[$i]['str_nivel']);
-        $relacionamento = get_relacionamento_organizer($data[$i]['tipo_id']);
+        $relacionamento = $data[$i]['tipo_id'];
         
         $email = $data[$i]['str_email1'];
         $tel1 = $data[$i]['str_telefone1'];
@@ -60,7 +60,7 @@
         $company_id = get_company_id_mautic($empresa);
 
         // Insere o relacionamento do Organizer como uma tag no Mautic
-        $sql = "INSERT INTO `lead_tags` (id, tag)
+        $sql = "INSERT INTO `lead_tags_xref` (id, tag)
         VALUES ('{$lead_id}','{$relacionamento}')";
 
         $conn -> query($sql);

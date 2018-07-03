@@ -191,7 +191,7 @@
         $empresa = check_company_existe_mautic($empresa);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
-        $relacionamento = get_relacionamento_organizer($data['tipo_id']);
+        $relacionamento = $data['tipo_id'];
         
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
@@ -219,7 +219,7 @@
         $company_id = get_company_id_mautic($empresa);
 
         // Insere o relacionamento do Organizer como uma tag no Mautic
-        $sql = "INSERT INTO `lead_tags` (id, tag)
+        $sql = "INSERT INTO `lead_tags_xref` (lead_id, tag_id)
         VALUES ('{$lead_id}','{$relacionamento}')";
 
         $conn -> query($sql);
@@ -261,7 +261,8 @@
         require 'organizer-func.php';
         
         // Identifica o usuário no Mautic antes de alterá-lo
-        $lead_id = get_lead_id_by_selectedID_mautic($data['selectedID']);
+        $selectedID = $data['selectedID'];
+        $lead_id = get_lead_id_by_selectedID_mautic($selectedID);
         $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
         $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
         
@@ -274,7 +275,7 @@
         $empresa = check_company_existe_mautic($empresa);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
-        $relacionamento = get_relacionamento_organizer($data['tipo_id']);
+        $relacionamento = $data['tipo_id'];
         
         $email = $data['str_email1'];
         $tel1 = $data['str_telefone1'];
@@ -304,9 +305,9 @@
         // Revisa se o contato trocou de relacionamento e atualiza no Mautic        
         if($relacionamento_old != $relacionamento){
             
-            $sql = "UPDATE lead_tags
-            SET tag = '{$relacionamento}'
-            WHERE id = '{$lead_id}'";
+            $sql = "UPDATE lead_tags_xref
+            SET tag_id = '{$relacionamento}'
+            WHERE lead_id = '{$lead_id}'";
             
             $conn -> query($sql);
         }
@@ -361,6 +362,7 @@
 	*/
 
 	function tb_contato_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
+        require 'organizer-func.php';
         
         // Inicio da Query
         // Se o funcionário existe no Mautic, ele será apagado
@@ -431,8 +433,8 @@
 
 	function tb_contato_dv($selectedID, $memberInfo, &$html, &$args){
         if(isset($_REQUEST['dvprint_x'])) return;
-
-		ob_start(); ?>
+        
+        ob_start(); ?>
 
 		<script>
             $j(function(){
@@ -450,7 +452,7 @@
             });
 
             function teste(){
-                var selectedID = '<?php echo urlencode($selectedID); ?>';
+                var selectedID = '<?php echo $selectedID; ?>';
                 window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
             }
             

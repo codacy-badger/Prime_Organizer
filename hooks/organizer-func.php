@@ -12,7 +12,12 @@
     
     // Retorna o nome da empresa no Organizer de acordo com a id
     function get_empresa_nome_organizer($id){
-        $nome_empresa = sqlValue("SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'", $eo);
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'";
+        $query = $org -> query($sql);
+        $res = $query -> fetch_array(MYSQLI_BOTH);
+        $nome_empresa = $res['str_nome_fantasia'];
     
         return $nome_empresa;
     }
@@ -78,11 +83,11 @@
     function get_companyname_by_lead_id_mautic($id_lead){
         require 'mautic-conn.php';
         
-        $sql = "SELECT companyname FROM leads WHERE id = '{$id_lead}'";
+        $sql = "SELECT company FROM leads WHERE id = '{$id_lead}'";
         $query = $conn -> query($sql);
         $res = $query -> fetch_array(MYSQLI_BOTH);
         
-        return $res['companyname'];
+        return $res['company'];
     }
 
     // Retorna a id do contato no Mautic de acordo com o email do contato correspondente no Organizer
@@ -98,7 +103,7 @@
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $conn -> close();
         
-        return $res["id"];
+        return $res['id'];
     }
     
     // Retorna a id do contato no Mautic de acordo com o id do contato correspondente no Organizer
@@ -106,7 +111,7 @@
         // Inicia a query
         require 'organizer-conn.php';
         
-        $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$selectedID}'";
+        $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
         
         $query = $org -> query($sql);
             
@@ -114,7 +119,7 @@
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $org -> close();
         
-        $email = $res["str_email1"];
+        $email = $res['str_email1'];
         
         // Inicia a query
         require 'mautic-conn.php';
@@ -128,7 +133,6 @@
         $conn -> close();
         
         return $res['id'];
-        
     }
 
     // Retorna a tag/relacionamento do contato no Mautic de acordo com o id do contato no Mautic
@@ -228,4 +232,16 @@
         return $data['id'];
     }
 
+    // Retorna o email do contato no Organizer de acordo com o id correspondente
+    function get_contato_email_organizer($id){
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
+        $query = $org -> query($sql);
+        $data = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        return $data['str_email1'];
+    }
+    
 ?>

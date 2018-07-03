@@ -208,7 +208,7 @@
 
         $conn -> query($sql);
 
-        $id_func = funcionario_id($nome, $sobrenome, $empresa);
+        $id_func = funcionario_id($data['selectedID']);
 
         $id_empr = empresa_id($empresa);
 
@@ -245,18 +245,8 @@
         require 'organizer-func.php';
         
         // Identifica o usuário no Mautic antes de alterá-lo
-        $id = makeSafe($data['id']);
-        
-        $query = sql("SELECT * FROM tb_contato WHERE id = '{$id}'", $eo);
-        $res = db_fetch_assoc($query);
-
-        $nome_old = preg_replace($vogais, $subs, $res['str_primeiro_nome']);
-        $sobrenome_old = preg_replace($vogais, $subs, $res['str_sobrenome']);
-        $empresa_old = empresa($res['empresa_id']);
-        $empresa_old = preg_replace($vogais, $subs, $empresa_old);
-        $empresa_old = valida_empresa($empresa_old);
-
-        $id_func = funcionario_id($nome_old, $sobrenome_old, $empresa_old);
+        $id = $data['selectedID'];
+        $id_func = funcionario_id($id);
         
         //Recebimento das variáveis do Organizer
         $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
@@ -342,19 +332,10 @@
 
 	function tb_contato_before_delete($selectedID, &$skipChecks, $memberInfo, &$args){
         require 'organizer-func.php';
-
-        $query = sql("SELECT * FROM tb_contato WHERE id = '{$selectedID}'", $eo);
-        $data = db_fetch_assoc($query);
-
-        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
-        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
-        $empresa = empresa($data['empresa_id']);
-        $empresa = preg_replace($vogais, $subs, $empresa);
-        $empresa = valida_empresa($empresa);
-
+        
         // Inicio da Query
         // Se o funcionário existe no Mautic, ele será apagado
-        $id_func = funcionario_id($nome, $sobrenome, $empresa);
+        $id_func = funcionario_id($selectedID);
         
         if($id_func){
             require('mautic-conn.php');    

@@ -2,7 +2,7 @@
     
     $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/");
     $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
-
+    
     function empresa($id){
         $nome_empresa = sqlValue("SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'", $eo);
     
@@ -60,7 +60,26 @@
         return $res["id"];
     }
 
-    function funcionario_id($nome_func, $snome_func, $empr_func){
+    function funcionario_id($id){
+        // Retira os dados do Organizer antes do Update
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT * FROM tb_contato WHERE id = '{$id}'";
+        $query = $org -> query($sql);
+        $data = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/");
+        $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
+        
+        $nome_func = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
+        $snome_func = preg_replace($vogais, $subs, $data['str_sobrenome']);
+        
+        $empr_func = empresa($data['empresa_id']);
+        $empr_func = preg_replace($vogais, $subs, $empr_func);
+        $empr_func = valida_empresa($empr_func);
+        
+        // Inicia a query
         require 'mautic-conn.php';
         
         $sql = "SELECT id FROM leads WHERE firstname LIKE '{$nome_func}' AND lastname LIKE '{$snome_func}' AND company LIKE '{$empr_func}'";
@@ -141,5 +160,5 @@
             }
         }
     }
-
+    
 ?>

@@ -1,30 +1,41 @@
 <?php
-    // batch_organizer_mautic.php
-    // Passa toda a tabela Contatos do Organizer para a base do Mautic
-    
     // Integração do Organizer
+	define('PREPEND_PATH', '../');
+	$hooks_dir = dirname(__FILE__);
+	include("$hooks_dir/../defaultLang.php");
+	include("$hooks_dir/../language.php");
+	include("$hooks_dir/../lib.php");
+
+    require 'organizer-conn.php';
     require 'organizer-func.php';
 
-    $query = sql("SELECT * FROM `tb_contato`", $eo);
+    if($query = $org -> query("SELECT * FROM tb_contato")){
+        echo "Query ok<br/>";
+    }
 
-    while($res = db_fetch_assoc($query)){
+    if($data = $query -> fetch_all(MYSQLI_BOTH)){
+        echo "Fetch ok<br/>";
+    }
+       
+    $org -> close();
+    
+    for($i = 0; $i < count($data); $i++){
+        $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/", "/Ç/", "/ç/");
+        $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u", "C", "c");
 
         //Recebimento das variáveis do Organizer
-        $vogais = array("Á", "á", "Ã", "ã", "Â", "â", "É", "é", "Ê", "ê", "Í", "í", "Ó", "ó", "Ô", "ô", "Õ", "õ", "Ú", "ú");
-        $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
-
-        $nome = preg_replace($vogais, $subs, $data['str_primeiro_nome']);
-        $sobrenome = preg_replace($vogais, $subs, $data['str_sobrenome']);
-        $empresa = empresa($data['empresa_id']);
+        $nome = preg_replace($vogais, $subs, $data[$i]['str_primeiro_nome']);
+        $sobrenome = preg_replace($vogais, $subs, $data[$i]['str_sobrenome']);
+        $empresa = empresa($data[$i]['empresa_id']);
         $empresa = preg_replace($vogais, $subs, $empresa);
         $empresa = valida_empresa($empresa);
 
-        $relacionamento = relacao($data['tipo_id']);
-        $email = $data['str_email1'];
-        $tel1 = $data['str_telefone1'];
-        $tel2 = $data['str_telefone2'];
-        $cidade = preg_replace($vogais, $subs, $data['cidade']);
-        $estado = estado($data['uf']);
+        $relacionamento = relacao($data[$i]['tipo_id']);
+        $email = $data[$i]['str_email1'];
+        $tel1 =$data[$i]['str_telefone1'];
+        $tel2 = $data[$i]['str_telefone2'];
+        $cidade = preg_replace($vogais, $subs, $data[$i]['cidade']);
+        $estado = estado($data[$i]['uf']);
 
         // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
         $timestamp = date('Y-m-d H:i:s', time());
@@ -40,17 +51,20 @@
 
         $conn->query($sql);
         
-        $id = sqlValue("SELECT id FROM tb_contato WHERE str_primeiro_nome LIKE '{$nome}', str_sobrenome LIKE '{$sobrenome}', empresa_id = '{$data['empresa_id']}'", $eo);
+        $id = id_org($nome, $sobrenome, $data[$i]['empresa_id']);
 
         $id_func = funcionario_id($id);
+        echo "Contato Mautic: $id_func<br/>";
 
         $id_empr = empresa_id($empresa);
+        echo "Empresa Mautic: $id_empr<br/>";
 
         $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary) VALUES ('{$id_empr}','{$id_func}', '{$timestamp}', 1)";
-
-        if($conn -> query($sql)){
-            echo "Contato $id_func OK<br/>";
-        }
+        
+        $conn -> query($sql);
+        echo "Contato $id_func OK<br/><br/>";
+        
+        $conn -> close();
     }
     
 ?>

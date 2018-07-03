@@ -1,7 +1,7 @@
 <?php
     
-    $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/");
-    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u");
+    $vogais = array("/Á/", "/á/", "/Ã/", "/ã/", "/Â/", "/â/", "/É/", "/é/", "/Ê/", "/ê/", "/Í/", "/í/", "/Ó/", "/ó/", "/Ô/", "/ô/", "/Õ/", "/õ/", "/Ú/", "/ú/", "/Ç/", "/ç/");
+    $subs = array("A", "a", "A", "a", "A", "a", "E", "e", "E", "e", "I", "i", "O", "o", "O", "o", "O", "o", "U", "u", "C", "c");
     
     function empresa($id){
         $nome_empresa = sqlValue("SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'", $eo);
@@ -161,4 +161,14 @@
         }
     }
     
+    function id_org($nome, $sobrenome, $empresa){
+        require 'organizer-conn.php';
+        
+        $sql = "SELECT id FROM tb_contato WHERE str_primeiro_nome LIKE '{$nome}' AND str_sobrenome LIKE '{$sobrenome}' AND empresa_id = '{$empresa}'";
+        $query = $org -> query($sql);
+        $data = $query -> fetch_array(MYSQLI_BOTH);
+        $org -> close();
+        
+        return $data['id'];
+    }
 ?>

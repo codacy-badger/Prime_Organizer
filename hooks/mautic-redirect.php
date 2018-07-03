@@ -14,5 +14,5 @@
         
     $id_func = funcionario_id($id);
 
-    header('Location: http://projetosemeandoamor.com.br/conteudo/s/contacts/view/'.$id_func);
+    header('Location: http://localhost/conteudo/s/contacts/view/'.$id_func);
 ?>

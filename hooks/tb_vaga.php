@@ -26,6 +26,10 @@
 	*/
 
 	function tb_vaga_init(&$options, $memberInfo, &$args){
+		/* Inserted by Search Page Maker for AppGini on 2018-07-04 01:45:18 */
+		$options->FilterPage = 'hooks/tb_vaga_filter.php';
+		/* End of Search Page Maker for AppGini code */
+
 
 		return TRUE;
 	}

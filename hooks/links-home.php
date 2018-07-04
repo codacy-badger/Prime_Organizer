@@ -18,7 +18,7 @@
     $homeLinks[] = array(
         'url' => 'http://indicadores.primecontrol.com.br', 
         'title' => 'Indicadores', 
-        'description' => 'Link para o painel de Indicadores',
+        'description' => 'Link para o painel de Indicadores gerado pelo Microsoft Power BI',
         'groups' => array('*'), // Mudar para ('RH','Comercial','Financeiro', 'Admins') no servidor
         'grid_column_classes' => 'col-sm-6 col-md-4 col-lg-3', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
         'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels

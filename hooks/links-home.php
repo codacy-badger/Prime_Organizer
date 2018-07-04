@@ -15,3 +15,15 @@
 		);
 	 */
 
+    $homeLinks[] = array(
+        'url' => 'http://indicadores.primecontrol.com.br', 
+        'title' => 'Indicadores', 
+        'description' => 'Link para o painel de Indicadores',
+        'groups' => array('*'), // Mudar para ('RH','Comercial','Financeiro', 'Admins') no servidor
+        'grid_column_classes' => 'col-sm-6 col-md-4 col-lg-3', // optional CSS classes to apply to link block. See: http://getbootstrap.com/css/#grid
+        'panel_classes' => 'panel panel-warning', // optional CSS classes to apply to panel. See: http://getbootstrap.com/components/#panels
+        'link_classes' => 'btn btn-block btn-lg btn-warning', // optional CSS classes to apply to link. See: http://getbootstrap.com/css/#buttons
+        'icon' => '', // optional icon to use with the link
+        'table_group' => '' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
+    );
+

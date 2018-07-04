@@ -8,6 +8,7 @@
 
 		/* data for selected record, or defaults if none is selected */
 		var data = {
+			requerimento_id: <?php echo json_encode(array('id' => $rdata['requerimento_id'], 'value' => $rdata['requerimento_id'], 'text' => $jdata['requerimento_id'])); ?>,
 			empresa_id: <?php echo json_encode(array('id' => $rdata['empresa_id'], 'value' => $rdata['empresa_id'], 'text' => $jdata['empresa_id'])); ?>,
 			str_alocacao: <?php echo json_encode(array('id' => $rdata['str_alocacao'], 'value' => $rdata['str_alocacao'], 'text' => $jdata['str_alocacao'])); ?>,
 			recrutador_id: <?php echo json_encode(array('id' => $rdata['recrutador_id'], 'value' => $rdata['recrutador_id'], 'text' => $jdata['recrutador_id'])); ?>
@@ -17,6 +18,14 @@
 		AppGini.cache = AppGini.cache || {};
 		AppGini.cache[tn] = AppGini.cache[tn] || AppGini.ajaxCache();
 		var cache = AppGini.cache[tn];
+
+		/* saved value for requerimento_id */
+		cache.addCheck(function(u, d){
+			if(u != 'ajax_combo.php') return false;
+			if(d.t == tn && d.f == 'requerimento_id' && d.id == data.requerimento_id.id)
+				return { results: [ data.requerimento_id ], more: false, elapsed: 0.01 };
+			return false;
+		});
 
 		/* saved value for empresa_id */
 		cache.addCheck(function(u, d){

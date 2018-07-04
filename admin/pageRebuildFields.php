@@ -11,6 +11,8 @@
 	/* application schema as created in AppGini */
 	$schema = array(   
 		'tb_vaga' => array(   
+			'requerimento_id' => array('appgini' => 'INT unsigned '),
+			'int_vaga_numero' => array('appgini' => 'INT '),
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'empresa_id' => array('appgini' => 'INT unsigned '),
 			'str_alocacao' => array('appgini' => 'INT unsigned not null '),

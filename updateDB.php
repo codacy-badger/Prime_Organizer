@@ -15,7 +15,7 @@
 		setupIndexes('tb_vaga', array('empresa_id','str_alocacao','recrutador_id'));
 		setupTable('tb_entrevista', "create table if not exists `tb_entrevista` (   `id` INT unsigned not null auto_increment , primary key (`id`), `empresa_id` INT unsigned not null , `vaga_id` INT unsigned not null , `recrutador_id` INT unsigned not null , `dta` DATE not null , `int_qtd_contatos` SMALLINT not null , `int_qtd_entrevistas` SMALLINT not null , `int_qtd_encaminhamentos` SMALLINT not null ) CHARSET utf8", $silent);
 		setupIndexes('tb_entrevista', array('empresa_id','vaga_id','recrutador_id'));
-		setupTable('tb_contratacao', "create table if not exists `tb_contratacao` (   `id` INT unsigned not null auto_increment , primary key (`id`), `str_candidato_nome` VARCHAR(150) not null , `dta_contratacao` DATE not null , `dta_demissao` DATE , `bol_gestor` TINYINT default '0' ) CHARSET utf8", $silent);
+		setupTable('tb_contratacao', "create table if not exists `tb_contratacao` (   `id` INT unsigned not null auto_increment , primary key (`id`), `str_candidato_nome` VARCHAR(150) not null , `int_cpf` INT not null , unique `int_cpf_unique` (`int_cpf`), `dta_contratacao` DATE not null , `dta_demissao` DATE , `bol_gestor` TINYINT default '0' ) CHARSET utf8", $silent);
 		setupTable('tb_alocacao', "create table if not exists `tb_alocacao` (   `id` INT unsigned not null auto_increment , primary key (`id`), `int_empresa` INT unsigned not null , `str_nome` VARCHAR(150) ) CHARSET utf8", $silent);
 		setupIndexes('tb_alocacao', array('int_empresa'));
 		setupTable('tb_recrutador', "create table if not exists `tb_recrutador` (   `id` INT unsigned not null auto_increment , primary key (`id`), `str_nome` VARCHAR(150) not null , `bol_status` TINYINT default '1' , `bol_recrutador` TINYINT , `bol_comercial` TINYINT ) CHARSET utf8", $silent);
@@ -48,6 +48,8 @@
 		setupIndexes('tb_fatura', array('empresa_id'));
 		setupTable('tb_ajuste_colaborador', "create table if not exists `tb_ajuste_colaborador` (   `id` INT unsigned not null auto_increment , primary key (`id`), `str_responsavel` VARCHAR(150) , `dta_data` DATE , `colaborador_id` INT unsigned not null , `str_ajuste` VARCHAR(150) not null , `bol_evidencia` TINYINT(1) , `int_quantidade` INT default '1' , `gestor_id` INT unsigned not null , `bol_notificacao` TINYINT(1) ) CHARSET utf8", $silent);
 		setupIndexes('tb_ajuste_colaborador', array('colaborador_id','gestor_id'));
+		setupTable('tb_requerimento', "create table if not exists `tb_requerimento` (   `id` INT unsigned not null auto_increment , primary key (`id`), `str_status` VARCHAR(40) default 'Pendente' , `str_posicao` VARCHAR(40) not null , `int_n_vagas` INT not null , `str_reposicao` VARCHAR(8) not null , `str_recurso` VARCHAR(40) , `time_horario_entrada` TIME not null , `time_horario_saida` TIME not null , `empresa_id` INT unsigned not null , `contato_id` INT unsigned not null , `str_gestor` VARCHAR(40) not null , `str_telefone` VARCHAR(40) not null , `str_email` VARCHAR(40) not null , `float_salario` FLOAT(10,2) not null , `int_maquinas` INT not null default '0' , `str_beneficios` TEXT , `bool_abertura` VARCHAR(40) not null default 'Abertura imediata' , `data_indicacao` DATE not null , `str_descricao` TEXT ) CHARSET utf8", $silent);
+		setupIndexes('tb_requerimento', array('empresa_id','contato_id'));
 
 
 		// save MD5

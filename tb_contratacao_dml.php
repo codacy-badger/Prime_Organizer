@@ -16,6 +16,8 @@ function tb_contratacao_insert(){
 
 	$data['str_candidato_nome'] = makeSafe($_REQUEST['str_candidato_nome']);
 		if($data['str_candidato_nome'] == empty_lookup_value){ $data['str_candidato_nome'] = ''; }
+	$data['int_cpf'] = makeSafe($_REQUEST['int_cpf']);
+		if($data['int_cpf'] == empty_lookup_value){ $data['int_cpf'] = ''; }
 	$data['dta_contratacao'] = intval($_REQUEST['dta_contratacaoYear']) . '-' . intval($_REQUEST['dta_contratacaoMonth']) . '-' . intval($_REQUEST['dta_contratacaoDay']);
 	$data['dta_contratacao'] = parseMySQLDate($data['dta_contratacao'], '');
 	$data['dta_demissao'] = intval($_REQUEST['dta_demissaoYear']) . '-' . intval($_REQUEST['dta_demissaoMonth']) . '-' . intval($_REQUEST['dta_demissaoDay']);
@@ -24,6 +26,11 @@ function tb_contratacao_insert(){
 		if($data['bol_gestor'] == empty_lookup_value){ $data['bol_gestor'] = ''; }
 	if($data['str_candidato_nome']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Nome completo do Colaborador': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
+	if($data['int_cpf']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'CPF': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -40,7 +47,7 @@ function tb_contratacao_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `tb_contratacao` set       `str_candidato_nome`=' . (($data['str_candidato_nome'] !== '' && $data['str_candidato_nome'] !== NULL) ? "'{$data['str_candidato_nome']}'" : 'NULL') . ', `dta_contratacao`=' . (($data['dta_contratacao'] !== '' && $data['dta_contratacao'] !== NULL) ? "'{$data['dta_contratacao']}'" : 'NULL') . ', `dta_demissao`=' . (($data['dta_demissao'] !== '' && $data['dta_demissao'] !== NULL) ? "'{$data['dta_demissao']}'" : 'NULL') . ', `bol_gestor`=' . (($data['bol_gestor'] !== '' && $data['bol_gestor'] !== NULL) ? "'{$data['bol_gestor']}'" : 'NULL'), $o);
+	sql('insert into `tb_contratacao` set       `str_candidato_nome`=' . (($data['str_candidato_nome'] !== '' && $data['str_candidato_nome'] !== NULL) ? "'{$data['str_candidato_nome']}'" : 'NULL') . ', `int_cpf`=' . (($data['int_cpf'] !== '' && $data['int_cpf'] !== NULL) ? "'{$data['int_cpf']}'" : 'NULL') . ', `dta_contratacao`=' . (($data['dta_contratacao'] !== '' && $data['dta_contratacao'] !== NULL) ? "'{$data['dta_contratacao']}'" : 'NULL') . ', `dta_demissao`=' . (($data['dta_demissao'] !== '' && $data['dta_demissao'] !== NULL) ? "'{$data['dta_demissao']}'" : 'NULL') . ', `bol_gestor`=' . (($data['bol_gestor'] !== '' && $data['bol_gestor'] !== NULL) ? "'{$data['bol_gestor']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"tb_contratacao_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -177,6 +184,13 @@ function tb_contratacao_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
+	$data['int_cpf'] = makeSafe($_REQUEST['int_cpf']);
+		if($data['int_cpf'] == empty_lookup_value){ $data['int_cpf'] = ''; }
+	if($data['int_cpf']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'CPF': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
 	$data['dta_contratacao'] = intval($_REQUEST['dta_contratacaoYear']) . '-' . intval($_REQUEST['dta_contratacaoMonth']) . '-' . intval($_REQUEST['dta_contratacaoDay']);
 	$data['dta_contratacao'] = parseMySQLDate($data['dta_contratacao'], '');
 	if($data['dta_contratacao']==''){
@@ -197,7 +211,7 @@ function tb_contratacao_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `tb_contratacao` set       `str_candidato_nome`=' . (($data['str_candidato_nome'] !== '' && $data['str_candidato_nome'] !== NULL) ? "'{$data['str_candidato_nome']}'" : 'NULL') . ', `dta_contratacao`=' . (($data['dta_contratacao'] !== '' && $data['dta_contratacao'] !== NULL) ? "'{$data['dta_contratacao']}'" : 'NULL') . ', `dta_demissao`=' . (($data['dta_demissao'] !== '' && $data['dta_demissao'] !== NULL) ? "'{$data['dta_demissao']}'" : 'NULL') . ', `bol_gestor`=' . (($data['bol_gestor'] !== '' && $data['bol_gestor'] !== NULL) ? "'{$data['bol_gestor']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `tb_contratacao` set       `str_candidato_nome`=' . (($data['str_candidato_nome'] !== '' && $data['str_candidato_nome'] !== NULL) ? "'{$data['str_candidato_nome']}'" : 'NULL') . ', `int_cpf`=' . (($data['int_cpf'] !== '' && $data['int_cpf'] !== NULL) ? "'{$data['int_cpf']}'" : 'NULL') . ', `dta_contratacao`=' . (($data['dta_contratacao'] !== '' && $data['dta_contratacao'] !== NULL) ? "'{$data['dta_contratacao']}'" : 'NULL') . ', `dta_demissao`=' . (($data['dta_demissao'] !== '' && $data['dta_demissao'] !== NULL) ? "'{$data['dta_demissao']}'" : 'NULL') . ', `bol_gestor`=' . (($data['bol_gestor'] !== '' && $data['bol_gestor'] !== NULL) ? "'{$data['bol_gestor']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="tb_contratacao_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -364,6 +378,7 @@ function tb_contratacao_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
 		$jsReadOnly .= "\tjQuery('#str_candidato_nome').replaceWith('<div class=\"form-control-static\" id=\"str_candidato_nome\">' + (jQuery('#str_candidato_nome').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#int_cpf').replaceWith('<div class=\"form-control-static\" id=\"int_cpf\">' + (jQuery('#int_cpf').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#dta_contratacao').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#dta_contratacaoDay, #dta_contratacaoMonth, #dta_contratacaoYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#dta_demissao').prop('readonly', true);\n";
@@ -402,6 +417,7 @@ function tb_contratacao_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
 	// process images
 	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_candidato_nome)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(int_cpf)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_contratacao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_demissao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(bol_gestor)%%>', '', $templateCode);
@@ -414,6 +430,9 @@ function tb_contratacao_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_candidato_nome)%%>', safe_html($urow['str_candidato_nome']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_candidato_nome)%%>', html_attr($row['str_candidato_nome']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_candidato_nome)%%>', urlencode($urow['str_candidato_nome']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(int_cpf)%%>', safe_html($urow['int_cpf']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(int_cpf)%%>', html_attr($row['int_cpf']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(int_cpf)%%>', urlencode($urow['int_cpf']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_contratacao)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_contratacao']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_contratacao)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_contratacao'])))), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_demissao)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_demissao']))), $templateCode);
@@ -424,6 +443,8 @@ function tb_contratacao_form($selected_id = '', $AllowUpdate = 1, $AllowInsert =
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_candidato_nome)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_candidato_nome)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(int_cpf)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(int_cpf)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_contratacao)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_contratacao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_demissao)%%>', '', $templateCode);

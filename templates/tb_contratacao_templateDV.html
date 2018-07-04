@@ -10,8 +10,6 @@
 			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="tb_acompanhamento_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="tb_acompanhamento_colaborador_link"><i class="glyphicon glyphicon-list-alt"></i> Acompanhamento individual</a>
 			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="tb_acompanhamento_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_tb_acompanhamento_colaborador_link"><i class="glyphicon glyphicon-list-alt"></i> Acompanhamento individual</a>
 			<input type="hidden" id="tb_acompanhamento_colaborador_hclink" value="tb_acompanhamento_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="tb_ajuste_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="tb_ajuste_colaborador_link"><i class="glyphicon glyphicon-list-alt"></i> Ajustes do Colaborador</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="tb_ajuste_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_tb_ajuste_colaborador_link"><i class="glyphicon glyphicon-list-alt"></i> Ajustes do Colaborador</a>
 			<input type="hidden" id="tb_ajuste_colaborador_hclink" value="tb_ajuste_colaborador_view.php?filterer_colaborador_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
@@ -36,6 +34,16 @@
 					<label for="str_candidato_nome" class="control-label col-lg-3">Nome completo do Colaborador<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<input maxlength="150" type="text" class="form-control" name="str_candidato_nome" id="str_candidato_nome" value="<%%VALUE(str_candidato_nome)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_cpf" class="control-label col-lg-3">CPF<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#int_cpf-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="int_cpf-description"><div class="alert alert-info">CPF do colaborador</div></span>
+
+						<input maxlength="" type="text" class="form-control" name="int_cpf" id="int_cpf" value="<%%VALUE(int_cpf)%%>" required><div class="text-danger vspacer-md" id="int_cpf-uniqueness-note" style="display: none;"><%%TRANSLATION(unique field error)%%></div>
 					</div>
 				</div>
 
@@ -218,6 +226,7 @@
 				}
 			});
 
+			enforce_uniqueness('tb_contratacao', 'int_cpf');
 
 			/* load admin tools for admin user */
 			if(!add_new_mode){

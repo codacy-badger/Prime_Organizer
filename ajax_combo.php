@@ -450,6 +450,30 @@
 				'list_type' => 0,
 				'not_null' => true
 			)
+		),
+		'tb_requerimento' => array(   
+			'empresa_id' => array(
+				'parent_table' => 'tb_empresa',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_empresa`.`str_nome_fantasia`',
+				'parent_from' => '`tb_empresa` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_empresa`.`str_responsavel` LEFT JOIN `tb_contato_tipo` as tb_contato_tipo1 ON `tb_contato_tipo1`.`id`=`tb_empresa`.`relacionamento_id` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => true
+			),
+			'contato_id' => array(
+				'parent_table' => 'tb_contato',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`tb_contato`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato`.`str_sobrenome`), CONCAT_WS(\'\', `tb_contato`.`str_primeiro_nome`, \' \', `tb_contato`.`str_sobrenome`), \'\')',
+				'parent_from' => '`tb_contato` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_contato`.`empresa_id` LEFT JOIN `tb_contato_tipo` as tb_contato_tipo1 ON `tb_contato_tipo1`.`id`=`tb_contato`.`tipo_id` ',
+				'filterers' => array('empresa_id' => 'empresa_id'),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => true
+			)
 		)
 	);
 

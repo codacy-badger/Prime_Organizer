@@ -231,6 +231,13 @@
 					'tableIcon' => 'resources/table_icons/clock_edit.png',
 					'group' => $tg[0],
 					'homepageShowCount' => 0
+				),
+				'tb_requerimento' => array(
+					'Caption' => 'Requerimento de Vagas',
+					'Description' => 'Requerimento de vagas por parceiros',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 1
 				)
 		);
 
@@ -268,7 +275,8 @@
 				'tb_indicador' => 'Metas e Indicadores',
 				'tb_indicador_periodo' => 'Per&#237;odos dos indicadores',
 				'tb_fatura' => 'Faturamento',
-				'tb_ajuste_colaborador' => 'Ajustes do Colaborador'
+				'tb_ajuste_colaborador' => 'Ajustes do Colaborador',
+				'tb_requerimento' => 'Requerimento de Vagas'
 			);
 
 			return $arrTables;

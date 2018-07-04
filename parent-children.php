@@ -385,6 +385,8 @@
 				)
 			),
 			'tb_ajuste_colaborador' => array(   
+			),
+			'tb_requerimento' => array(   
 			)
 		);
 

@@ -39,6 +39,7 @@
 		'tb_contratacao' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'str_candidato_nome' => array('appgini' => 'VARCHAR(150) not null '),
+			'int_cpf' => array('appgini' => 'INT not null unique '),
 			'dta_contratacao' => array('appgini' => 'DATE not null '),
 			'dta_demissao' => array('appgini' => 'DATE '),
 			'bol_gestor' => array('appgini' => 'TINYINT default \'0\' ')
@@ -209,6 +210,27 @@
 			'int_quantidade' => array('appgini' => 'INT default \'1\' '),
 			'gestor_id' => array('appgini' => 'INT unsigned not null '),
 			'bol_notificacao' => array('appgini' => 'TINYINT(1) ')
+		),
+		'tb_requerimento' => array(   
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'str_status' => array('appgini' => 'VARCHAR(40) default \'Pendente\' '),
+			'str_posicao' => array('appgini' => 'VARCHAR(40) not null '),
+			'int_n_vagas' => array('appgini' => 'INT not null '),
+			'str_reposicao' => array('appgini' => 'VARCHAR(8) not null '),
+			'str_recurso' => array('appgini' => 'VARCHAR(40) '),
+			'time_horario_entrada' => array('appgini' => 'TIME not null '),
+			'time_horario_saida' => array('appgini' => 'TIME not null '),
+			'empresa_id' => array('appgini' => 'INT unsigned not null '),
+			'contato_id' => array('appgini' => 'INT unsigned not null '),
+			'str_gestor' => array('appgini' => 'VARCHAR(40) not null '),
+			'str_telefone' => array('appgini' => 'VARCHAR(40) not null '),
+			'str_email' => array('appgini' => 'VARCHAR(40) not null '),
+			'float_salario' => array('appgini' => 'FLOAT(10,2) not null '),
+			'int_maquinas' => array('appgini' => 'INT not null default \'0\' '),
+			'str_beneficios' => array('appgini' => 'TEXT '),
+			'bool_abertura' => array('appgini' => 'VARCHAR(40) not null default \'Abertura imediata\' '),
+			'data_indicacao' => array('appgini' => 'DATE not null '),
+			'str_descricao' => array('appgini' => 'TEXT ')
 		)
 	);
 

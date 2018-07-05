@@ -22,17 +22,18 @@
 
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
-		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') /* Requerimento */" => "requerimento_id",
 		"`tb_vaga`.`int_vaga_numero`" => "int_vaga_numero",
-		"IF(    CHAR_LENGTH(if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), CONCAT_WS('',   if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), '') /* Data de abertura */" => "dta_abertura",
-		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
+		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
 		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o */" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_posicao`" => "str_posicao",
+		"if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
+		"`tb_vaga`.`qtd_vagas`" => "qtd_vagas",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
@@ -40,36 +41,38 @@
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
-		1 => '`tb_vaga`.`id`',
-		2 => '`tb_requerimento1`.`id`',
-		3 => '`tb_vaga`.`int_vaga_numero`',
-		4 => 'date_format(`tb_requerimento2`.`dta_abertura`,\'%d/%m/%Y\')',
-		5 => '`tb_vaga`.`dta_fechamento`',
-		6 => '`tb_empresa1`.`str_nome_fantasia`',
-		7 => '`tb_alocacao1`.`str_nome`',
-		8 => '`tb_recrutador1`.`str_nome`',
-		9 => 9,
+		1 => '`tb_requerimento1`.`id`',
+		2 => '`tb_vaga`.`int_vaga_numero`',
+		3 => '`tb_vaga`.`id`',
+		4 => '`tb_empresa1`.`str_nome_fantasia`',
+		5 => '`tb_alocacao1`.`str_nome`',
+		6 => '`tb_recrutador1`.`str_nome`',
+		7 => 7,
+		8 => '`tb_vaga`.`dta_abertura`',
+		9 => '`tb_vaga`.`qtd_vagas`',
 		10 => 10,
 		11 => 11,
-		12 => '`tb_vaga`.`dta_previsao_fechamento`',
-		13 => 13,
-		14 => '`tb_vaga`.`dta_inicio`',
-		15 => 15
+		12 => '`tb_vaga`.`dta_fechamento`',
+		13 => '`tb_vaga`.`dta_previsao_fechamento`',
+		14 => 14,
+		15 => '`tb_vaga`.`dta_inicio`',
+		16 => 16
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
-		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') /* Requerimento */" => "requerimento_id",
 		"`tb_vaga`.`int_vaga_numero`" => "int_vaga_numero",
-		"IF(    CHAR_LENGTH(if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), CONCAT_WS('',   if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), '') /* Data de abertura */" => "dta_abertura",
-		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
+		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
 		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o */" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_posicao`" => "str_posicao",
+		"if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
+		"`tb_vaga`.`qtd_vagas`" => "qtd_vagas",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
@@ -77,17 +80,18 @@
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
-		"`tb_vaga`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') /* Requerimento */" => "Requerimento",
 		"`tb_vaga`.`int_vaga_numero`" => "Vaga",
-		"IF(    CHAR_LENGTH(if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), CONCAT_WS('',   if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), '') /* Data de abertura */" => "Data de abertura",
-		"`tb_vaga`.`dta_fechamento`" => "Data fechamento",
+		"`tb_vaga`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "Empresa",
 		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o */" => "Aloca&#231;&#227;o",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "Recrutador",
 		"`tb_vaga`.`str_posicao`" => "Posi&#231;&#227;o",
+		"`tb_vaga`.`dta_abertura`" => "Data de abertura",
+		"`tb_vaga`.`qtd_vagas`" => "Qtd. de vagas em aberto",
 		"`tb_vaga`.`str_prioridade`" => "Prioridade",
 		"`tb_vaga`.`str_status`" => "Status",
+		"`tb_vaga`.`dta_fechamento`" => "Data fechamento",
 		"`tb_vaga`.`dta_previsao_fechamento`" => "Data de previs&#227;o de fechamento",
 		"`tb_vaga`.`str_obs`" => "Observa&#231;&#245;es",
 		"`tb_vaga`.`dta_inicio`" => "Data de admiss&#227;o/in&#237;cio",
@@ -96,17 +100,18 @@
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
-		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') /* Requerimento */" => "requerimento_id",
 		"`tb_vaga`.`int_vaga_numero`" => "int_vaga_numero",
-		"IF(    CHAR_LENGTH(if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), CONCAT_WS('',   if(`tb_requerimento2`.`dta_abertura`,date_format(`tb_requerimento2`.`dta_abertura`,'%d/%m/%Y'),'')), '') /* Data de abertura */" => "dta_abertura",
-		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
+		"`tb_vaga`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
 		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o */" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_posicao`" => "str_posicao",
+		"if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
+		"`tb_vaga`.`qtd_vagas`" => "qtd_vagas",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
@@ -114,9 +119,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'requerimento_id' => 'Requerimento', 'dta_abertura' => 'Data de abertura', 'empresa_id' => 'Empresa', 'str_alocacao' => 'Aloca&#231;&#227;o', 'recrutador_id' => 'Recrutador');
+	$x->filterers = array(  'requerimento_id' => 'Requerimento', 'empresa_id' => 'Empresa', 'str_alocacao' => 'Aloca&#231;&#227;o', 'recrutador_id' => 'Recrutador');
 
-	$x->QueryFrom = "`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_requerimento` as tb_requerimento2 ON `tb_requerimento2`.`id`=`tb_vaga`.`dta_abertura` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` ";
+	$x->QueryFrom = "`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -142,13 +147,13 @@
 	$x->TableTitle = "Vagas";
 	$x->TableIcon = "resources/table_icons/chair.png";
 	$x->PrimaryKey = "`tb_vaga`.`id`";
-	$x->DefaultSortField = '4';
+	$x->DefaultSortField = '`tb_vaga`.`dta_abertura`';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Requerimento", "Vaga", "Data de abertura", "Data fechamento", "Empresa", "Aloca&#231;&#227;o", "Recrutador", "Posi&#231;&#227;o", "Prioridade", "Status", "Data de previs&#227;o de fechamento", "Observa&#231;&#245;es");
-	$x->ColFieldName = array('requerimento_id', 'int_vaga_numero', 'dta_abertura', 'dta_fechamento', 'empresa_id', 'str_alocacao', 'recrutador_id', 'str_posicao', 'str_prioridade', 'str_status', 'dta_previsao_fechamento', 'str_obs');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Empresa", "Aloca&#231;&#227;o", "Recrutador", "Posi&#231;&#227;o", "Data de abertura", "Qtd. de vagas em aberto", "Prioridade", "Status", "Data fechamento", "Data de previs&#227;o de fechamento", "Observa&#231;&#245;es");
+	$x->ColFieldName = array('empresa_id', 'str_alocacao', 'recrutador_id', 'str_posicao', 'dta_abertura', 'qtd_vagas', 'str_prioridade', 'str_status', 'dta_fechamento', 'dta_previsao_fechamento', 'str_obs');
+	$x->ColNumber  = array(4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_vaga_templateTV.html';

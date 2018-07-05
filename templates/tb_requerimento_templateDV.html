@@ -7,9 +7,6 @@
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="tb_vaga_link"><i class="glyphicon glyphicon-list-alt"></i> Vagas</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_tb_vaga_link"><i class="glyphicon glyphicon-list-alt"></i> Vagas</a>
-			<input type="hidden" id="tb_vaga_hclink" value="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -25,14 +22,6 @@
 					<label for="id" class="control-label col-lg-3">ID</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="dta_abertura" class="control-label col-lg-3">Data de abertura</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="dta_abertura"><%%COMBOTEXT(dta_abertura)%%></div>
 					</div>
 				</div>
 
@@ -180,9 +169,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_indicacao" class="control-label col-lg-3">Prazo para indica&#231;&#227;o de candidatos<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="data_indicacao" class="control-label col-lg-3">Prazo para indica&#231;&#227;o de candidatos<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<%%COMBO(dta_indicacao)%%>
+						<%%COMBO(data_indicacao)%%>
 					</div>
 				</div>
 
@@ -217,14 +206,6 @@
 	</div>
 
 
-	<!-- child records -->
-	<hr>
-	<div class="row">
-		<div class="col-lg-10 col-lg-offset-1">
-			<div id="tb_requerimento-children" class="children-tabs"></div>
-		</div>
-	</div>
-
 </div><!-- /div class="panel-body" -->
 	<script>
 		$j(function() {
@@ -254,38 +235,6 @@
 
 			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
 
-			if(embedded_mode){
-				/* hide links to children tables in embedded mode */
-				$j('.detail_view a[id$=_link]').remove();
-
-				/* append embedded mode to all links */
-				var append_embedded = function(){
-					$j('a[href]:not([href^="#"]):not([href^="javascript"]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
-						function(){
-							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
-						}
-					);
-				}
-				setTimeout(append_embedded, 500);
-				setTimeout(append_embedded, 1500);
-				setTimeout(append_embedded, 2500);
-				setTimeout(append_embedded, 3500);
-			}
-
-			/* when no record is selected ('add new' mode) */
-			if(add_new_mode){
-				/* hide links to children tables */
-				$j('.detail_view a[id$=_link]').remove();
-			}else{
-				post(
-					'parent-children.php', {
-						ParentTable: 'tb_requerimento',
-						SelectedID: '<%%VALUE(id)%%>',
-						Operation: 'show-children'
-					},
-					'tb_requerimento-children'
-				);
-			}
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */

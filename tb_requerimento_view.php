@@ -23,6 +23,7 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = array(   
 		"`tb_requerimento`.`id`" => "id",
+		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"`tb_requerimento`.`str_status`" => "str_status",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -39,35 +40,37 @@
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
 		"`tb_requerimento`.`bool_abertura`" => "bool_abertura",
-		"if(`tb_requerimento`.`data_indicacao`,date_format(`tb_requerimento`.`data_indicacao`,'%d/%m/%Y'),'')" => "data_indicacao",
+		"if(`tb_requerimento`.`dta_indicacao`,date_format(`tb_requerimento`.`dta_indicacao`,'%d/%m/%Y'),'')" => "dta_indicacao",
 		"`tb_requerimento`.`str_descricao`" => "str_descricao"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => '`tb_requerimento`.`id`',
-		2 => 2,
+		2 => '`tb_requerimento`.`dta_abertura`',
 		3 => 3,
-		4 => '`tb_requerimento`.`int_n_vagas`',
-		5 => 5,
+		4 => 4,
+		5 => '`tb_requerimento`.`int_n_vagas`',
 		6 => 6,
-		7 => '`tb_requerimento`.`time_horario_entrada`',
-		8 => '`tb_requerimento`.`time_horario_saida`',
-		9 => '`tb_empresa1`.`str_nome_fantasia`',
-		10 => 10,
+		7 => 7,
+		8 => '`tb_requerimento`.`time_horario_entrada`',
+		9 => '`tb_requerimento`.`time_horario_saida`',
+		10 => '`tb_empresa1`.`str_nome_fantasia`',
 		11 => 11,
 		12 => 12,
 		13 => 13,
-		14 => '`tb_requerimento`.`float_salario`',
-		15 => '`tb_requerimento`.`int_maquinas`',
-		16 => 16,
+		14 => 14,
+		15 => '`tb_requerimento`.`float_salario`',
+		16 => '`tb_requerimento`.`int_maquinas`',
 		17 => 17,
-		18 => '`tb_requerimento`.`data_indicacao`',
-		19 => 19
+		18 => 18,
+		19 => '`tb_requerimento`.`dta_indicacao`',
+		20 => 20
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`tb_requerimento`.`id`" => "id",
+		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"`tb_requerimento`.`str_status`" => "str_status",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -84,12 +87,13 @@
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
 		"`tb_requerimento`.`bool_abertura`" => "bool_abertura",
-		"if(`tb_requerimento`.`data_indicacao`,date_format(`tb_requerimento`.`data_indicacao`,'%d/%m/%Y'),'')" => "data_indicacao",
+		"if(`tb_requerimento`.`dta_indicacao`,date_format(`tb_requerimento`.`dta_indicacao`,'%d/%m/%Y'),'')" => "dta_indicacao",
 		"`tb_requerimento`.`str_descricao`" => "str_descricao"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
 		"`tb_requerimento`.`id`" => "ID",
+		"`tb_requerimento`.`dta_abertura`" => "Dta abertura",
 		"`tb_requerimento`.`str_status`" => "Status do Requerimento",
 		"`tb_requerimento`.`str_posicao`" => "Posi&#231;&#227;o",
 		"`tb_requerimento`.`int_n_vagas`" => "N&#250;mero de Vagas",
@@ -106,13 +110,14 @@
 		"`tb_requerimento`.`int_maquinas`" => "Quantas m&#225;quinas ser&#227;o necess&#225;rias?",
 		"`tb_requerimento`.`str_beneficios`" => "Benef&#237;cios oferecidos",
 		"`tb_requerimento`.`bool_abertura`" => "Abertura da vaga",
-		"`tb_requerimento`.`data_indicacao`" => "Prazo para indica&#231;&#227;o de candidatos",
+		"`tb_requerimento`.`dta_indicacao`" => "Prazo para indica&#231;&#227;o de candidatos",
 		"`tb_requerimento`.`str_descricao`" => "Descri&#231;&#227;o da vaga"
 	);
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = array(   
 		"`tb_requerimento`.`id`" => "id",
+		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"`tb_requerimento`.`str_status`" => "str_status",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -129,7 +134,7 @@
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
 		"`tb_requerimento`.`bool_abertura`" => "bool_abertura",
-		"if(`tb_requerimento`.`data_indicacao`,date_format(`tb_requerimento`.`data_indicacao`,'%d/%m/%Y'),'')" => "data_indicacao",
+		"if(`tb_requerimento`.`dta_indicacao`,date_format(`tb_requerimento`.`dta_indicacao`,'%d/%m/%Y'),'')" => "dta_indicacao",
 		"`tb_requerimento`.`str_descricao`" => "str_descricao"
 	);
 
@@ -165,8 +170,8 @@
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Status do Requerimento", "Posi&#231;&#227;o", "N&#250;mero de Vagas", "Empresa/Cliente Solicitante", "Nome do Contato", "Gestor Imediato", "Abertura da vaga", "Prazo para indica&#231;&#227;o de candidatos");
-	$x->ColFieldName = array('str_status', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'str_gestor', 'bool_abertura', 'data_indicacao');
-	$x->ColNumber  = array(2, 3, 4, 9, 10, 11, 17, 18);
+	$x->ColFieldName = array('str_status', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'str_gestor', 'bool_abertura', 'dta_indicacao');
+	$x->ColNumber  = array(3, 4, 5, 10, 11, 12, 18, 19);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_requerimento_templateTV.html';

@@ -7,6 +7,30 @@
 
 		$pcConfig = array(
 			'tb_vaga' => array(   
+				'requerimento_id' => array(   
+					'parent-table' => 'tb_requerimento',
+					'parent-primary-key' => 'id',
+					'child-primary-key' => 'id',
+					'child-primary-key-index' => 2,
+					'tab-label' => 'Vagas',
+					'auto-close' => true,
+					'table-icon' => 'resources/table_icons/chair.png',
+					'display-refresh' => true,
+					'display-add-new' => true,
+					'forced-where' => '',
+					'display-fields' => array(3 => 'Empresa', 4 => 'Aloca&#231;&#227;o', 5 => 'Recrutador', 6 => 'Posi&#231;&#227;o', 7 => 'Data de abertura', 8 => 'Qtd. de vagas em aberto', 9 => 'Prioridade', 10 => 'Status', 11 => 'Data fechamento', 12 => 'Data de previs&#227;o de fechamento', 13 => 'Observa&#231;&#245;es'),
+					'display-field-names' => array(3 => 'empresa_id', 4 => 'str_alocacao', 5 => 'recrutador_id', 6 => 'str_posicao', 7 => 'dta_abertura', 8 => 'qtd_vagas', 9 => 'str_prioridade', 10 => 'str_status', 11 => 'dta_fechamento', 12 => 'dta_previsao_fechamento', 13 => 'str_obs'),
+					'sortable-fields' => array(0 => '`tb_requerimento1`.`id`', 1 => '`tb_vaga`.`int_vaga_numero`', 2 => '`tb_vaga`.`id`', 3 => '`tb_empresa1`.`str_nome_fantasia`', 4 => '`tb_alocacao1`.`str_nome`', 5 => '`tb_recrutador1`.`str_nome`', 6 => 7, 7 => '`tb_vaga`.`dta_abertura`', 8 => '`tb_vaga`.`qtd_vagas`', 9 => 10, 10 => 11, 11 => '`tb_vaga`.`dta_fechamento`', 12 => '`tb_vaga`.`dta_previsao_fechamento`', 13 => 14, 14 => '`tb_vaga`.`dta_inicio`', 15 => 16),
+					'records-per-page' => 10,
+					'default-sort-by' => 7,
+					'default-sort-direction' => 'desc',
+					'open-detail-view-on-click' => true,
+					'display-page-selector' => true,
+					'show-page-progress' => true,
+					'template' => 'children-tb_vaga',
+					'template-printable' => 'children-tb_vaga-printable',
+					'query' => "SELECT IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') as 'requerimento_id', `tb_vaga`.`int_vaga_numero` as 'int_vaga_numero', `tb_vaga`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') as 'str_alocacao', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'recrutador_id', `tb_vaga`.`str_posicao` as 'str_posicao', if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', `tb_vaga`.`qtd_vagas` as 'qtd_vagas', `tb_vaga`.`str_prioridade` as 'str_prioridade', `tb_vaga`.`str_status` as 'str_status', if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'') as 'dta_previsao_fechamento', `tb_vaga`.`str_obs` as 'str_obs', if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'') as 'dta_inicio', `tb_vaga`.`str_contratado_nome` as 'str_contratado_nome' FROM `tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` "
+				),
 				'empresa_id' => array(   
 					'parent-table' => 'tb_empresa',
 					'parent-primary-key' => 'id',

@@ -215,6 +215,7 @@
 		),
 		'tb_requerimento' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'dta_abertura' => array('appgini' => 'DATE '),
 			'str_status' => array('appgini' => 'VARCHAR(40) default \'Pendente\' '),
 			'str_posicao' => array('appgini' => 'VARCHAR(40) not null '),
 			'int_n_vagas' => array('appgini' => 'INT not null '),
@@ -231,7 +232,7 @@
 			'int_maquinas' => array('appgini' => 'INT not null default \'0\' '),
 			'str_beneficios' => array('appgini' => 'TEXT '),
 			'bool_abertura' => array('appgini' => 'VARCHAR(40) not null default \'Abertura imediata\' '),
-			'data_indicacao' => array('appgini' => 'DATE not null '),
+			'dta_indicacao' => array('appgini' => 'DATE not null '),
 			'str_descricao' => array('appgini' => 'TEXT ')
 		)
 	);

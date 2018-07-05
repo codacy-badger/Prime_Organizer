@@ -23,7 +23,9 @@
 	*/
 
 	function login_ok($memberInfo, &$args){
-
+        // Define um cookie que guarda a ID do grupo de usuário do usuário atual
+        setcookie('groupID', $memberInfo['groupID'], time()+36000);
+        
 		return '';
 	}
 

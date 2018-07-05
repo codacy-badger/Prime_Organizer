@@ -11,20 +11,19 @@
 	/* application schema as created in AppGini */
 	$schema = array(   
 		'tb_vaga' => array(   
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'requerimento_id' => array('appgini' => 'INT unsigned '),
 			'int_vaga_numero' => array('appgini' => 'INT '),
-			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'dta_abertura' => array('appgini' => 'INT unsigned '),
+			'dta_fechamento' => array('appgini' => 'DATE '),
 			'empresa_id' => array('appgini' => 'INT unsigned '),
-			'str_alocacao' => array('appgini' => 'INT unsigned not null '),
-			'recrutador_id' => array('appgini' => 'INT unsigned not null '),
-			'str_posicao' => array('appgini' => 'VARCHAR(150) not null '),
-			'dta_abertura' => array('appgini' => 'DATE not null '),
-			'qtd_vagas' => array('appgini' => 'SMALLINT(1) unsigned not null '),
+			'str_alocacao' => array('appgini' => 'INT unsigned '),
+			'recrutador_id' => array('appgini' => 'INT unsigned '),
+			'str_posicao' => array('appgini' => 'VARCHAR(150) '),
 			'str_prioridade' => array('appgini' => 'VARCHAR(150) not null '),
 			'str_status' => array('appgini' => 'VARCHAR(150) not null '),
-			'dta_fechamento' => array('appgini' => 'DATE '),
 			'dta_previsao_fechamento' => array('appgini' => 'DATE '),
-			'str_obs' => array('appgini' => 'VARCHAR(255) '),
+			'str_obs' => array('appgini' => 'TINYTEXT '),
 			'dta_inicio' => array('appgini' => 'DATE '),
 			'str_contratado_nome' => array('appgini' => 'VARCHAR(150) ')
 		),
@@ -215,6 +214,7 @@
 		),
 		'tb_requerimento' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'dta_abertura' => array('appgini' => 'DATE '),
 			'str_status' => array('appgini' => 'VARCHAR(40) default \'Pendente\' '),
 			'str_posicao' => array('appgini' => 'VARCHAR(40) not null '),
 			'int_n_vagas' => array('appgini' => 'INT not null '),
@@ -231,7 +231,7 @@
 			'int_maquinas' => array('appgini' => 'INT not null default \'0\' '),
 			'str_beneficios' => array('appgini' => 'TEXT '),
 			'bool_abertura' => array('appgini' => 'VARCHAR(40) not null default \'Abertura imediata\' '),
-			'data_indicacao' => array('appgini' => 'DATE not null '),
+			'dta_indicacao' => array('appgini' => 'DATE not null '),
 			'str_descricao' => array('appgini' => 'TEXT ')
 		)
 	);

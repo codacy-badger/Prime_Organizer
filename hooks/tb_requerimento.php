@@ -154,7 +154,6 @@
 	*/
 
 	function tb_requerimento_before_insert(&$data, $memberInfo, &$args){
-
 		return TRUE;
 	}
 
@@ -180,7 +179,7 @@
 	*/
 
 	function tb_requerimento_after_insert($data, $memberInfo, &$args){
-
+            
 		return TRUE;
 	}
 
@@ -232,6 +231,10 @@
 	*/
 
 	function tb_requerimento_after_update($data, $memberInfo, &$args){
+        // Insere novas vagas na Tabela Vagas se o status é aprovado
+        if($data['str_status'] == "Aprovado"){
+            
+        }
 
 		return TRUE;
 	}

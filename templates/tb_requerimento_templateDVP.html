@@ -21,6 +21,12 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data de abertura</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_abertura)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Status do Requerimento</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%COMBOTEXT(str_status)%%></div>
@@ -119,7 +125,7 @@
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Prazo para indica&#231;&#227;o de candidatos</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(data_indicacao)%%></div>
+				<div class="form-control-static"><%%COMBOTEXT(dta_indicacao)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -130,3 +136,32 @@
 		</div>
 	</fieldset>
 </div>
+<!-- child records -->
+<div class="panel-body">
+	<div id="tb_requerimento-children"></div>
+</div>
+
+<script>
+	$j(function(){
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=tb_requerimento-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'tb_requerimento',
+				SelectedID: '<%%VALUE(id)%%>',
+				Operation: 'show-children-printable'
+			},
+			'tb_requerimento-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function(){
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

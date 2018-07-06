@@ -180,6 +180,14 @@
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
         // Funções para a integração Organizer-Mautic
+        
+        /*
+        $sql = "SELECT COUNT(*) AS _num FROM test; ";
+        $sql.= "INSERT INTO test(id) VALUES (1); ";
+        $sql.= "SELECT COUNT(*) AS _num FROM test; ";
+
+        if (!$mysqli->multi_query($sql)) {
+        */
         require 'organizer-func.php';
         
         // Captura dos dados do Organizer

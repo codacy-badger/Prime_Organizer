@@ -38,7 +38,7 @@
 				'parent_table' => 'tb_requerimento',
 				'parent_pk_field' => 'id',
 				'parent_caption' => '`tb_requerimento`.`id`',
-				'parent_from' => '`tb_requerimento` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_requerimento`.`str_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` ',
+				'parent_from' => '`tb_requerimento` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_requerimento`.`str_alocacao` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` ',
 				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
@@ -463,13 +463,13 @@
 			)
 		),
 		'tb_requerimento' => array(   
-			'str_alocacao' => array(
-				'parent_table' => 'tb_alocacao',
+			'recrutador_id' => array(
+				'parent_table' => 'tb_recrutador',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`tb_alocacao`.`str_nome`',
-				'parent_from' => '`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ',
-				'filterers' => array('empresa_id' => 'int_empresa'),
-				'custom_query' => '',
+				'parent_caption' => '`tb_recrutador`.`str_nome`',
+				'parent_from' => '`tb_recrutador` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `tb_recrutador`.`id`, `tb_recrutador`.`str_nome` FROM `tb_recrutador` WHERE bol_recrutador = 1 AND bol_status = 1 ORDER BY 2',
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
@@ -485,6 +485,17 @@
 				'list_type' => 0,
 				'not_null' => true
 			),
+			'str_alocacao' => array(
+				'parent_table' => 'tb_alocacao',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_alocacao`.`str_nome`',
+				'parent_from' => '`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ',
+				'filterers' => array('empresa_id' => 'int_empresa'),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
 			'contato_id' => array(
 				'parent_table' => 'tb_contato',
 				'parent_pk_field' => 'id',
@@ -495,17 +506,6 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => true
-			),
-			'recrutador_id' => array(
-				'parent_table' => 'tb_recrutador',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`tb_recrutador`.`str_nome`',
-				'parent_from' => '`tb_recrutador` ',
-				'filterers' => array(),
-				'custom_query' => 'SELECT `tb_recrutador`.`id`, `tb_recrutador`.`str_nome` FROM `tb_recrutador` WHERE bol_recrutador = 1 AND bol_status = 1 ORDER BY 2',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
 			)
 		)
 	);

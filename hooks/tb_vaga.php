@@ -211,7 +211,7 @@
 	*/
 
 	function tb_vaga_before_update(&$data, $memberInfo, &$args){
-
+        
 		return TRUE;
 	}
 
@@ -236,7 +236,22 @@
 	*/
 
 	function tb_vaga_after_update($data, $memberInfo, &$args){
-
+        
+        // Fecha o requerimento se todas as vagas foram preenchidas ou canceladas
+        $requerimento = $data['requerimento_id'];
+        $data = date('Y-m-d');
+        
+        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND str_status LIKE '%Preenchida%' OR str_status LIKE 'Cancelada'");
+        
+        $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
+        
+        if($vagas_preenchidas == $vagas_totais){
+            $sql = "UPDATE tb_requerimento
+            SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}'";
+            
+            sql($sql, $eo);
+        }
+        
 		return TRUE;
 	}
 

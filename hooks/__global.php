@@ -29,7 +29,7 @@
             setcookie('groupID', '', time()-36000);
         }
         
-        setcookie('groupID', $memberIndo['groupID'], time()+36000);
+        setcookie('groupID', $memberInfo['groupID'], time()+36000);
         
 		return '';
 	}

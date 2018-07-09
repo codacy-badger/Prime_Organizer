@@ -20,6 +20,8 @@ function get_data(campo){
 
     var date_object = new Date(ano, mes - 1, dia);
     
+    date_object.setHours(0,0,0,0);
+    
     // Se o ano não foi resgatado, retorna falso
     if(!ano){
         return false;
@@ -48,6 +50,7 @@ function getCookie(cname) {
 
 $j(function(){
     
+    
     // Esconde o campo 'str_recurso' se o campo 'str_reposicao' está marcado como "NÃO"
     $j('#str_reposicao').on('change', function(){
         var Reposicao = $j('#str_reposicao').val();
@@ -57,6 +60,19 @@ $j(function(){
             $j('#str_recurso').focus().select();
         } else {
             $j('#str_recurso').parents('.form-group').hide();
+        }
+    }).change();
+    
+    
+    // Esconde o campo Data de Previsão de Fechamento se o usuário não pertence ao grupo RH, Vagas ou Admin
+    $j('#dta_prev_fechamento').on('change', function(){
+        var GroupID = parseInt(getCookie('groupID'));
+        
+        // groupID válidos: 2 (Admins), 3 (RH), 8 (Vagas)
+        if(GroupID == 2 || GroupID == 3 || GroupID == 8){
+            $j('#dta_prev_fechamento').parents('.form-group').show();
+        } else{
+            $j('#dta_prev_fechamento').parents('.form-group').hide();
         }
     }).change();
     
@@ -71,13 +87,27 @@ $j(function(){
     });
 
     
-    // Verifica se a data é atual ou futura
+    // Verifica se a data de indicação é atual ou futura
     $j('#update, #insert').click(function(){
         var Hoje = new Date();
-        var DataIndicacao = get_data('data_indicacao');
+        Hoje.setHours(0,0,0,0);
+        
+        var DataIndicacao = get_data('dta_indicacao');
+        DataIndicacao.setHours(0,0,0,0);
 
         if(DataIndicacao < Hoje){
-            return show_error('data_indicacao', 'Data para Indicação','A data para indicação deve ser atual ou futura.');
+            return show_error('dta_indicacao', 'Data para Indicação','A data para indicação deve ser atual ou futura.');
+        }
+    });
+    
+    
+    // Verifica se a data de previsão de fechamento é igual ou futura à de indicação
+    $j('#update, #insert').click(function(){
+        var DataIndicacao = get_data('dta_indicacao');
+        var DataPrev = get_data('dta_prev_fechamento');
+
+        if(DataPrev < DataIndicacao){
+            return show_error('dta_prev_fechamento', 'Data de Previsao de Fechamento','A Data de Previsão de Fechamento deve ser igual ou futura à Data de Indicação.');
         }
     });
     
@@ -99,6 +129,7 @@ $j(function(){
             });            
         }
     }).change();
+    
     
 });
 

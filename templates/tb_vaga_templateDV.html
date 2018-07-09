@@ -22,9 +22,17 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="id" class="control-label col-lg-3">ID</label>
+					<label for="requerimento_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Requerimento</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
+						<div class="form-control-static"><span id="requerimento_id-readonly"><%%COMBOTEXT(requerimento_id)%%></span> <%%PLINK(requerimento_id)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_vaga_numero" class="control-label col-lg-3">Vaga</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="int_vaga_numero"><%%VALUE(int_vaga_numero)%%></div>
 					</div>
 				</div>
 
@@ -75,16 +83,6 @@
 						<span class="help-block collapse" id="dta_abertura-description"><div class="alert alert-info">Data de abertura da vaga</div></span>
 
 						<%%COMBO(dta_abertura)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="qtd_vagas" class="control-label col-lg-3">Qtd. de vagas em aberto<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#qtd_vagas-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="qtd_vagas-description"><div class="alert alert-info">Informe quantas vagas est&#227;o ABERTAS para esta posi&#231;&#227;o.</div></span>
-
-						<input maxlength="1" type="text" class="form-control" name="qtd_vagas" id="qtd_vagas" value="<%%VALUE(qtd_vagas)%%>" required>
 					</div>
 				</div>
 
@@ -170,7 +168,6 @@
 		</div>
 	</div>
 
-	<input type="hidden" name="requerimento_id" value="<%%VALUE(requerimento_id)%%>">
 
 	<!-- child records -->
 	<hr>

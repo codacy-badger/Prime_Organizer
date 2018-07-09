@@ -14,6 +14,7 @@ function tb_requerimento_insert(){
 		return false;
 	}
 
+	$data['dta_abertura'] = parseMySQLDate('', '<%%editingDate%%>');
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['str_posicao'] = makeSafe($_REQUEST['str_posicao']);
@@ -24,6 +25,8 @@ function tb_requerimento_insert(){
 		if($data['str_reposicao'] == empty_lookup_value){ $data['str_reposicao'] = ''; }
 	$data['str_recurso'] = makeSafe($_REQUEST['str_recurso']);
 		if($data['str_recurso'] == empty_lookup_value){ $data['str_recurso'] = ''; }
+	$data['str_alocacao'] = makeSafe($_REQUEST['str_alocacao']);
+		if($data['str_alocacao'] == empty_lookup_value){ $data['str_alocacao'] = ''; }
 	$data['time_horario_entrada'] = makeSafe($_REQUEST['time_horario_entrada']);
 		if($data['time_horario_entrada'] == empty_lookup_value){ $data['time_horario_entrada'] = ''; }
 	$data['time_horario_saida'] = makeSafe($_REQUEST['time_horario_saida']);
@@ -32,8 +35,8 @@ function tb_requerimento_insert(){
 		if($data['empresa_id'] == empty_lookup_value){ $data['empresa_id'] = ''; }
 	$data['contato_id'] = makeSafe($_REQUEST['contato_id']);
 		if($data['contato_id'] == empty_lookup_value){ $data['contato_id'] = ''; }
-	$data['str_gestor'] = makeSafe($_REQUEST['str_gestor']);
-		if($data['str_gestor'] == empty_lookup_value){ $data['str_gestor'] = ''; }
+	$data['recrutador_id'] = makeSafe($_REQUEST['recrutador_id']);
+		if($data['recrutador_id'] == empty_lookup_value){ $data['recrutador_id'] = ''; }
 	$data['str_telefone'] = makeSafe($_REQUEST['str_telefone']);
 		if($data['str_telefone'] == empty_lookup_value){ $data['str_telefone'] = ''; }
 	$data['str_email'] = makeSafe($_REQUEST['str_email']);
@@ -84,11 +87,6 @@ function tb_requerimento_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['str_gestor']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Gestor Imediato': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	if($data['str_telefone']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tel. do Solicitante': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -129,7 +127,7 @@ function tb_requerimento_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `tb_requerimento` set       `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `int_n_vagas`=' . (($data['int_n_vagas'] !== '' && $data['int_n_vagas'] !== NULL) ? "'{$data['int_n_vagas']}'" : 'NULL') . ', `str_reposicao`=' . (($data['str_reposicao'] !== '' && $data['str_reposicao'] !== NULL) ? "'{$data['str_reposicao']}'" : 'NULL') . ', `str_recurso`=' . (($data['str_recurso'] !== '' && $data['str_recurso'] !== NULL) ? "'{$data['str_recurso']}'" : 'NULL') . ', `time_horario_entrada`=' . (($data['time_horario_entrada'] !== '' && $data['time_horario_entrada'] !== NULL) ? "'{$data['time_horario_entrada']}'" : 'NULL') . ', `time_horario_saida`=' . (($data['time_horario_saida'] !== '' && $data['time_horario_saida'] !== NULL) ? "'{$data['time_horario_saida']}'" : 'NULL') . ', `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `contato_id`=' . (($data['contato_id'] !== '' && $data['contato_id'] !== NULL) ? "'{$data['contato_id']}'" : 'NULL') . ', `str_gestor`=' . (($data['str_gestor'] !== '' && $data['str_gestor'] !== NULL) ? "'{$data['str_gestor']}'" : 'NULL') . ', `str_telefone`=' . (($data['str_telefone'] !== '' && $data['str_telefone'] !== NULL) ? "'{$data['str_telefone']}'" : 'NULL') . ', `str_email`=' . (($data['str_email'] !== '' && $data['str_email'] !== NULL) ? "'{$data['str_email']}'" : 'NULL') . ', `float_salario`=' . (($data['float_salario'] !== '' && $data['float_salario'] !== NULL) ? "'{$data['float_salario']}'" : 'NULL') . ', `int_maquinas`=' . (($data['int_maquinas'] !== '' && $data['int_maquinas'] !== NULL) ? "'{$data['int_maquinas']}'" : 'NULL') . ', `str_beneficios`=' . (($data['str_beneficios'] !== '' && $data['str_beneficios'] !== NULL) ? "'{$data['str_beneficios']}'" : 'NULL') . ', `bool_abertura`=' . (($data['bool_abertura'] !== '' && $data['bool_abertura'] !== NULL) ? "'{$data['bool_abertura']}'" : 'NULL') . ', `dta_indicacao`=' . (($data['dta_indicacao'] !== '' && $data['dta_indicacao'] !== NULL) ? "'{$data['dta_indicacao']}'" : 'NULL') . ', `str_descricao`=' . (($data['str_descricao'] !== '' && $data['str_descricao'] !== NULL) ? "'{$data['str_descricao']}'" : 'NULL'), $o);
+	sql('insert into `tb_requerimento` set       `dta_abertura`=' . (($data['dta_abertura'] != '') ? "'{$data['dta_abertura']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `int_n_vagas`=' . (($data['int_n_vagas'] !== '' && $data['int_n_vagas'] !== NULL) ? "'{$data['int_n_vagas']}'" : 'NULL') . ', `str_reposicao`=' . (($data['str_reposicao'] !== '' && $data['str_reposicao'] !== NULL) ? "'{$data['str_reposicao']}'" : 'NULL') . ', `str_recurso`=' . (($data['str_recurso'] !== '' && $data['str_recurso'] !== NULL) ? "'{$data['str_recurso']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `time_horario_entrada`=' . (($data['time_horario_entrada'] !== '' && $data['time_horario_entrada'] !== NULL) ? "'{$data['time_horario_entrada']}'" : 'NULL') . ', `time_horario_saida`=' . (($data['time_horario_saida'] !== '' && $data['time_horario_saida'] !== NULL) ? "'{$data['time_horario_saida']}'" : 'NULL') . ', `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `contato_id`=' . (($data['contato_id'] !== '' && $data['contato_id'] !== NULL) ? "'{$data['contato_id']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_telefone`=' . (($data['str_telefone'] !== '' && $data['str_telefone'] !== NULL) ? "'{$data['str_telefone']}'" : 'NULL') . ', `str_email`=' . (($data['str_email'] !== '' && $data['str_email'] !== NULL) ? "'{$data['str_email']}'" : 'NULL') . ', `float_salario`=' . (($data['float_salario'] !== '' && $data['float_salario'] !== NULL) ? "'{$data['float_salario']}'" : 'NULL') . ', `int_maquinas`=' . (($data['int_maquinas'] !== '' && $data['int_maquinas'] !== NULL) ? "'{$data['int_maquinas']}'" : 'NULL') . ', `str_beneficios`=' . (($data['str_beneficios'] !== '' && $data['str_beneficios'] !== NULL) ? "'{$data['str_beneficios']}'" : 'NULL') . ', `bool_abertura`=' . (($data['bool_abertura'] !== '' && $data['bool_abertura'] !== NULL) ? "'{$data['bool_abertura']}'" : 'NULL') . ', `dta_indicacao`=' . (($data['dta_indicacao'] !== '' && $data['dta_indicacao'] !== NULL) ? "'{$data['dta_indicacao']}'" : 'NULL') . ', `str_descricao`=' . (($data['str_descricao'] !== '' && $data['str_descricao'] !== NULL) ? "'{$data['str_descricao']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"tb_requerimento_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -221,6 +219,7 @@ function tb_requerimento_update($selected_id){
 		return false;
 	}
 
+	$data['dta_abertura'] = parseCode('<%%editingDate%%>', false, true);
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['str_posicao'] = makeSafe($_REQUEST['str_posicao']);
@@ -246,6 +245,8 @@ function tb_requerimento_update($selected_id){
 	}
 	$data['str_recurso'] = makeSafe($_REQUEST['str_recurso']);
 		if($data['str_recurso'] == empty_lookup_value){ $data['str_recurso'] = ''; }
+	$data['str_alocacao'] = makeSafe($_REQUEST['str_alocacao']);
+		if($data['str_alocacao'] == empty_lookup_value){ $data['str_alocacao'] = ''; }
 	$data['time_horario_entrada'] = makeSafe($_REQUEST['time_horario_entrada']);
 		if($data['time_horario_entrada'] == empty_lookup_value){ $data['time_horario_entrada'] = ''; }
 	if($data['time_horario_entrada']==''){
@@ -274,13 +275,8 @@ function tb_requerimento_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['str_gestor'] = makeSafe($_REQUEST['str_gestor']);
-		if($data['str_gestor'] == empty_lookup_value){ $data['str_gestor'] = ''; }
-	if($data['str_gestor']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Gestor Imediato': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
+	$data['recrutador_id'] = makeSafe($_REQUEST['recrutador_id']);
+		if($data['recrutador_id'] == empty_lookup_value){ $data['recrutador_id'] = ''; }
 	$data['str_telefone'] = makeSafe($_REQUEST['str_telefone']);
 		if($data['str_telefone'] == empty_lookup_value){ $data['str_telefone'] = ''; }
 	if($data['str_telefone']==''){
@@ -334,7 +330,7 @@ function tb_requerimento_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `tb_requerimento` set       `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `int_n_vagas`=' . (($data['int_n_vagas'] !== '' && $data['int_n_vagas'] !== NULL) ? "'{$data['int_n_vagas']}'" : 'NULL') . ', `str_reposicao`=' . (($data['str_reposicao'] !== '' && $data['str_reposicao'] !== NULL) ? "'{$data['str_reposicao']}'" : 'NULL') . ', `str_recurso`=' . (($data['str_recurso'] !== '' && $data['str_recurso'] !== NULL) ? "'{$data['str_recurso']}'" : 'NULL') . ', `time_horario_entrada`=' . (($data['time_horario_entrada'] !== '' && $data['time_horario_entrada'] !== NULL) ? "'{$data['time_horario_entrada']}'" : 'NULL') . ', `time_horario_saida`=' . (($data['time_horario_saida'] !== '' && $data['time_horario_saida'] !== NULL) ? "'{$data['time_horario_saida']}'" : 'NULL') . ', `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `contato_id`=' . (($data['contato_id'] !== '' && $data['contato_id'] !== NULL) ? "'{$data['contato_id']}'" : 'NULL') . ', `str_gestor`=' . (($data['str_gestor'] !== '' && $data['str_gestor'] !== NULL) ? "'{$data['str_gestor']}'" : 'NULL') . ', `str_telefone`=' . (($data['str_telefone'] !== '' && $data['str_telefone'] !== NULL) ? "'{$data['str_telefone']}'" : 'NULL') . ', `str_email`=' . (($data['str_email'] !== '' && $data['str_email'] !== NULL) ? "'{$data['str_email']}'" : 'NULL') . ', `float_salario`=' . (($data['float_salario'] !== '' && $data['float_salario'] !== NULL) ? "'{$data['float_salario']}'" : 'NULL') . ', `int_maquinas`=' . (($data['int_maquinas'] !== '' && $data['int_maquinas'] !== NULL) ? "'{$data['int_maquinas']}'" : 'NULL') . ', `str_beneficios`=' . (($data['str_beneficios'] !== '' && $data['str_beneficios'] !== NULL) ? "'{$data['str_beneficios']}'" : 'NULL') . ', `bool_abertura`=' . (($data['bool_abertura'] !== '' && $data['bool_abertura'] !== NULL) ? "'{$data['bool_abertura']}'" : 'NULL') . ', `dta_indicacao`=' . (($data['dta_indicacao'] !== '' && $data['dta_indicacao'] !== NULL) ? "'{$data['dta_indicacao']}'" : 'NULL') . ', `str_descricao`=' . (($data['str_descricao'] !== '' && $data['str_descricao'] !== NULL) ? "'{$data['str_descricao']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `tb_requerimento` set       `dta_abertura`=' . "'{$data['dta_abertura']}'" . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `int_n_vagas`=' . (($data['int_n_vagas'] !== '' && $data['int_n_vagas'] !== NULL) ? "'{$data['int_n_vagas']}'" : 'NULL') . ', `str_reposicao`=' . (($data['str_reposicao'] !== '' && $data['str_reposicao'] !== NULL) ? "'{$data['str_reposicao']}'" : 'NULL') . ', `str_recurso`=' . (($data['str_recurso'] !== '' && $data['str_recurso'] !== NULL) ? "'{$data['str_recurso']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `time_horario_entrada`=' . (($data['time_horario_entrada'] !== '' && $data['time_horario_entrada'] !== NULL) ? "'{$data['time_horario_entrada']}'" : 'NULL') . ', `time_horario_saida`=' . (($data['time_horario_saida'] !== '' && $data['time_horario_saida'] !== NULL) ? "'{$data['time_horario_saida']}'" : 'NULL') . ', `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `contato_id`=' . (($data['contato_id'] !== '' && $data['contato_id'] !== NULL) ? "'{$data['contato_id']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_telefone`=' . (($data['str_telefone'] !== '' && $data['str_telefone'] !== NULL) ? "'{$data['str_telefone']}'" : 'NULL') . ', `str_email`=' . (($data['str_email'] !== '' && $data['str_email'] !== NULL) ? "'{$data['str_email']}'" : 'NULL') . ', `float_salario`=' . (($data['float_salario'] !== '' && $data['float_salario'] !== NULL) ? "'{$data['float_salario']}'" : 'NULL') . ', `int_maquinas`=' . (($data['int_maquinas'] !== '' && $data['int_maquinas'] !== NULL) ? "'{$data['int_maquinas']}'" : 'NULL') . ', `str_beneficios`=' . (($data['str_beneficios'] !== '' && $data['str_beneficios'] !== NULL) ? "'{$data['str_beneficios']}'" : 'NULL') . ', `bool_abertura`=' . (($data['bool_abertura'] !== '' && $data['bool_abertura'] !== NULL) ? "'{$data['bool_abertura']}'" : 'NULL') . ', `dta_indicacao`=' . (($data['dta_indicacao'] !== '' && $data['dta_indicacao'] !== NULL) ? "'{$data['dta_indicacao']}'" : 'NULL') . ', `str_descricao`=' . (($data['str_descricao'] !== '' && $data['str_descricao'] !== NULL) ? "'{$data['str_descricao']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="tb_requerimento_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -376,10 +372,13 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$dvprint = true;
 	}
 
+	$filterer_str_alocacao = thisOr(undo_magic_quotes($_REQUEST['filterer_str_alocacao']), '');
 	$filterer_empresa_id = thisOr(undo_magic_quotes($_REQUEST['filterer_empresa_id']), '');
 	$filterer_contato_id = thisOr(undo_magic_quotes($_REQUEST['filterer_contato_id']), '');
+	$filterer_recrutador_id = thisOr(undo_magic_quotes($_REQUEST['filterer_recrutador_id']), '');
 
 	// populate filterers, starting from children to grand-parents
+	if($filterer_str_alocacao && !$filterer_empresa_id) $filterer_empresa_id = sqlValue("select int_empresa from tb_alocacao where id='" . makeSafe($filterer_str_alocacao) . "'");
 	if($filterer_contato_id && !$filterer_empresa_id) $filterer_empresa_id = sqlValue("select empresa_id from tb_contato where id='" . makeSafe($filterer_contato_id) . "'");
 
 	// unique random identifier
@@ -389,7 +388,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$combo_dta_abertura->DateFormat = "dmy";
 	$combo_dta_abertura->MinYear = 1900;
 	$combo_dta_abertura->MaxYear = 2100;
-	$combo_dta_abertura->DefaultDate = parseMySQLDate('', '');
+	$combo_dta_abertura->DefaultDate = parseMySQLDate('<%%editingDate%%>', '<%%editingDate%%>');
 	$combo_dta_abertura->MonthNames = $Translation['month names'];
 	$combo_dta_abertura->NamePrefix = 'dta_abertura';
 	// combobox: str_status
@@ -423,10 +422,14 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}
 	$combo_str_reposicao->SelectName = 'str_reposicao';
 	$combo_str_reposicao->AllowNull = false;
+	// combobox: str_alocacao, filterable by: empresa_id
+	$combo_str_alocacao = new DataCombo;
 	// combobox: empresa_id
 	$combo_empresa_id = new DataCombo;
 	// combobox: contato_id, filterable by: empresa_id
 	$combo_contato_id = new DataCombo;
+	// combobox: recrutador_id
+	$combo_recrutador_id = new DataCombo;
 	// combobox: bool_abertura
 	$combo_bool_abertura = new Combo;
 	$combo_bool_abertura->ListType = 2;
@@ -484,23 +487,31 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$combo_dta_abertura->DefaultDate = $row['dta_abertura'];
 		$combo_str_status->SelectedData = $row['str_status'];
 		$combo_str_reposicao->SelectedData = $row['str_reposicao'];
+		$combo_str_alocacao->SelectedData = $row['str_alocacao'];
 		$combo_empresa_id->SelectedData = $row['empresa_id'];
 		$combo_contato_id->SelectedData = $row['contato_id'];
+		$combo_recrutador_id->SelectedData = $row['recrutador_id'];
 		$combo_bool_abertura->SelectedData = $row['bool_abertura'];
 		$combo_dta_indicacao->DefaultDate = $row['dta_indicacao'];
 	}else{
 		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='3' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Pendente");
 		$combo_str_reposicao->SelectedText = ( $_REQUEST['FilterField'][1]=='6' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_str_alocacao->SelectedData = $filterer_str_alocacao;
 		$combo_empresa_id->SelectedData = $filterer_empresa_id;
 		$combo_contato_id->SelectedData = $filterer_contato_id;
-		$combo_bool_abertura->SelectedText = ( $_REQUEST['FilterField'][1]=='18' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Abertura imediata");
+		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
+		$combo_bool_abertura->SelectedText = ( $_REQUEST['FilterField'][1]=='19' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Abertura imediata");
 	}
 	$combo_str_status->Render();
 	$combo_str_reposicao->Render();
+	$combo_str_alocacao->HTML = '<span id="str_alocacao-container' . $rnd1 . '"></span><input type="hidden" name="str_alocacao" id="str_alocacao' . $rnd1 . '" value="' . html_attr($combo_str_alocacao->SelectedData) . '">';
+	$combo_str_alocacao->MatchText = '<span id="str_alocacao-container-readonly' . $rnd1 . '"></span><input type="hidden" name="str_alocacao" id="str_alocacao' . $rnd1 . '" value="' . html_attr($combo_str_alocacao->SelectedData) . '">';
 	$combo_empresa_id->HTML = '<span id="empresa_id-container' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
 	$combo_empresa_id->MatchText = '<span id="empresa_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
 	$combo_contato_id->HTML = '<span id="contato_id-container' . $rnd1 . '"></span><input type="hidden" name="contato_id" id="contato_id' . $rnd1 . '" value="' . html_attr($combo_contato_id->SelectedData) . '">';
 	$combo_contato_id->MatchText = '<span id="contato_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="contato_id" id="contato_id' . $rnd1 . '" value="' . html_attr($combo_contato_id->SelectedData) . '">';
+	$combo_recrutador_id->HTML = '<span id="recrutador_id-container' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
+	$combo_recrutador_id->MatchText = '<span id="recrutador_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
 	$combo_bool_abertura->Render();
 
 	ob_start();
@@ -508,15 +519,96 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 
 	<script>
 		// initial lookup values
+		AppGini.current_str_alocacao__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['str_alocacao'] : $filterer_str_alocacao); ?>"};
 		AppGini.current_empresa_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['empresa_id'] : $filterer_empresa_id); ?>"};
 		AppGini.current_contato_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['contato_id'] : $filterer_contato_id); ?>"};
+		AppGini.current_recrutador_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['recrutador_id'] : $filterer_recrutador_id); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
+				<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(str_alocacao_reload__RAND__) == \'function\') str_alocacao_reload__RAND__(AppGini.current_empresa_id__RAND__.value);' : ''); ?>
 				if(typeof(empresa_id_reload__RAND__) == 'function') empresa_id_reload__RAND__();
 				<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(contato_id_reload__RAND__) == \'function\') contato_id_reload__RAND__(AppGini.current_empresa_id__RAND__.value);' : ''); ?>
+				if(typeof(recrutador_id_reload__RAND__) == 'function') recrutador_id_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
+		function str_alocacao_reload__RAND__(filterer_empresa_id){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#str_alocacao-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { filterer_empresa_id: filterer_empresa_id, id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_requerimento', f: 'str_alocacao' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="str_alocacao"]').val(resp.results[0].id);
+							$j('[id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
+
+
+							if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { filterer_empresa_id: filterer_empresa_id, s: term, p: page, t: 'tb_requerimento', f: 'str_alocacao' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_str_alocacao__RAND__.value = e.added.id;
+				AppGini.current_str_alocacao__RAND__.text = e.added.text;
+				$j('[name="str_alocacao"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
+
+
+				if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
+			});
+
+			if(!$j("#str_alocacao-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_requerimento', f: 'str_alocacao' },
+					success: function(resp){
+						$j('[name="str_alocacao"]').val(resp.results[0].id);
+						$j('[id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
+
+						if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_requerimento', f: 'str_alocacao' },
+				success: function(resp){
+					$j('[id=str_alocacao-container__RAND__], [id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
+
+					if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 		function empresa_id_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
@@ -536,6 +628,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 							$j('[id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
 							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
+						if(typeof(str_alocacao_reload__RAND__) == 'function') str_alocacao_reload__RAND__(AppGini.current_empresa_id__RAND__.value);
 						if(typeof(contato_id_reload__RAND__) == 'function') contato_id_reload__RAND__(AppGini.current_empresa_id__RAND__.value);
 
 							if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
@@ -560,6 +653,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 				$j('[name="empresa_id"]').val(e.added.id);
 				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
+						if(typeof(str_alocacao_reload__RAND__) == 'function') str_alocacao_reload__RAND__(AppGini.current_empresa_id__RAND__.value);
 						if(typeof(contato_id_reload__RAND__) == 'function') contato_id_reload__RAND__(AppGini.current_empresa_id__RAND__.value);
 
 				if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
@@ -673,6 +767,83 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		<?php } ?>
 
 		}
+		function recrutador_id_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			$j("#recrutador_id-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_recrutador_id__RAND__.value, t: 'tb_requerimento', f: 'recrutador_id' },
+						success: function(resp){
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="recrutador_id"]').val(resp.results[0].id);
+							$j('[id=recrutador_id-container-readonly__RAND__]').html('<span id="recrutador_id-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_recrutador_view_parent]').hide(); }else{ $j('.btn[id=tb_recrutador_view_parent]').show(); }
+
+
+							if(typeof(recrutador_id_update_autofills__RAND__) == 'function') recrutador_id_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'tb_requerimento', f: 'recrutador_id' }; },
+					results: function(resp, page){ /* */ return resp; }
+				},
+				escapeMarkup: function(str){ /* */ return str; }
+			}).on('change', function(e){
+				AppGini.current_recrutador_id__RAND__.value = e.added.id;
+				AppGini.current_recrutador_id__RAND__.text = e.added.text;
+				$j('[name="recrutador_id"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_recrutador_view_parent]').hide(); }else{ $j('.btn[id=tb_recrutador_view_parent]').show(); }
+
+
+				if(typeof(recrutador_id_update_autofills__RAND__) == 'function') recrutador_id_update_autofills__RAND__();
+			});
+
+			if(!$j("#recrutador_id-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_recrutador_id__RAND__.value, t: 'tb_requerimento', f: 'recrutador_id' },
+					success: function(resp){
+						$j('[name="recrutador_id"]').val(resp.results[0].id);
+						$j('[id=recrutador_id-container-readonly__RAND__]').html('<span id="recrutador_id-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_recrutador_view_parent]').hide(); }else{ $j('.btn[id=tb_recrutador_view_parent]').show(); }
+
+						if(typeof(recrutador_id_update_autofills__RAND__) == 'function') recrutador_id_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_recrutador_id__RAND__.value, t: 'tb_requerimento', f: 'recrutador_id' },
+				success: function(resp){
+					$j('[id=recrutador_id-container__RAND__], [id=recrutador_id-container-readonly__RAND__]').html('<span id="recrutador_id-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_recrutador_view_parent]').hide(); }else{ $j('.btn[id=tb_recrutador_view_parent]').show(); }
+
+					if(typeof(recrutador_id_update_autofills__RAND__) == 'function') recrutador_id_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -692,7 +863,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}
 
 	// process form title
-	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Tb requerimento details', $templateCode);
+	$templateCode = str_replace('<%%DETAIL_VIEW_TITLE%%>', 'Detalhes do Requerimento', $templateCode);
 	$templateCode = str_replace('<%%RND1%%>', $rnd1, $templateCode);
 	$templateCode = str_replace('<%%EMBEDDED%%>', ($_REQUEST['Embedded'] ? 'Embedded=1' : ''), $templateCode);
 	// process buttons
@@ -736,13 +907,16 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$jsReadOnly .= "\tjQuery('#int_n_vagas').replaceWith('<div class=\"form-control-static\" id=\"int_n_vagas\">' + (jQuery('#int_n_vagas').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#str_reposicao').replaceWith('<div class=\"form-control-static\" id=\"str_reposicao\">' + (jQuery('#str_reposicao').val() || '') + '</div>'); jQuery('#str_reposicao-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#str_recurso').replaceWith('<div class=\"form-control-static\" id=\"str_recurso\">' + (jQuery('#str_recurso').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#str_alocacao').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#str_alocacao_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#time_horario_entrada').replaceWith('<div class=\"form-control-static\" id=\"time_horario_entrada\">' + (jQuery('#time_horario_entrada').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#time_horario_saida').replaceWith('<div class=\"form-control-static\" id=\"time_horario_saida\">' + (jQuery('#time_horario_saida').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#empresa_id').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#empresa_id_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#contato_id').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#contato_id_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#str_gestor').replaceWith('<div class=\"form-control-static\" id=\"str_gestor\">' + (jQuery('#str_gestor').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#recrutador_id').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#recrutador_id_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#str_telefone').replaceWith('<div class=\"form-control-static\" id=\"str_telefone\">' + (jQuery('#str_telefone').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#str_email').replaceWith('<div class=\"form-control-static\" id=\"str_email\">' + (jQuery('#str_email').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#float_salario').replaceWith('<div class=\"form-control-static\" id=\"float_salario\">' + (jQuery('#float_salario').val() || '') + '</div>');\n";
@@ -769,19 +943,25 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$templateCode = str_replace('<%%COMBOTEXT(str_status)%%>', $combo_str_status->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(str_reposicao)%%>', $combo_str_reposicao->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(str_reposicao)%%>', $combo_str_reposicao->SelectedData, $templateCode);
+	$templateCode = str_replace('<%%COMBO(str_alocacao)%%>', $combo_str_alocacao->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(str_alocacao)%%>', $combo_str_alocacao->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(str_alocacao)%%>', urlencode($combo_str_alocacao->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(empresa_id)%%>', $combo_empresa_id->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(empresa_id)%%>', $combo_empresa_id->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(empresa_id)%%>', urlencode($combo_empresa_id->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(contato_id)%%>', $combo_contato_id->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(contato_id)%%>', $combo_contato_id->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(contato_id)%%>', urlencode($combo_contato_id->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(recrutador_id)%%>', $combo_recrutador_id->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(recrutador_id)%%>', $combo_recrutador_id->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(recrutador_id)%%>', urlencode($combo_recrutador_id->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(bool_abertura)%%>', $combo_bool_abertura->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(bool_abertura)%%>', $combo_bool_abertura->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(dta_indicacao)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_indicacao->GetHTML(true) . '</div>' : $combo_dta_indicacao->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(dta_indicacao)%%>', $combo_dta_indicacao->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'empresa_id' => array('tb_empresa', 'Empresa/Cliente Solicitante'), 'contato_id' => array('tb_contato', 'Nome do Contato'));
+	$lookup_fields = array(  'str_alocacao' => array('tb_alocacao', 'Aloca&#231;&#227;o'), 'empresa_id' => array('tb_empresa', 'Empresa/Cliente Solicitante'), 'contato_id' => array('tb_contato', 'Nome do Contato'), 'recrutador_id' => array('tb_recrutador', 'Gestor Imediato'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -804,11 +984,12 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$templateCode = str_replace('<%%UPLOADFILE(int_n_vagas)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_reposicao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_recurso)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(str_alocacao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(time_horario_entrada)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(time_horario_saida)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(empresa_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(contato_id)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(str_gestor)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(recrutador_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_telefone)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_email)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(float_salario)%%>', '', $templateCode);
@@ -840,6 +1021,9 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_recurso)%%>', safe_html($urow['str_recurso']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_recurso)%%>', html_attr($row['str_recurso']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_recurso)%%>', urlencode($urow['str_recurso']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_alocacao)%%>', safe_html($urow['str_alocacao']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_alocacao)%%>', html_attr($row['str_alocacao']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_alocacao)%%>', urlencode($urow['str_alocacao']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(time_horario_entrada)%%>', safe_html($urow['time_horario_entrada']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(time_horario_entrada)%%>', html_attr($row['time_horario_entrada']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(time_horario_entrada)%%>', urlencode($urow['time_horario_entrada']), $templateCode);
@@ -852,9 +1036,9 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(contato_id)%%>', safe_html($urow['contato_id']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(contato_id)%%>', html_attr($row['contato_id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(contato_id)%%>', urlencode($urow['contato_id']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_gestor)%%>', safe_html($urow['str_gestor']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_gestor)%%>', html_attr($row['str_gestor']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_gestor)%%>', urlencode($urow['str_gestor']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(recrutador_id)%%>', safe_html($urow['recrutador_id']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(recrutador_id)%%>', html_attr($row['recrutador_id']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode($urow['recrutador_id']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_telefone)%%>', safe_html($urow['str_telefone']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_telefone)%%>', html_attr($row['str_telefone']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_telefone)%%>', urlencode($urow['str_telefone']), $templateCode);
@@ -887,8 +1071,8 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '<%%editingDate%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode('<%%editingDate%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_status)%%>', 'Pendente', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode('Pendente'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', '', $templateCode);
@@ -899,6 +1083,8 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$templateCode = str_replace('<%%URLVALUE(str_reposicao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_recurso)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_recurso)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_alocacao)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_alocacao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(time_horario_entrada)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(time_horario_entrada)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(time_horario_saida)%%>', '', $templateCode);
@@ -907,8 +1093,8 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(contato_id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(contato_id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_gestor)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_gestor)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(recrutador_id)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_telefone)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_telefone)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_email)%%>', '', $templateCode);

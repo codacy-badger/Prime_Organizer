@@ -235,7 +235,7 @@
 				'tb_requerimento' => array(
 					'Caption' => 'Requerimento de Vagas',
 					'Description' => 'Requerimento de vagas por parceiros',
-					'tableIcon' => 'table.gif',
+					'tableIcon' => 'resources/table_icons/group_add.png',
 					'group' => $tg[0],
 					'homepageShowCount' => 1
 				)

@@ -272,7 +272,7 @@
         // Senão, cria a tag/relacionamento
         } else{
             $sql = "INSERT INTO lead_tags (tag) VALUES('{$tag}')";
-            $query = $conn -> query($sql);
+            $conn -> query($sql);
             
             $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
             $query = $conn -> query($sql);

@@ -24,8 +24,6 @@ function tb_vaga_insert(){
 		if($data['str_posicao'] == empty_lookup_value){ $data['str_posicao'] = ''; }
 	$data['dta_abertura'] = intval($_REQUEST['dta_aberturaYear']) . '-' . intval($_REQUEST['dta_aberturaMonth']) . '-' . intval($_REQUEST['dta_aberturaDay']);
 	$data['dta_abertura'] = parseMySQLDate($data['dta_abertura'], '');
-	$data['qtd_vagas'] = makeSafe($_REQUEST['qtd_vagas']);
-		if($data['qtd_vagas'] == empty_lookup_value){ $data['qtd_vagas'] = ''; }
 	$data['str_prioridade'] = makeSafe($_REQUEST['str_prioridade']);
 		if($data['str_prioridade'] == empty_lookup_value){ $data['str_prioridade'] = ''; }
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
@@ -60,11 +58,6 @@ function tb_vaga_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['qtd_vagas']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Qtd. de vagas em aberto': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	if($data['str_prioridade']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Prioridade': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -83,7 +76,7 @@ function tb_vaga_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `tb_vaga` set       `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `dta_abertura`=' . (($data['dta_abertura'] !== '' && $data['dta_abertura'] !== NULL) ? "'{$data['dta_abertura']}'" : 'NULL') . ', `qtd_vagas`=' . (($data['qtd_vagas'] !== '' && $data['qtd_vagas'] !== NULL) ? "'{$data['qtd_vagas']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `dta_fechamento`=' . (($data['dta_fechamento'] !== '' && $data['dta_fechamento'] !== NULL) ? "'{$data['dta_fechamento']}'" : 'NULL') . ', `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL'), $o);
+	sql('insert into `tb_vaga` set       `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `dta_abertura`=' . (($data['dta_abertura'] !== '' && $data['dta_abertura'] !== NULL) ? "'{$data['dta_abertura']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `dta_fechamento`=' . (($data['dta_fechamento'] !== '' && $data['dta_fechamento'] !== NULL) ? "'{$data['dta_fechamento']}'" : 'NULL') . ', `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"tb_vaga_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -210,13 +203,6 @@ function tb_vaga_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['qtd_vagas'] = makeSafe($_REQUEST['qtd_vagas']);
-		if($data['qtd_vagas'] == empty_lookup_value){ $data['qtd_vagas'] = ''; }
-	if($data['qtd_vagas']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Qtd. de vagas em aberto': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['str_prioridade'] = makeSafe($_REQUEST['str_prioridade']);
 		if($data['str_prioridade'] == empty_lookup_value){ $data['str_prioridade'] = ''; }
 	if($data['str_prioridade']==''){
@@ -250,7 +236,7 @@ function tb_vaga_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `tb_vaga` set       `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `dta_abertura`=' . (($data['dta_abertura'] !== '' && $data['dta_abertura'] !== NULL) ? "'{$data['dta_abertura']}'" : 'NULL') . ', `qtd_vagas`=' . (($data['qtd_vagas'] !== '' && $data['qtd_vagas'] !== NULL) ? "'{$data['qtd_vagas']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `dta_fechamento`=' . (($data['dta_fechamento'] !== '' && $data['dta_fechamento'] !== NULL) ? "'{$data['dta_fechamento']}'" : 'NULL') . ', `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `tb_vaga` set       `empresa_id`=' . (($data['empresa_id'] !== '' && $data['empresa_id'] !== NULL) ? "'{$data['empresa_id']}'" : 'NULL') . ', `str_alocacao`=' . (($data['str_alocacao'] !== '' && $data['str_alocacao'] !== NULL) ? "'{$data['str_alocacao']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_posicao`=' . (($data['str_posicao'] !== '' && $data['str_posicao'] !== NULL) ? "'{$data['str_posicao']}'" : 'NULL') . ', `dta_abertura`=' . (($data['dta_abertura'] !== '' && $data['dta_abertura'] !== NULL) ? "'{$data['dta_abertura']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `dta_fechamento`=' . (($data['dta_fechamento'] !== '' && $data['dta_fechamento'] !== NULL) ? "'{$data['dta_fechamento']}'" : 'NULL') . ', `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="tb_vaga_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -419,8 +405,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$combo_empresa_id->SelectedData = $filterer_empresa_id;
 		$combo_str_alocacao->SelectedData = $filterer_str_alocacao;
 		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
-		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='9' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 	}
 	$combo_requerimento_id->HTML = '<span id="requerimento_id-container' . $rnd1 . '"></span><input type="hidden" name="requerimento_id" id="requerimento_id' . $rnd1 . '" value="' . html_attr($combo_requerimento_id->SelectedData) . '">';
 	$combo_requerimento_id->MatchText = '<span id="requerimento_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="requerimento_id" id="requerimento_id' . $rnd1 . '" value="' . html_attr($combo_requerimento_id->SelectedData) . '">';
@@ -828,7 +814,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$jsReadOnly .= "\tjQuery('#str_posicao').replaceWith('<div class=\"form-control-static\" id=\"str_posicao\">' + (jQuery('#str_posicao').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#dta_abertura').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#dta_aberturaDay, #dta_aberturaMonth, #dta_aberturaYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#qtd_vagas').replaceWith('<div class=\"form-control-static\" id=\"qtd_vagas\">' + (jQuery('#qtd_vagas').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#str_prioridade').replaceWith('<div class=\"form-control-static\" id=\"str_prioridade\">' + (jQuery('#str_prioridade').val() || '') + '</div>'); jQuery('#str_prioridade-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('input[name=str_status]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=str_status]:checked').next().text() + '</div>')\n";
 		$jsReadOnly .= "\tjQuery('#dta_fechamento').prop('readonly', true);\n";
@@ -890,15 +875,14 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}
 
 	// process images
+	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(requerimento_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(int_vaga_numero)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(empresa_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_alocacao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(recrutador_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_posicao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_abertura)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(qtd_vagas)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_prioridade)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_status)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_fechamento)%%>', '', $templateCode);
@@ -909,13 +893,13 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 
 	// process values
 	if($selected_id){
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', html_attr($row['id']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(requerimento_id)%%>', safe_html($urow['requerimento_id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(requerimento_id)%%>', urlencode($urow['requerimento_id']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(int_vaga_numero)%%>', safe_html($urow['int_vaga_numero']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(int_vaga_numero)%%>', urlencode($urow['int_vaga_numero']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', html_attr($row['id']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(empresa_id)%%>', safe_html($urow['empresa_id']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(empresa_id)%%>', html_attr($row['empresa_id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode($urow['empresa_id']), $templateCode);
@@ -930,9 +914,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode($urow['str_posicao']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_abertura']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_abertura'])))), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(qtd_vagas)%%>', safe_html($urow['qtd_vagas']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(qtd_vagas)%%>', html_attr($row['qtd_vagas']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(qtd_vagas)%%>', urlencode($urow['qtd_vagas']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_prioridade)%%>', safe_html($urow['str_prioridade']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_prioridade)%%>', html_attr($row['str_prioridade']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_prioridade)%%>', urlencode($urow['str_prioridade']), $templateCode);
@@ -952,12 +933,12 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_contratado_nome)%%>', html_attr($row['str_contratado_nome']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_contratado_nome)%%>', urlencode($urow['str_contratado_nome']), $templateCode);
 	}else{
-		$templateCode = str_replace('<%%VALUE(requerimento_id)%%>', ( $_REQUEST['FilterField'][1]=='1' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_requerimento_id->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(requerimento_id)%%>', urlencode( $_REQUEST['FilterField'][1]=='1' && $_REQUEST['FilterOperator'][1]=='<=>' ? $combo_requerimento_id->SelectedData : ''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(int_vaga_numero)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(int_vaga_numero)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(requerimento_id)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(requerimento_id)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(int_vaga_numero)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(int_vaga_numero)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(empresa_id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_alocacao)%%>', '', $templateCode);
@@ -968,8 +949,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(qtd_vagas)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(qtd_vagas)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_prioridade)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_prioridade)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_status)%%>', '', $templateCode);
@@ -1023,7 +1002,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode .= $lookups;
 
 	// handle enforced parent values for read-only lookup fields
-	if( $_REQUEST['FilterField'][1]=='1' && $_REQUEST['FilterOperator'][1]=='<=>'){
+	if( $_REQUEST['FilterField'][1]=='2' && $_REQUEST['FilterOperator'][1]=='<=>'){
 		$templateCode.="\n<input type=hidden name=requerimento_id value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
 	}
 

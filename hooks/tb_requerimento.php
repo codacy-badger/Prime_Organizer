@@ -180,7 +180,44 @@
 	*/
 
 	function tb_requerimento_after_insert($data, $memberInfo, &$args){
+        // Checa se o status do Requerimento é aprovado
+            // Se sim, inclui as vagas na tabela Vaga
+        $status = $data['str_status'];
+        
+        if($status == "Aprovado"){
+        
+            $requerimento = $data['selectedID'];
+            
+            // Quantidade de Vagas // ID da vaga
+            $quantidade = $data['int_n_vagas'];
+            // Data de abertura da Vaga
+            $data_abertura = $data['dta_abertura'];
+            
+            $posicao = $data['str_posicao'];
+            $entrada = $data['time_horario_entrada'];
+            $saida = $data['time_horario_saida'];
+            $empresa = $data['empresa_id'];
+            $alocacao = $data['alocacao_id'];
 
+            $recrutador = $data['recrutador_id'];
+
+            $contato = $data['contato_id'];
+
+            $salario = $data['float_salario'];
+            $beneficios = $data['str_beneficios'];
+
+            $abertura = $data['bool_abertura'];
+
+            $indicacao = $data['data_indicacao'];
+
+            $descricao = $data['str_descricao'];
+
+            for($i = 1; $i <= $quantidade; $i++){
+                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, str_alocacao, str_posicao, dta_abertura, recrutador_id, empresa_id, str_status, dta_previsao_fechamento) VALUES ()";
+                $query = sql($sql, $eo);
+            }
+        }
+        
 		return TRUE;
 	}
 

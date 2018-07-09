@@ -15,9 +15,15 @@
 <div class="panel-body">
 	<fieldset class="form-horizontal">
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">ID</label>
+			<label class="col-xs-3 control-label">Requerimento</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(id)%%></div>
+				<div class="form-control-static"><span id="requerimento_id-readonly<%%RND1%%>"><%%COMBOTEXT(requerimento_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Vaga</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(int_vaga_numero)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -48,12 +54,6 @@
 			<label class="col-xs-3 control-label">Data de abertura</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%COMBOTEXT(dta_abertura)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Qtd. de vagas em aberto</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(qtd_vagas)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">

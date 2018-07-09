@@ -42,8 +42,8 @@
         require('mautic-conn.php');
         
         // Insere o contato como lead no Mautic
-        $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
-        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
+        $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
+        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}', '{$hora}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
 
         if($conn -> query($sql)){
             echo 'Insert Lead OK<br/>';
@@ -55,17 +55,13 @@
 
         // Insere o relacionamento do Organizer como uma tag no Mautic
         $sql = "INSERT INTO `lead_tags_xref` (id, tag)
-        VALUES ('{$lead_id}','{$relacionamento}')";
+        VALUES ('{$lead_id}','{$relacionamento}');";
 
-        if($conn -> query($sql)){
-            echo 'Insert Tag OK<br/>';            
-        }
-        
         // Faz o link do contato com uma empresa no Mautic para que o mesmo seja exibido
-        $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary)
-        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1)";
+        $sql .= "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary, manually_removed, manually_added)
+        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1, 0, 0);";
         
-        if($conn -> query($sql)){
+        if($conn -> multi_query($sql)){
             echo 'Insert Lead in Company OK<br/>';            
         }
     }

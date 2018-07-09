@@ -217,8 +217,8 @@
         require('mautic-conn.php');
         
         // Insere o contato como lead no Mautic
-        $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
-        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
+        $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
+        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}', '{$hora}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
 
         $conn -> query($sql);
         
@@ -228,15 +228,13 @@
 
         // Insere o relacionamento do Organizer como uma tag no Mautic
         $sql = "INSERT INTO `lead_tags_xref` (lead_id, tag_id)
-        VALUES ('{$lead_id}','{$relacionamento}')";
+        VALUES ('{$lead_id}','{$relacionamento}');";
 
-        $conn -> query($sql);
-        
         // Faz o link do contato com uma empresa no Mautic para que o mesmo seja exibido
-        $sql = "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary)
-        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1)";
+        $sql .= "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary)
+        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1);";
         
-        $conn -> query($sql);
+        $conn -> multi_query($sql);
         
 
 		return TRUE;
@@ -295,30 +293,27 @@
         // Inicio da Query
         require 'mautic-conn.php';
 
-        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$cargo}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$lead_id}'";
-        
-        $conn->query($sql);
+        $sql = "UPDATE leads SET firstname = '{$nome}', lastname = '{$sobrenome}', company = '{$empresa}', position = '{$cargo}', email = '{$email}', phone = '{$tel1}', mobile = '{$tel2}', city = '{$cidade}', state = '{$estado}' WHERE id = '{$lead_id}';";
         
         // Revisa se o contato trocou de empresa e atualiza no Mautic        
         if($empresa_old != $empresa){
             $nova_empresa = get_company_id_mautic($empresa);
             
-            $sql = "UPDATE companies_leads
+            $sql .= "UPDATE companies_leads
             SET company_id = '{$nova_empresa}'
-            WHERE lead_id = '{$lead_id}'";
-            
-            $conn -> query($sql);
+            WHERE lead_id = '{$lead_id}';";
         }
         
         // Revisa se o contato trocou de relacionamento e atualiza no Mautic        
         if($relacionamento_old != $relacionamento){
             
-            $sql = "UPDATE lead_tags_xref
+            $sql .= "UPDATE lead_tags_xref
             SET tag_id = '{$relacionamento}'
-            WHERE lead_id = '{$lead_id}'";
+            WHERE lead_id = '{$lead_id}';";
             
-            $conn -> query($sql);
         }
+        
+        $conn -> multi_query($sql);
         
 		return TRUE;
 	}
@@ -381,18 +376,16 @@
             require('mautic-conn.php');    
 
             // Deleta o registro do contato
-            $sql = "DELETE FROM leads WHERE id = '{$lead_id}'";
-            $conn->query($sql);
+            $sql = "DELETE FROM leads WHERE id = '{$lead_id}';";
             
             // Deleta o registro de relacionamento do contato
-            $sql = "DELETE FROM lead_tags_xref WHERE lead_id = '{$lead_id}'";
-            $conn->query($sql);
+            $sql .= "DELETE FROM lead_tags_xref WHERE lead_id = '{$lead_id}';";
 
             // Retira o funcionário da tabela que liga Contato-Empresa
             $company_id = get_company_id_mautic($empresa);
+            $sql .= "DELETE FROM `companies_leads` WHERE company_id = '{$company_id}' AND lead_id = '{$lead_id}';";
             
-            $sql = "DELETE FROM `companies_leads` WHERE company_id = '{$company_id}' AND lead_id = '{$lead_id}'";
-            $conn -> query($sql);
+            $conn -> multi_query($sql);
         }
 		return TRUE;
 	}

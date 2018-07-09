@@ -180,23 +180,15 @@
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
         // Funções para a integração Organizer-Mautic
-        
-        /*
-        $sql = "SELECT COUNT(*) AS _num FROM test; ";
-        $sql.= "INSERT INTO test(id) VALUES (1); ";
-        $sql.= "SELECT COUNT(*) AS _num FROM test; ";
-
-        if (!$mysqli->multi_query($sql)) {
-        */
         require 'organizer-func.php';
         
         // Captura dos dados do Organizer
         $nome = retira_caracter_especial($data['str_primeiro_nome']);
         $sobrenome = retira_caracter_especial($data['str_sobrenome']);
         
-        $empresa = get_empresa_nome_organizer($data['empresa_id']);
-        $empresa = retira_caracter_especial($empresa);
-        $empresa = check_company_existe_mautic($empresa);
+        $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa_nome = retira_caracter_especial($empresa_org);
+        $empresa = check_company_existe_mautic($empresa_nome);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
         $relacionamento = check_tag_mautic($data['tipo_id']);
@@ -218,7 +210,7 @@
         
         // Insere o contato como lead no Mautic
         $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
-        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}', '{$hora}','gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
+        VALUES (1,1,'{$hora}',1,'admin admin','{$hora}',1,'admin admin',0,'{$vazio}','{$vazio}', '{$hora}' ,'gravatar','{$nome}','{$sobrenome}','{$empresa}','{$cargo}', '{$email}', '{$tel1}','{$tel2}','{$cidade}', '{$estado}','Brazil')";
 
         $conn -> query($sql);
         
@@ -227,12 +219,12 @@
         $company_id = get_company_id_mautic($empresa);
 
         // Insere o relacionamento do Organizer como uma tag no Mautic
-        $sql = "INSERT INTO `lead_tags_xref` (lead_id, tag_id)
+        $sql = "INSERT INTO lead_tags_xref (lead_id, tag_id)
         VALUES ('{$lead_id}','{$relacionamento}');";
 
         // Faz o link do contato com uma empresa no Mautic para que o mesmo seja exibido
-        $sql .= "INSERT INTO `companies_leads` (company_id, lead_id, date_added, is_primary)
-        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1);";
+        $sql .= "INSERT INTO companies_leads (company_id, lead_id, date_added, is_primary, manually_removed, manually_added)
+        VALUES ('{$company_id}','{$lead_id}', '{$hora}', 1, 0, 0);";
         
         $conn -> multi_query($sql);
         
@@ -276,9 +268,9 @@
         $nome = retira_caracter_especial($data['str_primeiro_nome']);
         $sobrenome = retira_caracter_especial($data['str_sobrenome']);
         
-        $empresa = get_empresa_nome_organizer($data['empresa_id']);
-        $empresa = retira_caracter_especial($empresa);
-        $empresa = check_company_existe_mautic($empresa);
+        $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa_nome = retira_caracter_especial($empresa_org);
+        $empresa = check_company_existe_mautic($empresa_nome);
         
         $cargo = retira_caracter_especial($data['str_nivel']);
         $relacionamento = check_tag_mautic($data['tipo_id']);
@@ -302,6 +294,7 @@
             $sql .= "UPDATE companies_leads
             SET company_id = '{$nova_empresa}'
             WHERE lead_id = '{$lead_id}';";
+            
         }
         
         // Revisa se o contato trocou de relacionamento e atualiza no Mautic        
@@ -309,7 +302,7 @@
             
             $sql .= "UPDATE lead_tags_xref
             SET tag_id = '{$relacionamento}'
-            WHERE lead_id = '{$lead_id}';";
+            WHERE lead_id = '{$lead_id}'";
             
         }
         

@@ -43,7 +43,7 @@
         if($res = $query -> fetch_array(MYSQLI_BOTH)){
             $conn -> close();
             
-            return $res["companyname"];
+            return $res['companyname'];
 
         // Senão, cria a empresa no Mautic
         } else{
@@ -52,10 +52,11 @@
             $empt = array();
             $empt = serialize($empt);
 
-            $timestamp = date('Y-md H:i:s', time());
+            $timestamp = date('Y-m-d H:i:s', time());
 
             // Inicio da Query
-            $sql = "INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`) VALUES (1, 1, '{$timestamp}', 1, 'admin admin', '{$timestamp}', 1, 'admin admin', '{$empt}', 0, '{$nome_empresa}')";
+            $sql = "INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`)
+            VALUES (1, 1, '{$timestamp}', 1, 'admin admin', '{$timestamp}', 1, 'admin admin', '{$empt}', 0, '{$nome_empresa}')";
 
             $conn -> query($sql);
             $conn -> close();
@@ -76,7 +77,7 @@
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $conn -> close();
         
-        return $res["id"];
+        return $res['id'];
     }
     
     // Retorna o nome da empresa no cadastro do contato antes do update no Mautic

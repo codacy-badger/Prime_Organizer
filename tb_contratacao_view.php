@@ -24,6 +24,7 @@
 	$x->QueryFieldsTV = array(   
 		"`tb_contratacao`.`id`" => "id",
 		"`tb_contratacao`.`str_candidato_nome`" => "str_candidato_nome",
+		"`tb_contratacao`.`int_cpf`" => "int_cpf",
 		"if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'')" => "dta_contratacao",
 		"if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'')" => "dta_demissao",
 		"concat('<i class=\"glyphicon glyphicon-', if(`tb_contratacao`.`bol_gestor`, 'check', 'unchecked'), '\"></i>')" => "bol_gestor"
@@ -32,15 +33,17 @@
 	$x->SortFields = array(   
 		1 => '`tb_contratacao`.`id`',
 		2 => 2,
-		3 => '`tb_contratacao`.`dta_contratacao`',
-		4 => '`tb_contratacao`.`dta_demissao`',
-		5 => '`tb_contratacao`.`bol_gestor`'
+		3 => '`tb_contratacao`.`int_cpf`',
+		4 => '`tb_contratacao`.`dta_contratacao`',
+		5 => '`tb_contratacao`.`dta_demissao`',
+		6 => '`tb_contratacao`.`bol_gestor`'
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = array(   
 		"`tb_contratacao`.`id`" => "id",
 		"`tb_contratacao`.`str_candidato_nome`" => "str_candidato_nome",
+		"`tb_contratacao`.`int_cpf`" => "int_cpf",
 		"if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'')" => "dta_contratacao",
 		"if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'')" => "dta_demissao",
 		"`tb_contratacao`.`bol_gestor`" => "bol_gestor"
@@ -49,6 +52,7 @@
 	$x->QueryFieldsFilters = array(   
 		"`tb_contratacao`.`id`" => "ID",
 		"`tb_contratacao`.`str_candidato_nome`" => "Nome completo do Colaborador",
+		"`tb_contratacao`.`int_cpf`" => "CPF",
 		"`tb_contratacao`.`dta_contratacao`" => "Data de Contrata&#231;&#227;o",
 		"`tb_contratacao`.`dta_demissao`" => "Data de demiss&#227;o",
 		"`tb_contratacao`.`bol_gestor`" => "Gestor"
@@ -58,6 +62,7 @@
 	$x->QueryFieldsQS = array(   
 		"`tb_contratacao`.`id`" => "id",
 		"`tb_contratacao`.`str_candidato_nome`" => "str_candidato_nome",
+		"`tb_contratacao`.`int_cpf`" => "int_cpf",
 		"if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'')" => "dta_contratacao",
 		"if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'')" => "dta_demissao",
 		"concat('<i class=\"glyphicon glyphicon-', if(`tb_contratacao`.`bol_gestor`, 'check', 'unchecked'), '\"></i>')" => "bol_gestor"
@@ -93,10 +98,10 @@
 	$x->TableIcon = "resources/table_icons/ceo.png";
 	$x->PrimaryKey = "`tb_contratacao`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150);
-	$x->ColCaption = array("Nome completo do Colaborador", "Data de Contrata&#231;&#227;o", "Data de demiss&#227;o", "Gestor");
-	$x->ColFieldName = array('str_candidato_nome', 'dta_contratacao', 'dta_demissao', 'bol_gestor');
-	$x->ColNumber  = array(2, 3, 4, 5);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150);
+	$x->ColCaption = array("Nome completo do Colaborador", "CPF", "Data de Contrata&#231;&#227;o", "Data de demiss&#227;o", "Gestor");
+	$x->ColFieldName = array('str_candidato_nome', 'int_cpf', 'dta_contratacao', 'dta_demissao', 'bol_gestor');
+	$x->ColNumber  = array(2, 3, 4, 5, 6);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_contratacao_templateTV.html';

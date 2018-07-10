@@ -1,0 +1,19 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- add the following to the tb_requerimento_init() hook (in hooks/tb_requerimento.php file) -->
+<!--     $options->ShowTableHeader = 0;     -->
+
+		<td id="tb_requerimento-dta_requisicao-<%%VALUE(id)%%>" class="tb_requerimento-dta_requisicao"><%%SELECT%%><%%VALUE(dta_requisicao)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-dta_abertura-<%%VALUE(id)%%>" class="tb_requerimento-dta_abertura"><%%SELECT%%><%%VALUE(dta_abertura)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-dta_fechamento-<%%VALUE(id)%%>" class="tb_requerimento-dta_fechamento"><%%SELECT%%><%%VALUE(dta_fechamento)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-str_status-<%%VALUE(id)%%>" class="tb_requerimento-str_status"><%%SELECT%%><%%VALUE(str_status)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-dta_prev_fechamento-<%%VALUE(id)%%>" class="tb_requerimento-dta_prev_fechamento"><%%SELECT%%><%%VALUE(dta_prev_fechamento)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-recrutador_id-<%%VALUE(id)%%>" class="tb_requerimento-recrutador_id"><%%SELECT%%><%%VALUE(recrutador_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-str_posicao-<%%VALUE(id)%%>" class="tb_requerimento-str_posicao"><%%SELECT%%><%%VALUE(str_posicao)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-int_n_vagas-<%%VALUE(id)%%>" class="tb_requerimento-int_n_vagas text-right"><%%SELECT%%><%%VALUE(int_n_vagas)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-empresa_id-<%%VALUE(id)%%>" class="tb_requerimento-empresa_id"><%%SELECT%%><%%VALUE(empresa_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-contato_id-<%%VALUE(id)%%>" class="tb_requerimento-contato_id"><%%SELECT%%><%%VALUE(contato_id)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-bool_abertura-<%%VALUE(id)%%>" class="tb_requerimento-bool_abertura"><%%SELECT%%><%%VALUE(bool_abertura)%%><%%ENDSELECT%%></td>
+		<td id="tb_requerimento-dta_indicacao-<%%VALUE(id)%%>" class="tb_requerimento-dta_indicacao"><%%SELECT%%><%%VALUE(dta_indicacao)%%><%%ENDSELECT%%></td>

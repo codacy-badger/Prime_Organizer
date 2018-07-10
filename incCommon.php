@@ -66,7 +66,8 @@
 			'tb_indicador' => array('Metas e Indicadores', 'Cadastre metas e indicadores para gerar um hist&#243;rico de performance.', 'resources/table_icons/chart_up_color.png', 'Marketing'),
 			'tb_indicador_periodo' => array('Per&#237;odos dos indicadores', '', 'table.gif', 'Marketing'),
 			'tb_fatura' => array('Faturamento', 'Lan&#231;amento de faturas e notas fiscais.', 'resources/table_icons/blogs.png', 'Financeiro'),
-			'tb_ajuste_colaborador' => array('Ajustes do Colaborador', 'Registros de ajustes do pontos dos colaboradores', 'resources/table_icons/clock_edit.png', 'RH')
+			'tb_ajuste_colaborador' => array('Ajustes do Colaborador', 'Registros de ajustes do pontos dos colaboradores', 'resources/table_icons/clock_edit.png', 'RH'),
+			'tb_requerimento' => array('Requerimento de Vagas', 'Requerimento de vagas por parceiros', 'resources/table_icons/group_add.png', 'RH')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -153,9 +154,9 @@
 
 	function get_sql_fields($table_name){
 		$sql_fields = array(   
-			'tb_vaga' => "`tb_vaga`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') as 'str_alocacao', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'recrutador_id', `tb_vaga`.`str_posicao` as 'str_posicao', if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', `tb_vaga`.`qtd_vagas` as 'qtd_vagas', `tb_vaga`.`str_prioridade` as 'str_prioridade', `tb_vaga`.`str_status` as 'str_status', if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'') as 'dta_previsao_fechamento', `tb_vaga`.`str_obs` as 'str_obs', if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'') as 'dta_inicio', `tb_vaga`.`str_contratado_nome` as 'str_contratado_nome'",
+			'tb_vaga' => "`tb_vaga`.`id` as 'id', IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') as 'requerimento_id', `tb_vaga`.`int_vaga_numero` as 'int_vaga_numero', if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', if(`tb_vaga`.`dta_prev_fechamento`,date_format(`tb_vaga`.`dta_prev_fechamento`,'%d/%m/%Y'),'') as 'dta_prev_fechamento', if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', `tb_vaga`.`str_posicao` as 'str_posicao', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') as 'str_alocacao', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') as 'recrutador_id', `tb_vaga`.`str_prioridade` as 'str_prioridade', `tb_vaga`.`str_status` as 'str_status', `tb_vaga`.`str_obs` as 'str_obs', if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'') as 'dta_inicio', IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') as 'str_contratado_nome'",
 			'tb_entrevista' => "`tb_entrevista`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_alocacao1`.`str_nome`), '') as 'vaga_id', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'recrutador_id', if(`tb_entrevista`.`dta`,date_format(`tb_entrevista`.`dta`,'%d/%m/%Y'),'') as 'dta', `tb_entrevista`.`int_qtd_contatos` as 'int_qtd_contatos', `tb_entrevista`.`int_qtd_entrevistas` as 'int_qtd_entrevistas', `tb_entrevista`.`int_qtd_encaminhamentos` as 'int_qtd_encaminhamentos'",
-			'tb_contratacao' => "`tb_contratacao`.`id` as 'id', `tb_contratacao`.`str_candidato_nome` as 'str_candidato_nome', if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'') as 'dta_contratacao', if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'') as 'dta_demissao', `tb_contratacao`.`bol_gestor` as 'bol_gestor'",
+			'tb_contratacao' => "`tb_contratacao`.`id` as 'id', `tb_contratacao`.`str_candidato_nome` as 'str_candidato_nome', `tb_contratacao`.`int_cpf` as 'int_cpf', if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'') as 'dta_contratacao', if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'') as 'dta_demissao', `tb_contratacao`.`bol_gestor` as 'bol_gestor'",
 			'tb_alocacao' => "`tb_alocacao`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'int_empresa', `tb_alocacao`.`str_nome` as 'str_nome'",
 			'tb_recrutador' => "`tb_recrutador`.`id` as 'id', `tb_recrutador`.`str_nome` as 'str_nome', `tb_recrutador`.`bol_status` as 'bol_status', `tb_recrutador`.`bol_recrutador` as 'bol_recrutador', `tb_recrutador`.`bol_comercial` as 'bol_comercial'",
 			'tb_empresa' => "`tb_empresa`.`id` as 'id', `tb_empresa`.`str_nome_fantasia` as 'str_nome_fantasia', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'str_responsavel', IF(    CHAR_LENGTH(`tb_contato_tipo1`.`str_nome`), CONCAT_WS('',   `tb_contato_tipo1`.`str_nome`), '') as 'relacionamento_id', `tb_empresa`.`cidade` as 'cidade', `tb_empresa`.`uf` as 'uf'",
@@ -174,7 +175,8 @@
 			'tb_indicador' => "`tb_indicador`.`id` as 'id', `tb_indicador`.`str_departamento` as 'str_departamento', `tb_indicador`.`str_nome` as 'str_nome', `tb_indicador`.`str_descricao` as 'str_descricao', `tb_indicador`.`str_unidade_medida` as 'str_unidade_medida'",
 			'tb_indicador_periodo' => "`tb_indicador_periodo`.`id` as 'id', IF(    CHAR_LENGTH(`tb_indicador1`.`str_departamento`) || CHAR_LENGTH(`tb_indicador1`.`str_nome`), CONCAT_WS('',   `tb_indicador1`.`str_departamento`, ' - ', `tb_indicador1`.`str_nome`), '') as 'indicador_id', `tb_indicador_periodo`.`str_unidade` as 'str_unidade', `tb_indicador_periodo`.`str_vertical` as 'str_vertical', `tb_indicador_periodo`.`str_responsavel` as 'str_responsavel', if(`tb_indicador_periodo`.`dta`,date_format(`tb_indicador_periodo`.`dta`,'%d/%m/%Y'),'') as 'dta', `tb_indicador_periodo`.`flo_sazonalidade` as 'flo_sazonalidade', `tb_indicador_periodo`.`int_meta` as 'int_meta', `tb_indicador_periodo`.`int_meta_ajustada` as 'int_meta_ajustada', `tb_indicador_periodo`.`int_realizado` as 'int_realizado'",
 			'tb_fatura' => "`tb_fatura`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', if(`tb_fatura`.`dta_emissao`,date_format(`tb_fatura`.`dta_emissao`,'%d/%m/%Y'),'') as 'dta_emissao', if(`tb_fatura`.`dta_competencia`,date_format(`tb_fatura`.`dta_competencia`,'%d/%m/%Y'),'') as 'dta_competencia', `tb_fatura`.`flo_valor` as 'flo_valor', `tb_fatura`.`int_nf` as 'int_nf', `tb_fatura`.`str_observacoes` as 'str_observacoes'",
-			'tb_ajuste_colaborador' => "`tb_ajuste_colaborador`.`id` as 'id', `tb_ajuste_colaborador`.`str_responsavel` as 'str_responsavel', if(`tb_ajuste_colaborador`.`dta_data`,date_format(`tb_ajuste_colaborador`.`dta_data`,'%d/%m/%Y'),'') as 'dta_data', IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`id`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, '-', `tb_contratacao1`.`id`), '') as 'colaborador_id', `tb_ajuste_colaborador`.`str_ajuste` as 'str_ajuste', `tb_ajuste_colaborador`.`bol_evidencia` as 'bol_evidencia', `tb_ajuste_colaborador`.`int_quantidade` as 'int_quantidade', IF(    CHAR_LENGTH(`tb_contratacao2`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao2`.`id`), CONCAT_WS('',   `tb_contratacao2`.`str_candidato_nome`, '-', `tb_contratacao2`.`id`), '') as 'gestor_id', `tb_ajuste_colaborador`.`bol_notificacao` as 'bol_notificacao'"
+			'tb_ajuste_colaborador' => "`tb_ajuste_colaborador`.`id` as 'id', `tb_ajuste_colaborador`.`str_responsavel` as 'str_responsavel', if(`tb_ajuste_colaborador`.`dta_data`,date_format(`tb_ajuste_colaborador`.`dta_data`,'%d/%m/%Y'),'') as 'dta_data', IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`id`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, '-', `tb_contratacao1`.`id`), '') as 'colaborador_id', `tb_ajuste_colaborador`.`str_ajuste` as 'str_ajuste', `tb_ajuste_colaborador`.`bol_evidencia` as 'bol_evidencia', `tb_ajuste_colaborador`.`int_quantidade` as 'int_quantidade', IF(    CHAR_LENGTH(`tb_contratacao2`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao2`.`id`), CONCAT_WS('',   `tb_contratacao2`.`str_candidato_nome`, '-', `tb_contratacao2`.`id`), '') as 'gestor_id', `tb_ajuste_colaborador`.`bol_notificacao` as 'bol_notificacao'",
+			'tb_requerimento' => "`tb_requerimento`.`id` as 'id', if(`tb_requerimento`.`dta_requisicao`,date_format(`tb_requerimento`.`dta_requisicao`,'%d/%m/%Y'),'') as 'dta_requisicao', if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', `tb_requerimento`.`str_status` as 'str_status', if(`tb_requerimento`.`dta_prev_fechamento`,date_format(`tb_requerimento`.`dta_prev_fechamento`,'%d/%m/%Y'),'') as 'dta_prev_fechamento', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'recrutador_id', `tb_requerimento`.`str_posicao` as 'str_posicao', `tb_requerimento`.`int_n_vagas` as 'int_n_vagas', `tb_requerimento`.`str_reposicao` as 'str_reposicao', `tb_requerimento`.`str_recurso` as 'str_recurso', `tb_requerimento`.`time_horario_entrada` as 'time_horario_entrada', `tb_requerimento`.`time_horario_saida` as 'time_horario_saida', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') as 'str_alocacao', IF(    CHAR_LENGTH(`tb_contato1`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato1`.`str_sobrenome`), CONCAT_WS('',   `tb_contato1`.`str_primeiro_nome`, ' ', `tb_contato1`.`str_sobrenome`), '') as 'contato_id', CONCAT_WS('-', LEFT(`tb_requerimento`.`str_telefone`,2), MID(`tb_requerimento`.`str_telefone`,3,4), RIGHT(`tb_requerimento`.`str_telefone`,4)) as 'str_telefone', `tb_requerimento`.`str_email` as 'str_email', CONCAT('R$', FORMAT(`tb_requerimento`.`float_salario`, 2)) as 'float_salario', `tb_requerimento`.`int_maquinas` as 'int_maquinas', `tb_requerimento`.`str_beneficios` as 'str_beneficios', `tb_requerimento`.`bool_abertura` as 'bool_abertura', if(`tb_requerimento`.`dta_indicacao`,date_format(`tb_requerimento`.`dta_indicacao`,'%d/%m/%Y'),'') as 'dta_indicacao', `tb_requerimento`.`str_descricao` as 'str_descricao'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -188,7 +190,7 @@
 
 	function get_sql_from($table_name, $skip_permissions = false){
 		$sql_from = array(   
-			'tb_vaga' => "`tb_vaga` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` ",
+			'tb_vaga' => "`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` LEFT JOIN `tb_contratacao` as tb_contratacao1 ON `tb_contratacao1`.`id`=`tb_vaga`.`str_contratado_nome` ",
 			'tb_entrevista' => "`tb_entrevista` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_entrevista`.`empresa_id` LEFT JOIN `tb_vaga` as tb_vaga1 ON `tb_vaga1`.`id`=`tb_entrevista`.`vaga_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga1`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_entrevista`.`recrutador_id` ",
 			'tb_contratacao' => "`tb_contratacao` ",
 			'tb_alocacao' => "`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ",
@@ -209,7 +211,8 @@
 			'tb_indicador' => "`tb_indicador` ",
 			'tb_indicador_periodo' => "`tb_indicador_periodo` LEFT JOIN `tb_indicador` as tb_indicador1 ON `tb_indicador1`.`id`=`tb_indicador_periodo`.`indicador_id` ",
 			'tb_fatura' => "`tb_fatura` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_fatura`.`empresa_id` ",
-			'tb_ajuste_colaborador' => "`tb_ajuste_colaborador` LEFT JOIN `tb_contratacao` as tb_contratacao1 ON `tb_contratacao1`.`id`=`tb_ajuste_colaborador`.`colaborador_id` LEFT JOIN `tb_contratacao` as tb_contratacao2 ON `tb_contratacao2`.`id`=`tb_ajuste_colaborador`.`gestor_id` "
+			'tb_ajuste_colaborador' => "`tb_ajuste_colaborador` LEFT JOIN `tb_contratacao` as tb_contratacao1 ON `tb_contratacao1`.`id`=`tb_ajuste_colaborador`.`colaborador_id` LEFT JOIN `tb_contratacao` as tb_contratacao2 ON `tb_contratacao2`.`id`=`tb_ajuste_colaborador`.`gestor_id` ",
+			'tb_requerimento' => "`tb_requerimento` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_requerimento`.`str_alocacao` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` "
 		);
 
 		$pkey = array(   
@@ -234,7 +237,8 @@
 			'tb_indicador' => 'id',
 			'tb_indicador_periodo' => 'id',
 			'tb_fatura' => 'id',
-			'tb_ajuste_colaborador' => 'id'
+			'tb_ajuste_colaborador' => 'id',
+			'tb_requerimento' => 'id'
 		);
 
 		if(isset($sql_from[$table_name])){
@@ -284,16 +288,17 @@
 		$defaults = array(
 			'tb_vaga' => array(
 				'id' => '',
+				'requerimento_id' => '',
+				'int_vaga_numero' => '',
+				'dta_abertura' => '',
+				'dta_prev_fechamento' => '',
+				'dta_fechamento' => '',
+				'str_posicao' => '',
 				'empresa_id' => '',
 				'str_alocacao' => '',
 				'recrutador_id' => '',
-				'str_posicao' => '',
-				'dta_abertura' => '',
-				'qtd_vagas' => '',
 				'str_prioridade' => '',
 				'str_status' => '',
-				'dta_fechamento' => '',
-				'dta_previsao_fechamento' => '',
 				'str_obs' => '',
 				'dta_inicio' => '',
 				'str_contratado_nome' => ''
@@ -311,6 +316,7 @@
 			'tb_contratacao' => array(
 				'id' => '',
 				'str_candidato_nome' => '',
+				'int_cpf' => '',
 				'dta_contratacao' => '',
 				'dta_demissao' => '',
 				'bol_gestor' => '0'
@@ -481,6 +487,32 @@
 				'int_quantidade' => '1',
 				'gestor_id' => '',
 				'bol_notificacao' => ''
+			),
+			'tb_requerimento' => array(
+				'id' => '',
+				'dta_requisicao' => '',
+				'dta_abertura' => '',
+				'dta_fechamento' => '',
+				'str_status' => 'Pendente',
+				'dta_prev_fechamento' => '',
+				'recrutador_id' => '',
+				'str_posicao' => '',
+				'int_n_vagas' => '',
+				'str_reposicao' => '',
+				'str_recurso' => '',
+				'time_horario_entrada' => '',
+				'time_horario_saida' => '',
+				'empresa_id' => '',
+				'str_alocacao' => '',
+				'contato_id' => '',
+				'str_telefone' => '',
+				'str_email' => '',
+				'float_salario' => '',
+				'int_maquinas' => '0',
+				'str_beneficios' => '',
+				'bool_abertura' => 'Abertura imediata',
+				'dta_indicacao' => '',
+				'str_descricao' => ''
 			)
 		);
 

@@ -43,7 +43,7 @@
         if($res = $query -> fetch_array(MYSQLI_BOTH)){
             $conn -> close();
             
-            return $res["companyname"];
+            return $res['companyname'];
 
         // Senão, cria a empresa no Mautic
         } else{
@@ -52,10 +52,11 @@
             $empt = array();
             $empt = serialize($empt);
 
-            $timestamp = date('Y-md H:i:s', time());
+            $timestamp = date('Y-m-d H:i:s', time());
 
             // Inicio da Query
-            $sql = "INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`) VALUES (1, 1, '{$timestamp}', 1, 'admin admin', '{$timestamp}', 1, 'admin admin', '{$empt}', 0, '{$nome_empresa}')";
+            $sql = "INSERT INTO `companies` (`owner_id`,`is_published`,`date_added`,`created_by`,`created_by_user`,`checked_out`,`checked_out_by`,`checked_out_by_user`,`social_cache`,`score`,`companyname`)
+            VALUES (1, 1, '{$timestamp}', 1, 'admin admin', '{$timestamp}', 1, 'admin admin', '{$empt}', 0, '{$nome_empresa}')";
 
             $conn -> query($sql);
             $conn -> close();
@@ -76,7 +77,7 @@
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $conn -> close();
         
-        return $res["id"];
+        return $res['id'];
     }
     
     // Retorna o nome da empresa no cadastro do contato antes do update no Mautic
@@ -100,10 +101,15 @@
         $query = $conn -> query($sql);
             
         // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
-        $res = $query -> fetch_array(MYSQLI_BOTH);
-        $conn -> close();
-        
-        return $res['id'];
+        if($res = $query -> fetch_array(MYSQLI_BOTH){
+            $conn -> close();
+
+            return $res['id'];
+        } else{
+            $conn -> close();
+            
+            return false;
+        }
     }
     
     // Retorna a id do contato no Mautic de acordo com o id do contato correspondente no Organizer
@@ -271,7 +277,7 @@
         // Senão, cria a tag/relacionamento
         } else{
             $sql = "INSERT INTO lead_tags (tag) VALUES('{$tag}')";
-            $query = $conn -> query($sql);
+            $conn -> query($sql);
             
             $sql = "SELECT id FROM lead_tags WHERE tag LIKE '{$tag}'";
             $query = $conn -> query($sql);

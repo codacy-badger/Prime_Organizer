@@ -15,33 +15,15 @@
 <div class="panel-body">
 	<fieldset class="form-horizontal">
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">ID</label>
+			<label class="col-xs-3 control-label">REQ</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(id)%%></div>
+				<div class="form-control-static"><span id="requerimento_id-readonly<%%RND1%%>"><%%COMBOTEXT(requerimento_id)%%></span></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Empresa</label>
+			<label class="col-xs-3 control-label">Vaga</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><span id="empresa_id<%%RND1%%>"><%%COMBOTEXT(empresa_id)%%></span></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Aloca&#231;&#227;o</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><span id="str_alocacao<%%RND1%%>"><%%COMBOTEXT(str_alocacao)%%></span></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Recrutador</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><span id="recrutador_id<%%RND1%%>"><%%COMBOTEXT(recrutador_id)%%></span></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Posi&#231;&#227;o</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(str_posicao)%%></div>
+				<div class="form-control-static"><%%VALUE(int_vaga_numero)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -51,9 +33,39 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Qtd. de vagas em aberto</label>
+			<label class="col-xs-3 control-label">Data de previs&#227;o de fechamento</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(qtd_vagas)%%></div>
+				<div class="form-control-static"><%%COMBOTEXT(dta_prev_fechamento)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data fechamento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_fechamento)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Posi&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_posicao)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Empresa</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="empresa_id-readonly<%%RND1%%>"><%%COMBOTEXT(empresa_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Aloca&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="str_alocacao-readonly<%%RND1%%>"><%%COMBOTEXT(str_alocacao)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Recrutador</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="recrutador_id<%%RND1%%>"><%%COMBOTEXT(recrutador_id)%%></span></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -66,18 +78,6 @@
 			<label class="col-xs-3 control-label">Status</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%COMBOTEXT(str_status)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Data fechamento</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(dta_fechamento)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Data de previs&#227;o de fechamento</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(dta_previsao_fechamento)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -95,7 +95,7 @@
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Nome do Contratado</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(str_contratado_nome)%%></div>
+				<div class="form-control-static"><span id="str_contratado_nome<%%RND1%%>"><%%COMBOTEXT(str_contratado_nome)%%></span></div>
 			</div>
 		</div>
 	</fieldset>

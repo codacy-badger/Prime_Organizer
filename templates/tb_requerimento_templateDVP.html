@@ -1,0 +1,191 @@
+<!-- Edit this file to change the layout of the detail view print preview page -->
+
+
+<div class="panel-heading"><h3 class="panel-title">
+	<strong><%%DETAIL_VIEW_TITLE%%></strong>
+	<div class="hidden-print pull-right">
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</h3></div>
+
+<div class="panel-body">
+	<fieldset class="form-horizontal">
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">ID</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(id)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data de requisi&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_requisicao)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data abertura</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_abertura)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data de fechamento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_fechamento)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Status do Requerimento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_status)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Data de previs&#227;o para o fechamento</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_prev_fechamento)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Gestor Imediato</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="recrutador_id<%%RND1%%>"><%%COMBOTEXT(recrutador_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Posi&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_posicao)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">N&#250;mero de Vagas</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(int_n_vagas)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Reposi&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_reposicao)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Recurso &#224; ser reposicionado</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_recurso)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Hor&#225;rio de Entrada</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(time_horario_entrada)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Hor&#225;rio de Sa&#237;da</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(time_horario_saida)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Empresa/Cliente Solicitante</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="empresa_id<%%RND1%%>"><%%COMBOTEXT(empresa_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Aloca&#231;&#227;o</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="str_alocacao<%%RND1%%>"><%%COMBOTEXT(str_alocacao)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Nome do Contato</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="contato_id<%%RND1%%>"><%%COMBOTEXT(contato_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Tel. do Solicitante</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_telefone)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Email do Solicitante</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_email)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Sal&#225;rio/Budget</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(float_salario)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Quantas m&#225;quinas ser&#227;o necess&#225;rias?</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(int_maquinas)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Benef&#237;cios oferecidos</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_beneficios)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Abertura da vaga</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(bool_abertura)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Prazo para indica&#231;&#227;o de candidatos</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(dta_indicacao)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Descri&#231;&#227;o da vaga</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(str_descricao)%%></div>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<!-- child records -->
+<div class="panel-body">
+	<div id="tb_requerimento-children"></div>
+</div>
+
+<script>
+	$j(function(){
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=tb_requerimento-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'tb_requerimento',
+				SelectedID: '<%%VALUE(id)%%>',
+				Operation: 'show-children-printable'
+			},
+			'tb_requerimento-children',
+			'disable-element',
+			'loading-element',
+			apply_persisting_children
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function(){
+			$j(this).toggleClass('active');
+			persist_expanded_child($j(this).attr('id'));
+		});
+	})
+</script>
+

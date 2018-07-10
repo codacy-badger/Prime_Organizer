@@ -26,6 +26,10 @@
 	*/
 
 	function tb_vaga_init(&$options, $memberInfo, &$args){
+		/* Inserted by Search Page Maker for AppGini on 2018-07-04 01:45:18 */
+		$options->FilterPage = 'hooks/tb_vaga_filter.php';
+		/* End of Search Page Maker for AppGini code */
+
 
 		return TRUE;
 	}
@@ -207,7 +211,7 @@
 	*/
 
 	function tb_vaga_before_update(&$data, $memberInfo, &$args){
-
+        
 		return TRUE;
 	}
 
@@ -232,7 +236,46 @@
 	*/
 
 	function tb_vaga_after_update($data, $memberInfo, &$args){
-
+        
+        // Fecha o requerimento se todas as vagas foram preenchidas ou canceladas
+        $id_vaga = $data['selectedID'];
+        $requerimento = $data['requerimento_id'];
+        $data = date('Y-m-d');
+        
+        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND (str_status LIKE '%Preenchida%' OR str_status LIKE 'Cancelada)'");
+        
+        $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
+        
+        if($vagas_preenchidas == $vagas_totais){
+            $sql = "UPDATE tb_requerimento
+            SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}';
+            UPDATE tb_vaga
+            SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}'";
+            
+            sql($sql, $eo);
+        }
+        
+        if($vagas_preenchidas != $vagas_totais){
+            $sql = "UPDATE tb_requerimento
+            SET dta_fechamento = NULL WHERE id = '{$requerimento}';
+            UPDATE tb_vaga
+            SET dta_fechamento = NULL WHERE id = '{$requerimento}'";
+            
+            sql($sql, $eo);
+        }
+        
+        if($data['bool_abertura'] == 'Abertura imediata'){
+            $data_abertura = date('Y-m-d');
+        } else{
+            $data_abertura = NULL;
+        }
+        
+        $sql = "UPDATE tb_vaga
+        SET dta_abertura = '{$data_abertura}'
+        WHERE id = '{$id_vaga}'";
+        
+        sql($sql, $eo);
+        
 		return TRUE;
 	}
 

@@ -34,6 +34,17 @@
 	// drop-downs config
 	$lookups = array(   
 		'tb_vaga' => array(   
+			'requerimento_id' => array(
+				'parent_table' => 'tb_requerimento',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_requerimento`.`id`',
+				'parent_from' => '`tb_requerimento` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_requerimento`.`str_alocacao` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
 			'empresa_id' => array(
 				'parent_table' => 'tb_empresa',
 				'parent_pk_field' => 'id',
@@ -50,22 +61,33 @@
 				'parent_pk_field' => 'id',
 				'parent_caption' => '`tb_alocacao`.`str_nome`',
 				'parent_from' => '`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ',
-				'filterers' => array('empresa_id' => 'int_empresa'),
+				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => true
+				'not_null' => false
 			),
 			'recrutador_id' => array(
 				'parent_table' => 'tb_recrutador',
 				'parent_pk_field' => 'id',
-				'parent_caption' => '`tb_recrutador`.`str_nome`',
+				'parent_caption' => 'IF(CHAR_LENGTH(`tb_recrutador`.`str_nome`) || CHAR_LENGTH(`tb_recrutador`.`bol_comercial`), CONCAT_WS(\'\', `tb_recrutador`.`str_nome`, `tb_recrutador`.`bol_comercial`), \'\')',
 				'parent_from' => '`tb_recrutador` ',
 				'filterers' => array(),
 				'custom_query' => 'SELECT `tb_recrutador`.`id`, `tb_recrutador`.`str_nome` FROM `tb_recrutador` WHERE bol_recrutador = 1 AND bol_status = 1 ORDER BY 2',
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => true
+			),
+			'str_contratado_nome' => array(
+				'parent_table' => 'tb_contratacao',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`tb_contratacao`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao`.`int_cpf`), CONCAT_WS(\'\', `tb_contratacao`.`str_candidato_nome`, \' - \', `tb_contratacao`.`int_cpf`), \'\')',
+				'parent_from' => '`tb_contratacao` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
 			)
 		),
 		'tb_entrevista' => array(   
@@ -84,7 +106,7 @@
 				'parent_table' => 'tb_vaga',
 				'parent_pk_field' => 'id',
 				'parent_caption' => 'IF(CHAR_LENGTH(`tb_vaga`.`str_posicao`) || CHAR_LENGTH(`tb_vaga`.`str_alocacao`), CONCAT_WS(\'\', `tb_vaga`.`str_posicao`, \' - \', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS(\'\',   `tb_alocacao1`.`str_nome`), \'\')), \'\')',
-				'parent_from' => '`tb_vaga` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` ',
+				'parent_from' => '`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` LEFT JOIN `tb_contratacao` as tb_contratacao1 ON `tb_contratacao1`.`id`=`tb_vaga`.`str_contratado_nome` ',
 				'filterers' => array('empresa_id' => 'empresa_id'),
 				'custom_query' => 'SELECT `tb_vaga`.`id`, IF(CHAR_LENGTH(`tb_vaga`.`str_posicao`) || CHAR_LENGTH(`tb_vaga`.`str_alocacao`), CONCAT_WS(\'\', `tb_vaga`.`str_posicao`, \' - \', IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS(\'\',   `tb_alocacao1`.`str_nome`), \'\')), \'\') FROM `tb_vaga` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` WHERE dta_fechamento is null ORDER BY 2',
 				'inherit_permissions' => false,
@@ -446,6 +468,52 @@
 				'parent_from' => '`tb_contratacao` ',
 				'filterers' => array(),
 				'custom_query' => 'SELECT `tb_contratacao`.`id`, IF(CHAR_LENGTH(`tb_contratacao`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao`.`id`), CONCAT_WS(\'\', `tb_contratacao`.`str_candidato_nome`, \'-\', `tb_contratacao`.`id`), \'\') FROM `tb_contratacao` WHERE `tb_contratacao`.`bol_gestor` = 1 ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => true
+			)
+		),
+		'tb_requerimento' => array(   
+			'recrutador_id' => array(
+				'parent_table' => 'tb_recrutador',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_recrutador`.`str_nome`',
+				'parent_from' => '`tb_recrutador` ',
+				'filterers' => array(),
+				'custom_query' => 'SELECT `tb_recrutador`.`id`, `tb_recrutador`.`str_nome` FROM `tb_recrutador` WHERE bol_recrutador = 1 AND bol_status = 1 ORDER BY 2',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'empresa_id' => array(
+				'parent_table' => 'tb_empresa',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_empresa`.`str_nome_fantasia`',
+				'parent_from' => '`tb_empresa` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_empresa`.`str_responsavel` LEFT JOIN `tb_contato_tipo` as tb_contato_tipo1 ON `tb_contato_tipo1`.`id`=`tb_empresa`.`relacionamento_id` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => true
+			),
+			'str_alocacao' => array(
+				'parent_table' => 'tb_alocacao',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`tb_alocacao`.`str_nome`',
+				'parent_from' => '`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ',
+				'filterers' => array('empresa_id' => 'int_empresa'),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'contato_id' => array(
+				'parent_table' => 'tb_contato',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`tb_contato`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato`.`str_sobrenome`), CONCAT_WS(\'\', `tb_contato`.`str_primeiro_nome`, \' \', `tb_contato`.`str_sobrenome`), \'\')',
+				'parent_from' => '`tb_contato` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_contato`.`empresa_id` LEFT JOIN `tb_contato_tipo` as tb_contato_tipo1 ON `tb_contato_tipo1`.`id`=`tb_contato`.`tipo_id` ',
+				'filterers' => array('empresa_id' => 'empresa_id'),
+				'custom_query' => '',
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => true

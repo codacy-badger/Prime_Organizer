@@ -23,7 +23,14 @@
 	*/
 
 	function login_ok($memberInfo, &$args){
-
+        // Cria um cookie com o valor de groupID do usuário
+            // Se o cookie já existe, reseta o mesmo
+        if(isset($_COOKIE['groupID'])){
+            setcookie('groupID', '', time()-36000);
+        }
+        
+        setcookie('groupID', $memberInfo['groupID'], time()+36000);
+        
 		return '';
 	}
 

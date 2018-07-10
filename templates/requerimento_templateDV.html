@@ -1,0 +1,320 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<a name="detail-view"></a>
+<div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
+
+<div class="panel-body" id="requerimento_dv_container">
+	<!-- child links -->
+	<div class="row vspacer-md">
+		<div class="col-xs-12">
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<hr class="hidden-xs hidden-sm">
+
+	<div class="row">
+		<!-- form inputs -->
+		<div class="col-md-8 col-lg-10" id="requerimento_dv_form">
+			<fieldset class="form-horizontal">
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="id" class="control-label col-lg-3">ID</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_status" class="control-label col-lg-3">Status do Requerimento</label>
+					<div class="col-lg-9">
+						<%%COMBO(str_status)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_posicao" class="control-label col-lg-3">Posi&#231;&#227;o<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_posicao-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_posicao-description"><div class="alert alert-info">Exemplo: Analista de teste j&#250;nior</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="str_posicao" id="str_posicao" value="<%%VALUE(str_posicao)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_n_vagas" class="control-label col-lg-3">N&#250;mero de Vagas<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<input maxlength="" type="text" class="form-control" name="int_n_vagas" id="int_n_vagas" value="<%%VALUE(int_n_vagas)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_reposicao" class="control-label col-lg-3">Reposi&#231;&#227;o<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_reposicao-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_reposicao-description"><div class="alert alert-info">Esta vaga trata-se de uma reposi&#231;&#227;o?</div></span>
+
+						<%%COMBO(str_reposicao)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_recurso" class="control-label col-lg-3">Recurso &#224; ser reposicionado <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_recurso-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_recurso-description"><div class="alert alert-info">Em caso de reposi&#231;&#227;o, informe o nome do recurso que ser&#225; substitu&#237;do</div></span>
+
+						<input maxlength="40" type="text" class="form-control" name="str_recurso" id="str_recurso" value="<%%VALUE(str_recurso)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="time_horario_entrada" class="control-label col-lg-3">Hor&#225;rio de Entrada<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#time_horario_entrada-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="time_horario_entrada-description"><div class="alert alert-info">Digite o hor&#225;rio de entrada. Exemplo: 9:00</div></span>
+
+						<input maxlength="" type="text" class="form-control" name="time_horario_entrada" id="time_horario_entrada" value="<%%VALUE(time_horario_entrada)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="time_horario_saida" class="control-label col-lg-3">Hor&#225;rio de Sa&#237;da<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#time_horario_saida-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="time_horario_saida-description"><div class="alert alert-info">Digite o hor&#225;rio de entrada. Exemplo: 18:00</div></span>
+
+						<input maxlength="" type="text" class="form-control" name="time_horario_saida" id="time_horario_saida" value="<%%VALUE(time_horario_saida)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="empresa_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Empresa/Cliente Solicitante<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(empresa_id)%%><%%PLINK(empresa_id)%%><%%ADDNEW(tb_empresa)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="contato_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(contato_id)%%><%%PLINK(contato_id)%%><%%ADDNEW(tb_contato)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_gestor" class="control-label col-lg-3">Gestor Imediato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="str_gestor" id="str_gestor" value="<%%VALUE(str_gestor)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_telefone" class="control-label col-lg-3">Tel. do Solicitante<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="str_telefone" id="str_telefone" value="<%%VALUE(str_telefone)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_email" class="control-label col-lg-3">Email do Solicitante<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="str_email" id="str_email" value="<%%VALUE(str_email)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="float_salario" class="control-label col-lg-3">Sal&#225;rio/Budget<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#float_salario-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="float_salario-description"><div class="alert alert-info">Em Reais (R$)</div></span>
+
+						<input maxlength="13" type="text" class="form-control" name="float_salario" id="float_salario" value="<%%VALUE(float_salario)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_maquinas" class="control-label col-lg-3">Quantas m&#225;quinas ser&#227;o necess&#225;rias?<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#int_maquinas-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="int_maquinas-description"><div class="alert alert-info">Digite o n&#250;mero de m&#225;quinas necess&#225;rias para os profissionais solicitados. Caso nenhuma seja necess&#225;ria, digite 0 (zero).<br></div></span>
+
+						<input maxlength="" type="text" class="form-control" name="int_maquinas" id="int_maquinas" value="<%%VALUE(int_maquinas)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_beneficios" class="control-label col-lg-3">Benef&#237;cios oferecidos</label>
+					<div class="col-lg-9">
+						<textarea class="form-control" name="str_beneficios" id="str_beneficios" rows="5"><%%VALUE(str_beneficios)%%></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="bool_abertura" class="control-label col-lg-3">Abertura da vaga<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<%%COMBO(bool_abertura)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="data_indicacao" class="control-label col-lg-3">Prazo para indica&#231;&#227;o de candidatos<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<%%COMBO(data_indicacao)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_descricao" class="control-label col-lg-3">Descri&#231;&#227;o da vaga</label>
+					<div class="col-lg-9">
+						<textarea class="form-control" name="str_descricao" id="str_descricao" rows="5"><%%VALUE(str_descricao)%%></textarea>
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+
+		<!-- DV action buttons -->
+		<hr class="hidden-md hidden-lg">
+		<div class="col-md-4 col-lg-2" id="requerimento_dv_action_buttons">
+			<div class="btn-toolbar">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%UPDATE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%DESELECT_BUTTON%%>
+					<%%DVPRINT_BUTTON%%>
+					<%%DELETE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%INSERT_BUTTON%%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div><!-- /div class="panel-body" -->
+	<script>
+		$j(function() {
+			var add_new_mode = (!$j('input[name=SelectedID]').val());
+			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
+
+			/* auto-close embedded page? */
+			var autoclose_mode = ($j('input[name=AutoClose]').val() == 1);
+			var record_added_ok = (location.search.split('record-added-ok=').length == 2);
+			var record_updated_ok = (location.search.split('record-updated-ok=').length == 2);
+			if((record_added_ok || record_updated_ok) && embedded_mode && autoclose_mode){
+				setTimeout(AppGini.closeParentModal, 2000);
+			}
+
+			/* enable DV action buttons to float on scrolling down the form */
+			enable_dvab_floating();
+
+			if(!(embedded_mode && AppGini.mobileDevice())){
+				$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
+			}
+
+			$j('form').eq(0).change(function(){
+				if($j(this).data('already_changed')) return;
+				if($j('#deselect').length) $j('#deselect').removeClass('btn-default').addClass('btn-warning').get(0).lastChild.data = " <%%TRANSLATION(Cancel)%%>";
+				$j(this).data('already_changed', true);
+			});
+
+			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
+
+
+			if(!embedded_mode){
+				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
+
+				$j('.add_new_parent').click(function(){
+					var pt = $j(this).attr('id').replace(/_add_new$/, '');
+					modal_window({
+						url: pt + '_view.php?addNew_x=1&Embedded=1',
+						close: function(){
+							var field_id = $j('#' + pt + '_add_new').prevAll('input:hidden').eq(0).attr('id');
+							$j('#' + field_id + '-container').select2('focus').select2('focus');
+						},
+						size: 'full',
+						title: $j(this).attr('title')
+					});
+				});
+			}
+
+			AppGini.hideViewParentLinks();
+
+			$j('form').on('click', '.view_parent', function(){
+				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
+
+				/* handle radio lookups */
+				if($j(this).prevAll('[type=radio]').length){
+					parent_id = $j(this).prevAll('[type=radio]').eq(0).val();
+				}
+
+				if(parent_id != '{empty_value}' && parent_id != undefined && parent_id != ''){
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
+				}
+			});
+
+
+			/* load admin tools for admin user */
+			if(!add_new_mode){
+				$j('body').append('<div id="admin-tools-appendix"></div>');
+				$j('#admin-tools-appendix').load(
+					'ajax_admin_tools.php?table=requerimento&id=<%%URLVALUE(id)%%>',
+					function(resp){
+						if(!resp.length) return;
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=requerimento&id=<%%URLVALUE(id)%%>');
+					}
+				);
+			}
+
+			/* warn user if 'add new' clicked while unsaved changes exist */
+			$j('#addNew').click(function(){
+				if($j('#deselect.btn-warning').length){
+					return confirm('<%%TRANSLATION(discard changes confirm)%%>');
+				}
+			});
+
+		});
+	</script>

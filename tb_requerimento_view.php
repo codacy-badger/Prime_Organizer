@@ -27,7 +27,7 @@
 		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_prev_fechamento`,date_format(`tb_requerimento`.`dta_prev_fechamento`,'%d/%m/%Y'),'')" => "dta_prev_fechamento",
+		"if(`tb_requerimento`.`dta_previsao_fechamento`,date_format(`tb_requerimento`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -54,7 +54,7 @@
 		3 => '`tb_requerimento`.`dta_abertura`',
 		4 => '`tb_requerimento`.`dta_fechamento`',
 		5 => 5,
-		6 => '`tb_requerimento`.`dta_prev_fechamento`',
+		6 => '`tb_requerimento`.`dta_previsao_fechamento`',
 		7 => '`tb_recrutador1`.`str_nome`',
 		8 => 8,
 		9 => '`tb_requerimento`.`int_n_vagas`',
@@ -82,7 +82,7 @@
 		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_prev_fechamento`,date_format(`tb_requerimento`.`dta_prev_fechamento`,'%d/%m/%Y'),'')" => "dta_prev_fechamento",
+		"if(`tb_requerimento`.`dta_previsao_fechamento`,date_format(`tb_requerimento`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -109,7 +109,7 @@
 		"`tb_requerimento`.`dta_abertura`" => "Data abertura",
 		"`tb_requerimento`.`dta_fechamento`" => "Data de fechamento",
 		"`tb_requerimento`.`str_status`" => "Status do Requerimento",
-		"`tb_requerimento`.`dta_prev_fechamento`" => "Data de previs&#227;o para o fechamento",
+		"`tb_requerimento`.`dta_previsao_fechamento`" => "Data de previs&#227;o para o fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "Gestor Imediato",
 		"`tb_requerimento`.`str_posicao`" => "Posi&#231;&#227;o",
 		"`tb_requerimento`.`int_n_vagas`" => "N&#250;mero de Vagas",
@@ -137,7 +137,7 @@
 		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
 		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_prev_fechamento`,date_format(`tb_requerimento`.`dta_prev_fechamento`,'%d/%m/%Y'),'')" => "dta_prev_fechamento",
+		"if(`tb_requerimento`.`dta_previsao_fechamento`,date_format(`tb_requerimento`.`dta_previsao_fechamento`,'%d/%m/%Y'),'')" => "dta_previsao_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -190,7 +190,7 @@
 
 	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
 	$x->ColCaption = array("Data de requisi&#231;&#227;o", "Data abertura", "Data de fechamento", "Status do Requerimento", "Data de previs&#227;o para o fechamento", "Gestor Imediato", "Posi&#231;&#227;o", "N&#250;mero de Vagas", "Empresa/Cliente Solicitante", "Nome do Contato", "Abertura da vaga", "Prazo para indica&#231;&#227;o de candidatos");
-	$x->ColFieldName = array('dta_requisicao', 'dta_abertura', 'dta_fechamento', 'str_status', 'dta_prev_fechamento', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'bool_abertura', 'dta_indicacao');
+	$x->ColFieldName = array('dta_requisicao', 'dta_abertura', 'dta_fechamento', 'str_status', 'dta_previsao_fechamento', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'bool_abertura', 'dta_indicacao');
 	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 14, 16, 22, 23);
 
 	// template paths below are based on the app main directory

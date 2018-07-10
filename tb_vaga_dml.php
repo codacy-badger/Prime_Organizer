@@ -252,14 +252,14 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$combo_dta_abertura->DefaultDate = parseMySQLDate('', '');
 	$combo_dta_abertura->MonthNames = $Translation['month names'];
 	$combo_dta_abertura->NamePrefix = 'dta_abertura';
-	// combobox: dta_prev_fechamento
-	$combo_dta_prev_fechamento = new DateCombo;
-	$combo_dta_prev_fechamento->DateFormat = "dmy";
-	$combo_dta_prev_fechamento->MinYear = 1900;
-	$combo_dta_prev_fechamento->MaxYear = 2100;
-	$combo_dta_prev_fechamento->DefaultDate = parseMySQLDate('', '');
-	$combo_dta_prev_fechamento->MonthNames = $Translation['month names'];
-	$combo_dta_prev_fechamento->NamePrefix = 'dta_prev_fechamento';
+	// combobox: dta_previsao_fechamento
+	$combo_dta_previsao_fechamento = new DateCombo;
+	$combo_dta_previsao_fechamento->DateFormat = "dmy";
+	$combo_dta_previsao_fechamento->MinYear = 1900;
+	$combo_dta_previsao_fechamento->MaxYear = 2100;
+	$combo_dta_previsao_fechamento->DefaultDate = parseMySQLDate('', '');
+	$combo_dta_previsao_fechamento->MonthNames = $Translation['month names'];
+	$combo_dta_previsao_fechamento->NamePrefix = 'dta_previsao_fechamento';
 	// combobox: dta_fechamento
 	$combo_dta_fechamento = new DateCombo;
 	$combo_dta_fechamento->DateFormat = "dmy";
@@ -348,7 +348,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_requerimento_id->SelectedData = $row['requerimento_id'];
 		$combo_dta_abertura->DefaultDate = $row['dta_abertura'];
-		$combo_dta_prev_fechamento->DefaultDate = $row['dta_prev_fechamento'];
+		$combo_dta_previsao_fechamento->DefaultDate = $row['dta_previsao_fechamento'];
 		$combo_dta_fechamento->DefaultDate = $row['dta_fechamento'];
 		$combo_empresa_id->SelectedData = $row['empresa_id'];
 		$combo_str_alocacao->SelectedData = $row['str_alocacao'];
@@ -865,8 +865,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%URLCOMBOTEXT(requerimento_id)%%>', urlencode($combo_requerimento_id->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(dta_abertura)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_abertura->GetHTML(true) . '</div>' : $combo_dta_abertura->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(dta_abertura)%%>', $combo_dta_abertura->GetHTML(true), $templateCode);
-	$templateCode = str_replace('<%%COMBO(dta_prev_fechamento)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_prev_fechamento->GetHTML(true) . '</div>' : $combo_dta_prev_fechamento->GetHTML()), $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(dta_prev_fechamento)%%>', $combo_dta_prev_fechamento->GetHTML(true), $templateCode);
+	$templateCode = str_replace('<%%COMBO(dta_previsao_fechamento)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_previsao_fechamento->GetHTML(true) . '</div>' : $combo_dta_previsao_fechamento->GetHTML()), $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(dta_previsao_fechamento)%%>', $combo_dta_previsao_fechamento->GetHTML(true), $templateCode);
 	$templateCode = str_replace('<%%COMBO(dta_fechamento)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_fechamento->GetHTML(true) . '</div>' : $combo_dta_fechamento->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(dta_fechamento)%%>', $combo_dta_fechamento->GetHTML(true), $templateCode);
 	$templateCode = str_replace('<%%COMBO(empresa_id)%%>', $combo_empresa_id->HTML, $templateCode);
@@ -909,7 +909,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%UPLOADFILE(requerimento_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(int_vaga_numero)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_abertura)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(dta_prev_fechamento)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(dta_previsao_fechamento)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_fechamento)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_posicao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(empresa_id)%%>', '', $templateCode);
@@ -932,8 +932,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(int_vaga_numero)%%>', urlencode($urow['int_vaga_numero']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_abertura']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_abertura'])))), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dta_prev_fechamento)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_prev_fechamento']))), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dta_prev_fechamento)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_prev_fechamento'])))), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dta_previsao_fechamento)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_previsao_fechamento']))), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dta_previsao_fechamento)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_previsao_fechamento'])))), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_fechamento']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_fechamento)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_fechamento'])))), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', safe_html($urow['str_posicao']), $templateCode);
@@ -971,8 +971,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(int_vaga_numero)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dta_prev_fechamento)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dta_prev_fechamento)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dta_previsao_fechamento)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dta_previsao_fechamento)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_fechamento)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', '', $templateCode);

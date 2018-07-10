@@ -191,7 +191,7 @@
             // Quantidade de Vagas // ID da vaga
             $quantidade = $data['int_n_vagas'];
             // Data de previsão de fechamento
-            $previsao = $data['dta_prev_fechamento'];
+            $previsao = $data['dta_previsao_fechamento'];
             
             // Cargo da vaga
             $posicao = $data['str_posicao'];
@@ -215,7 +215,7 @@
             
             // Cria as vagas de acordo com a quantidade proposta
             for($i = 1; $i <= $quantidade; $i++){
-                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
+                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
                 VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
                 
                 sql($sql, $eo);
@@ -280,7 +280,7 @@
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
                 // Data de previsão de fechamento
-                $previsao = $data['dta_prev_fechamento'];
+                $previsao = $data['dta_previsao_fechamento'];
 
                 // Cargo da vaga
                 $posicao = $data['str_posicao'];
@@ -325,8 +325,8 @@
                         $j = $i - 1;
                         
                         $sql = "
-                        INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
-                        SELECT requerimento_id, '{$i}', dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_prev_fechamento
+                        INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
+                        SELECT requerimento_id, '{$i}', dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento
                         FROM tb_vaga
                         WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$j}'";
                         
@@ -338,7 +338,7 @@
                 // Atualiza as vagas
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "UPDATE tb_vaga
-                    SET str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_prev_fechamento = '{$previsao}'
+                    SET str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_previsao_fechamento = '{$previsao}'
                     WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$i}'";
 
                     sql($sql, $eo);
@@ -362,7 +362,7 @@
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
                 // Data de previsão de fechamento
-                $previsao = $data['dta_prev_fechamento'];
+                $previsao = $data['dta_previsao_fechamento'];
 
                 // Cargo da vaga
                 $posicao = $data['str_posicao'];
@@ -386,7 +386,7 @@
 
                 // Cria as vagas de acordo com a quantidade proposta
                 for($i = 1; $i <= $quantidade; $i++){
-                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
+                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
                     VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
 
                     sql($sql, $eo);

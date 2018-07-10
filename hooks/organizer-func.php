@@ -101,10 +101,15 @@
         $query = $conn -> query($sql);
             
         // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
-        $res = $query -> fetch_array(MYSQLI_BOTH);
-        $conn -> close();
-        
-        return $res['id'];
+        if($res = $query -> fetch_array(MYSQLI_BOTH){
+            $conn -> close();
+
+            return $res['id'];
+        } else{
+            $conn -> close();
+            
+            return false;
+        }
     }
     
     // Retorna a id do contato no Mautic de acordo com o id do contato correspondente no Organizer

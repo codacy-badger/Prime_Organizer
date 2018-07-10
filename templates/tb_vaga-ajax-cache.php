@@ -11,7 +11,8 @@
 			requerimento_id: <?php echo json_encode(array('id' => $rdata['requerimento_id'], 'value' => $rdata['requerimento_id'], 'text' => $jdata['requerimento_id'])); ?>,
 			empresa_id: <?php echo json_encode(array('id' => $rdata['empresa_id'], 'value' => $rdata['empresa_id'], 'text' => $jdata['empresa_id'])); ?>,
 			str_alocacao: <?php echo json_encode(array('id' => $rdata['str_alocacao'], 'value' => $rdata['str_alocacao'], 'text' => $jdata['str_alocacao'])); ?>,
-			recrutador_id: <?php echo json_encode(array('id' => $rdata['recrutador_id'], 'value' => $rdata['recrutador_id'], 'text' => $jdata['recrutador_id'])); ?>
+			recrutador_id: <?php echo json_encode(array('id' => $rdata['recrutador_id'], 'value' => $rdata['recrutador_id'], 'text' => $jdata['recrutador_id'])); ?>,
+			str_contratado_nome: <?php echo json_encode(array('id' => $rdata['str_contratado_nome'], 'value' => $rdata['str_contratado_nome'], 'text' => $jdata['str_contratado_nome'])); ?>
 		};
 
 		/* initialize or continue using AppGini.cache for the current table */
@@ -48,6 +49,14 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'recrutador_id' && d.id == data.recrutador_id.id)
 				return { results: [ data.recrutador_id ], more: false, elapsed: 0.01 };
+			return false;
+		});
+
+		/* saved value for str_contratado_nome */
+		cache.addCheck(function(u, d){
+			if(u != 'ajax_combo.php') return false;
+			if(d.t == tn && d.f == 'str_contratado_nome' && d.id == data.str_contratado_nome.id)
+				return { results: [ data.str_contratado_nome ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

@@ -22,7 +22,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="requerimento_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Requerimento</label>
+					<label for="requerimento_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">REQ</label>
 					<div class="col-lg-9">
 						<div class="form-control-static"><span id="requerimento_id-readonly"><%%COMBOTEXT(requerimento_id)%%></span> <%%PLINK(requerimento_id)%%></div>
 					</div>
@@ -38,21 +38,59 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="empresa_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Empresa <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#empresa_id-description"></i></label>
+					<label for="dta_abertura" class="control-label col-lg-3">Data de abertura <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_abertura-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="empresa_id-description"><div class="alert alert-info">Selecione a empresa/cliente que demandou a contrata&#231;&#227;o.</div></span>
+						<span class="help-block collapse" id="dta_abertura-description"><div class="alert alert-info">Data de abertura da vaga</div></span>
 
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(empresa_id)%%><%%PLINK(empresa_id)%%><%%ADDNEW(tb_empresa)%%></div>
+						<div class="form-control-static" id="dta_abertura"><%%COMBOTEXT(dta_abertura)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="str_alocacao" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Aloca&#231;&#227;o<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_alocacao-description"></i></label>
+					<label for="dta_prev_fechamento" class="control-label col-lg-3">Data de previs&#227;o de fechamento</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="dta_prev_fechamento"><%%COMBOTEXT(dta_prev_fechamento)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_fechamento" class="control-label col-lg-3">Data fechamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_fechamento-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dta_fechamento-description"><div class="alert alert-info">Data de fechamento da vaga. Preenchido automaticamente no fechamento do requerimento.</div></span>
+
+						<div class="form-control-static" id="dta_fechamento"><%%COMBOTEXT(dta_fechamento)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_posicao" class="control-label col-lg-3">Posi&#231;&#227;o <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_posicao-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_posicao-description"><div class="alert alert-info">Informe o cargo ou fun&#231;&#227;o</div></span>
+
+						<div class="form-control-static" id="str_posicao"><%%VALUE(str_posicao)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="empresa_id" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Empresa <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#empresa_id-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="empresa_id-description"><div class="alert alert-info">Selecione a empresa/cliente que demandou a contrata&#231;&#227;o.</div></span>
+
+						<div class="form-control-static"><span id="empresa_id-readonly"><%%COMBOTEXT(empresa_id)%%></span> </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_alocacao" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Aloca&#231;&#227;o <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_alocacao-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="str_alocacao-description"><div class="alert alert-info">Selecione onde o(s) recurso(s) ser&#225; alocado</div></span>
 
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_alocacao)%%><%%ADDNEW(tb_alocacao)%%></div>
+						<div class="form-control-static"><span id="str_alocacao-readonly"><%%COMBOTEXT(str_alocacao)%%></span> </div>
 					</div>
 				</div>
 
@@ -63,26 +101,6 @@
 						<span class="help-block collapse" id="recrutador_id-description"><div class="alert alert-info">Informe o nome do recrutador respons&#225;vel</div></span>
 
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(recrutador_id)%%><%%PLINK(recrutador_id)%%><%%ADDNEW(tb_recrutador)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_posicao" class="control-label col-lg-3">Posi&#231;&#227;o<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_posicao-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="str_posicao-description"><div class="alert alert-info">Informe o cargo ou fun&#231;&#227;o</div></span>
-
-						<input maxlength="150" type="text" class="form-control" name="str_posicao" id="str_posicao" value="<%%VALUE(str_posicao)%%>" required>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="dta_abertura" class="control-label col-lg-3">Data de abertura<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_abertura-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="dta_abertura-description"><div class="alert alert-info">Data de abertura da vaga</div></span>
-
-						<%%COMBO(dta_abertura)%%>
 					</div>
 				</div>
 
@@ -106,27 +124,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_fechamento" class="control-label col-lg-3">Data fechamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_fechamento-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="dta_fechamento-description"><div class="alert alert-info">Data de fechamento da vaga. Deixe vazio caso a vaga esteja aberta.</div></span>
-
-						<%%COMBO(dta_fechamento)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="dta_previsao_fechamento" class="control-label col-lg-3">Data de previs&#227;o de fechamento</label>
-					<div class="col-lg-9">
-						<%%COMBO(dta_previsao_fechamento)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
 					<label for="str_obs" class="control-label col-lg-3">Observa&#231;&#245;es</label>
 					<div class="col-lg-9">
-						<input maxlength="255" type="text" class="form-control" name="str_obs" id="str_obs" value="<%%VALUE(str_obs)%%>">
+						<textarea class="form-control" name="str_obs" id="str_obs" rows="5"><%%VALUE(str_obs)%%></textarea>
 					</div>
 				</div>
 
@@ -140,9 +140,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="str_contratado_nome" class="control-label col-lg-3">Nome do Contratado</label>
+					<label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contratado</label>
 					<div class="col-lg-9">
-						<input maxlength="150" type="text" class="form-control" name="str_contratado_nome" id="str_contratado_nome" value="<%%VALUE(str_contratado_nome)%%>">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_contratado_nome)%%><%%PLINK(str_contratado_nome)%%><%%ADDNEW(tb_contratacao)%%></div>
 					</div>
 				</div>
 

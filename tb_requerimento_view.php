@@ -188,10 +188,10 @@
 	$x->TableIcon = "resources/table_icons/group_add.png";
 	$x->PrimaryKey = "`tb_requerimento`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Data de requisi&#231;&#227;o", "Status do Requerimento", "Data de previs&#227;o para o fechamento", "Gestor Imediato", "Posi&#231;&#227;o", "N&#250;mero de Vagas", "Empresa/Cliente Solicitante", "Aloca&#231;&#227;o", "Nome do Contato", "Abertura da vaga", "Prazo para indica&#231;&#227;o de candidatos");
-	$x->ColFieldName = array('dta_requisicao', 'str_status', 'dta_prev_fechamento', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'str_alocacao', 'contato_id', 'bool_abertura', 'dta_indicacao');
-	$x->ColNumber  = array(2, 5, 6, 7, 8, 9, 14, 15, 16, 22, 23);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Data de requisi&#231;&#227;o", "Data abertura", "Data de fechamento", "Status do Requerimento", "Data de previs&#227;o para o fechamento", "Gestor Imediato", "Posi&#231;&#227;o", "N&#250;mero de Vagas", "Empresa/Cliente Solicitante", "Nome do Contato", "Abertura da vaga", "Prazo para indica&#231;&#227;o de candidatos");
+	$x->ColFieldName = array('dta_requisicao', 'dta_abertura', 'dta_fechamento', 'str_status', 'dta_prev_fechamento', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'bool_abertura', 'dta_indicacao');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 14, 16, 22, 23);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_requerimento_templateTV.html';

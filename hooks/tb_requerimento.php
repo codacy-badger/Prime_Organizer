@@ -184,14 +184,12 @@
             // Se sim, inclui as vagas na tabela Vaga
         $status = $data['str_status'];
         
-        if($status == "Aprovado"){
+        $requerimento = $data['selectedID'];
         
-            $requerimento = $data['selectedID'];
+        if($status == "Aprovado"){
             
             // Quantidade de Vagas // ID da vaga
             $quantidade = $data['int_n_vagas'];
-            // Data de abertura da Vaga
-            $data_abertura = date('Y-m-d');
             // Data de previsão de fechamento
             $previsao = $data['dta_prev_fechamento'];
             
@@ -200,7 +198,7 @@
             // Empresa solicitante
             $empresa = $data['empresa_id'];
             // Local de alocação na empresa
-            $alocacao = $data['alocacao_id'];
+            $alocacao = $data['str_alocacao'];
             
             // Recrutador responsável
             $recrutador = $data['recrutador_id'];
@@ -208,18 +206,31 @@
             // Status de abertura da vaga
             if($data['bool_abertura'] == 'Abertura imediata'){
                 $status_vaga = 'Aberta';
+                $data_abertura_vaga = date('Y-m-d');
             } else{
                 $status_vaga = 'Congelada';
+                $data_abertura_vaga = NULL;
             }
             
             // Cria as vagas de acordo com a quantidade proposta
             for($i = 1; $i <= $quantidade; $i++){
-                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, str_alocacao, str_posicao, dta_abertura, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
-                VALUES ('{$requerimento}', '{$i}', '{$alocacao}', '{$posicao}', '{$data_abertura}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
+                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, dta_abertura, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
+                VALUES ('{$requerimento}', '{$i}', '{$data_abertura_vaga}', {$alocacao}', '{$posicao}', '{$data_abertura}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
                 
                 sql($sql, $eo);
             }
+            
+            // Data de abertura da Vaga
+            $data_abertura = date('Y-m-d');
+
+            // Insere a data de Abertura do Requerimento
+            $sql = "UPDATE tb_requerimento
+            SET dta_abertura = '{$data_abertura}'
+            WHERE id = '{$requerimento}'";
+
+            sql($sql, $eo);
         }
+        
         
 		return TRUE;
 	}
@@ -247,18 +258,23 @@
 	*/
 
 	function tb_requerimento_before_update(&$data, $memberInfo, &$args){
-
+        // ID do requerimento
+        $requerimento = $data['selectedID'];
+        
+        if(!($data = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'", $eo))){
+        }
+        
         // Status do Requerimento
         $status = $data['str_status'];
         
         // Se o requerimento está aprovado, atualiza ou cria as vagas
         if($status == "Aprovado"){
-            $query = sql("SELECT * tb_vaga WHERE requerimento_id = '{$data['selectedID']}'", $eo);
+            
+            $query = sql("SELECT requerimento_id FROM tb_vaga WHERE requerimento_id = '{$requerimento}'", $eo);
             
             // Se as vagas já existem, atualiza as mesmas
             if(db_fetch_assoc($query)){
-                $requerimento = $data['selectedID'];
-            
+                
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
                 // Data de previsão de fechamento
@@ -269,7 +285,7 @@
                 // Empresa solicitante
                 $empresa = $data['empresa_id'];
                 // Local de alocação na empresa
-                $alocacao = $data['alocacao_id'];
+                $alocacao = $data['str_alocacao'];
 
                 // Recrutador responsável
                 $recrutador = $data['recrutador_id'];
@@ -277,8 +293,10 @@
                 // Status de abertura da vaga
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';
+                    $data_abertura_vaga = date('Y-m-d');
                 } else{
                     $status_vaga = 'Congelada';
+                    $data_abertura_vaga = NULL;
                 }
 
                 // Atualiza a quantidade de vagas
@@ -309,16 +327,23 @@
                 // Atualiza as vagas
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "UPDATE tb_vaga
-                    SET int_vaga_numero, str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_previsao_fechamento = '{$indicacao}', dta_prev_fechamento = '{$previsao}'
+                    SET str_alocacao = '{$alocacao}', dta_abertura = '{$data_abertura_vaga}',str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_prev_fechamento = '{$previsao}'
                     WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$i}'";
 
                     sql($sql, $eo);
                 }
                 
+                // Data de abertura do Requerimento
+                $data_abertura = date('Y-m-d');
+
+                $sql = "UPDATE tb_requerimento
+                SET dta_abertura = '{$data_abertura}'
+                WHERE id = '{$requerimento}'";
+
+                sql($sql, $eo);
+                
             // Senão, cria as vagas   
             } else{        
-                $requerimento = $data['selectedID'];
-            
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
                 // Data de abertura da Vaga
@@ -331,7 +356,7 @@
                 // Empresa solicitante
                 $empresa = $data['empresa_id'];
                 // Local de alocação na empresa
-                $alocacao = $data['alocacao_id'];
+                $alocacao = $data['str_alocacao'];
 
                 // Recrutador responsável
                 $recrutador = $data['recrutador_id'];
@@ -339,17 +364,28 @@
                 // Status de abertura da vaga
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';
+                    $data_abertura_vaga = date('Y-m-d');
                 } else{
                     $status_vaga = 'Congelada';
+                    $data_abertura_vaga = NULL;
                 }
 
                 // Cria as vagas de acordo com a quantidade proposta
                 for($i = 1; $i <= $quantidade; $i++){
-                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, str_alocacao, str_posicao, dta_abertura, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
-                    VALUES ('{$requerimento}', '{$i}', '{$alocacao}', '{$posicao}', '{$data_abertura}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
+                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, dta_abertura, recrutador_id, empresa_id, str_status, dta_prev_fechamento)
+                    VALUES ('{$requerimento}', '{$i}', '{$data_abertura_vaga}', {$alocacao}', '{$posicao}', '{$data_abertura}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
 
                     sql($sql, $eo);
                 }
+                
+                // Data de abertura do Requerimento
+                $data_abertura = date('Y-m-d');
+
+                $sql = "UPDATE tb_requerimento
+                SET dta_abertura = '{$data_abertura}'
+                WHERE id = '{$requerimento}'";
+
+                sql($sql, $eo);
             }
         }
         

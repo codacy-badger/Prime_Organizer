@@ -95,6 +95,25 @@ function tb_contratacao_delete($selected_id, $AllowDeleteOfParents=false, $skipC
 			return $Translation['Couldn\'t delete this record'];
 	}
 
+	// child table: tb_vaga
+	$res = sql("select `id` from `tb_contratacao` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `tb_vaga` where `str_contratado_nome`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "tb_vaga", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "tb_vaga", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='tb_contratacao_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='tb_contratacao_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
 	// child table: tb_acompanhamento_colaborador
 	$res = sql("select `id` from `tb_contratacao` where `id`='$selected_id'", $eo);
 	$id = db_fetch_row($res);

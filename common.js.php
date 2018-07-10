@@ -269,16 +269,8 @@ function fix_table_responsive_width(){
 
 function tb_vaga_validateData(){
 	$j('.has-error').removeClass('has-error');
-	/* Field str_alocacao can't be empty */
-	if($j('#str_alocacao').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Aloca&#231;&#227;o", close: function(){ /* */ $j('[name=str_alocacao]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field recrutador_id can't be empty */
 	if($j('#recrutador_id').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Recrutador", close: function(){ /* */ $j('[name=recrutador_id]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Field str_posicao can't be empty */
-	if($j('#str_posicao').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Posi&#231;&#227;o", close: function(){ /* */ $j('[name=str_posicao]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
-	/* Date field dta_abertura can't be empty */
-	if($j('#dta_abertura-dd').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Data de abertura", close: function(){ /* */ $j('#dta_abertura-dd').focus().parents('.form-group').addClass('has-error'); } }); return false; };
-	if($j('#dta_abertura-mm').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Data de abertura", close: function(){ /* */ $j('#dta_abertura-mm').focus().parents('.form-group').addClass('has-error'); } }); return false; };
-	if($j('#dta_abertura').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Data de abertura", close: function(){ /* */ $j('#dta_abertura').focus().parents('.form-group').addClass('has-error'); } }); return false; };
 	/* Field str_prioridade can't be empty */
 	if($j('#str_prioridade').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Prioridade", close: function(){ /* */ $j('[name=str_prioridade]').eq(0).focus().parents('.form-group').addClass('has-error'); }, footer: [{ label: '<?php echo addslashes($Translation['ok']); ?>' }] }); return false; };
 	/* Field str_status can't be empty */

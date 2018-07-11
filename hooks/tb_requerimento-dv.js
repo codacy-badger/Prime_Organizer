@@ -65,14 +65,14 @@ $j(function(){
     
     
     // Esconde o campo Data de Previsão de Fechamento se o usuário não pertence ao grupo RH, Vagas ou Admin
-    $j('#dta_prev_fechamento').on('change', function(){
+    $j('#dta_previsao_fechamento').on('change', function(){
         var GroupID = parseInt(getCookie('groupID'));
         
         // groupID válidos: 2 (Admins), 3 (RH), 8 (Vagas)
         if(GroupID == 2 || GroupID == 3 || GroupID == 8){
-            $j('#dta_prev_fechamento').parents('.form-group').show();
+            $j('#dta_previsao_fechamento').parents('.form-group').show();
         } else{
-            $j('#dta_prev_fechamento').parents('.form-group').hide();
+            $j('#dta_previsao_fechamento').parents('.form-group').hide();
         }
     }).change();
     
@@ -104,10 +104,10 @@ $j(function(){
     // Verifica se a data de previsão de fechamento é igual ou futura à de indicação
     $j('#update, #insert').click(function(){
         var DataIndicacao = get_data('dta_indicacao');
-        var DataPrev = get_data('dta_prev_fechamento');
+        var DataPrev = get_data('dta_previsao_fechamento');
 
         if(DataPrev < DataIndicacao){
-            return show_error('dta_prev_fechamento', 'Data de Previsao de Fechamento','A Data de Previsão de Fechamento deve ser igual ou futura à Data de Indicação.');
+            return show_error('dta_previsao_fechamento', 'Data de Previsao de Fechamento','A Data de Previsão de Fechamento deve ser igual ou futura à Data de Indicação.');
         }
     });
     

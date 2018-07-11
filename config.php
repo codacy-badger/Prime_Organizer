@@ -3,10 +3,12 @@
 	$dbUsername = 'root';
 	$dbPassword = '';
 	$dbDatabase = 'teste_organizer';
-
+    
+    $memberInfo = unserialize($_COOKIE['admin_user']);
+    
 	$adminConfig = array(
-		'adminUsername' => "teste@teste.com",
-		'adminPassword' => "698dc19d489c4e4db73e28a713eab07b",
+		'adminUsername' => $memberInfo['username'],
+		'adminPassword' => $memberInfo['adminPassword'],
 		'notifyAdminNewMembers' => "",
 		'defaultSignUp' => "1",
 		'anonymousGroup' => "anonymous",
@@ -22,7 +24,7 @@
 		'PHPDateFormat' => "j/n/Y",
 		'PHPDateTimeFormat' => "d/m/Y, h:i a",
 		'senderName' => "Membership management",
-		'senderEmail' => "teste@teste.com",
+		'senderEmail' => $memberInfo['email'],
 		'approvalSubject' => "Your membership is now approved",
 		'approvalMessage' => "Dear member,\n\nYour membership is now approved by the admin. You can log in to your account here:\nhttp://localhost/prime_organizer\n\nRegards,\nAdmin",
 		'hide_twitter_feed' => "",

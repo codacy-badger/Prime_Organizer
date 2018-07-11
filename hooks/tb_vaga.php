@@ -242,7 +242,7 @@
         $requerimento = $data['requerimento_id'];
         $data = date('Y-m-d');
         
-        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND (str_status LIKE '%Preenchida%' OR str_status LIKE 'Cancelada)'");
+        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND (str_status LIKE 'Preenchida%' OR str_status LIKE 'Cancelada')");
         
         $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
         
@@ -349,7 +349,32 @@
 	*/
 
 	function tb_vaga_dv($selectedID, $memberInfo, &$html, &$args){
+        if(isset($_REQUEST['dvprint_x'])) return;
+        
+        ob_start(); ?>
 
+        
+
+		<script>
+            $j(function(){
+                <?php if($selectedID){ ?>
+                $j('#tb_vaga_dv_action_buttons .btn-toolbar').append(
+                    '<p></p>' +
+                    '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
+                        '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#fecharVaga">' +
+                            '<i class="glyphicon glyphicon-pencil"></i> Editar Status' +
+                        '</button>' +
+                    '</div>' +
+                '<p></p>'
+                );
+                <?php } ?> 
+            });
+        </script><?php
+        
+        $botao = ob_get_contents();
+		ob_end_clean();
+
+		$html .= $botao;
 	}
 
 	/**

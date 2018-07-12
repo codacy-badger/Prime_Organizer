@@ -6,7 +6,5 @@ installer
 hooks/mautic-conn.php
 hooks/organizer-conn.php
 hooks/mautic-redirect.php
-hooks/links-home.php
-hooks/links-navmenu.php
 plugins/projects/prime_organizer-1.axp
 config.php

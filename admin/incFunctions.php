@@ -234,10 +234,10 @@
 				),
 				'tb_requerimento' => array(
 					'Caption' => 'Requerimento de Vagas',
-					'Description' => 'Requerimento de vagas por parceiros',
+					'Description' => 'Requerimento de vagas por clientes e parceiros',
 					'tableIcon' => 'resources/table_icons/group_add.png',
 					'group' => $tg[0],
-					'homepageShowCount' => 1
+					'homepageShowCount' => 0
 				)
 		);
 

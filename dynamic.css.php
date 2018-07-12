@@ -66,8 +66,6 @@ img[src="blank.gif"] { max-height: 10px !important; }
 	-webkit-overflow-scrolling: touch !important;
 }
 
-.tb_requerimento-time_horario_entrada{ white-space: normal !important; max-width: 30px !important; min-width: 30px !important; overflow: hidden;  }
-.tb_requerimento-time_horario_saida{ white-space: normal !important; max-width: 30px !important; min-width: 30px !important; overflow: hidden;  }
 
 /* fixes for glyph icons in some themes */
 .glyphicon-camera:before { content: "\e046"; }

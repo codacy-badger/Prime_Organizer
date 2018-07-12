@@ -222,22 +222,22 @@
 			'dta_previsao_fechamento' => array('appgini' => 'DATE '),
 			'recrutador_id' => array('appgini' => 'INT unsigned '),
 			'str_posicao' => array('appgini' => 'VARCHAR(150) not null '),
-			'int_n_vagas' => array('appgini' => 'INT not null '),
-			'str_reposicao' => array('appgini' => 'VARCHAR(8) not null '),
-			'str_recurso' => array('appgini' => 'VARCHAR(40) '),
+			'int_n_vagas' => array('appgini' => 'INT not null default \'1\' '),
+			'str_reposicao' => array('appgini' => 'VARCHAR(40) default \'N&#195;O\' '),
+			'str_recurso' => array('appgini' => 'VARCHAR(50) '),
 			'time_horario_entrada' => array('appgini' => 'TIME not null '),
 			'time_horario_saida' => array('appgini' => 'TIME not null '),
 			'empresa_id' => array('appgini' => 'INT unsigned not null '),
 			'str_alocacao' => array('appgini' => 'INT unsigned '),
 			'contato_id' => array('appgini' => 'INT unsigned not null '),
-			'str_telefone' => array('appgini' => 'VARCHAR(40) not null '),
+			'str_telefone' => array('appgini' => 'VARCHAR(15) not null '),
 			'str_email' => array('appgini' => 'VARCHAR(40) not null '),
 			'float_salario' => array('appgini' => 'FLOAT(10,2) not null '),
-			'int_maquinas' => array('appgini' => 'INT not null default \'0\' '),
-			'str_beneficios' => array('appgini' => 'TEXT '),
-			'bool_abertura' => array('appgini' => 'VARCHAR(40) not null default \'Abertura imediata\' '),
+			'int_maquinas' => array('appgini' => 'INT '),
+			'str_beneficios' => array('appgini' => 'VARCHAR(255) '),
+			'bool_abertura' => array('appgini' => 'VARCHAR(40) not null '),
 			'dta_indicacao' => array('appgini' => 'DATE not null '),
-			'str_descricao' => array('appgini' => 'TEXT ')
+			'str_descricao' => array('appgini' => 'VARCHAR(255) ')
 		)
 	);
 

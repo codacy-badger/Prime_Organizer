@@ -35,44 +35,8 @@
 						<div class="form-control-static" id="int_vaga_numero"><%%VALUE(int_vaga_numero)%%></div>
 					</div>
 				</div>
-                    
-                <div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_status" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Status<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="str_status-description"><div class="alert alert-info">Selecione o status da vaga</div></span>
-
-						<div class="form-control-static"><span id="str_status-readonly"><%%COMBOTEXT(str_status)%%></span> </div>
-					</div>
-				</div>
-                
-                <div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="canal_fechamento" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Canal de Fechamento</label>
-					<div class="col-lg-9">
-                        <div class="form-control-static"><span id="canal_fechamento-readonly"><%%COMBOTEXT(canal_fechamento)%%></span> </div>
-					</div>
-				</div>
-                        
-                <div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="recrutador_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Recrutador<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#recrutador_id-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="recrutador_id-description"><div class="alert alert-info">Informe o nome do recrutador respons&#225;vel</div></span>
-
-						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(recrutador_id)%%><%%PLINK(recrutador_id)%%><%%ADDNEW(tb_recrutador)%%></div>
-					</div>
-				</div>
 
 				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_prioridade" class="control-label col-lg-3">Prioridade<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<%%COMBO(str_prioridade)%%>
-					</div>
-				</div>
-                
-                <div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="dta_abertura" class="control-label col-lg-3">Data de abertura <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_abertura-description"></i></label>
 					<div class="col-lg-9">
@@ -99,8 +63,8 @@
 						<div class="form-control-static" id="dta_fechamento"><%%COMBOTEXT(dta_fechamento)%%></div>
 					</div>
 				</div>
-                    
-                <div class="form-group">
+
+				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
 					<label for="str_posicao" class="control-label col-lg-3">Posi&#231;&#227;o <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_posicao-description"></i></label>
 					<div class="col-lg-9">
@@ -132,130 +96,63 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_inicio" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Data de admiss&#227;o/in&#237;cio</label>
+					<label for="recrutador_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Recrutador<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#recrutador_id-description"></i></label>
 					<div class="col-lg-9">
-						<div class="form-control-static"><span id="dta_inicio-readonly"><%%COMBOTEXT(dta_inicio)%%></span> </div>
+						<span class="help-block collapse" id="recrutador_id-description"><div class="alert alert-info">Informe o nome do recrutador respons&#225;vel</div></span>
+
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(recrutador_id)%%><%%PLINK(recrutador_id)%%><%%ADDNEW(tb_recrutador)%%></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Nome do Contratado</label>
+					<label for="str_prioridade" class="control-label col-lg-3">Prioridade<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<div class="form-control-static"><span id="str_contratado_nome-readonly"><%%COMBOTEXT(str_contratado_nome)%%></span> </div>
+						<%%COMBO(str_prioridade)%%>
 					</div>
 				</div>
-                    
-                <div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_obs" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Observa&#231;&#245;es</label>
-					<div class="col-lg-9">
-						<div class="form-control-static"><span id="str_obs-readonly"><%%VALUE(str_obs)%%></span> </div>
-					</div>
-				</div>
-                
-                <!-- -->
-                <!-- Modal -->
-                <div class="modal fade" id="fecharVaga" tabindex="-1" role="dialog" aria-labelledby="fecharVagaCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="fecharVagaLongTitle">Status da Vaga</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-		                        <fieldset class="form-horizontal">
-                                <!-- Conteúdo do modal -->
-                                    
-                                <div class="form-group">
-                                    <hr class="hidden-md hidden-lg">
-                                    <label for="str_status" class="control-label col-lg-3">
-                                        Status<span class="text-danger"><%%TRANSLATION(*)%%></span>
-                                    </label>
-                                    <div class="col-lg-9">
-                                        <span class="help-block collapse" id="str_status-description"><div class="alert alert-info">Selecione o status da vaga</div></span>
 
-                                        <%%COMBO(str_status)%%>
-                                    </div>
-                                </div>
-                                        
-                                <div class="form-group">
-                                    <hr class="hidden-md hidden-lg">
-                                    <label for="canal_fechamento" class="control-label col-lg-3">Canal de Fechamento</label>
-                                    <div class="col-lg-9">
-                                        <%%COMBO(canal_fechamento)%%>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <hr class="hidden-md hidden-lg">
-                                    <label for="dta_inicio" class="control-label col-lg-3">Data de admiss&#227;o/in&#237;cio</label>
-                                    <div class="col-lg-9">
-                                        <%%COMBO(dta_inicio)%%>
-                                    </div>
-                                </div>
-                                        
-                                <div class="form-group">
-                                    <hr class="hidden-md hidden-lg">
-                                    <label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contratado</label>
-                                    <div class="col-lg-9">
-                                        <div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_contratado_nome)%%><%%PLINK(str_contratado_nome)%%><%%ADDNEW(tb_contratacao)%%></div>
-                                    </div>
-                                </div>
-                                            
-                                <div class="form-group">
-                                    <hr class="hidden-md hidden-lg">
-                                    <label for="str_obs" class="control-label col-lg-3">Observa&#231;&#245;es</label>
-                                    <div class="col-lg-9">
-                                        <textarea class="form-control" name="str_obs" id="str_obs" rows="5"><%%VALUE(str_obs)%%></textarea>
-                                    </div>
-                                </div>
-                                
-                                <!-- Fim do conteúdo do Modal -->
-                                </fieldset>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" id='update' type="button" class="btn btn-success" name="update_x" value="1" onclick="return tb_vaga_validateData();" title="Salvar">Salvar alterações</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <script>
-                    
-                    $j(function(){
-                        
-                        // Esconde o campo Canal de Fechamento se a vaga não está marcada como Encerrada
-                        $j('#str_status').on('change', function(){
-                            var Status = $j(this).val();
-                            
-                            if(Status == 'Encerrada'){
-                                $j('#canal_fechamento').parents('.form-group').show();
-                            } else {
-                                $j('#canal_fechamento').parents('.form-group').hide();
-                            }
-                            
-                        }).change();
-                        
-                        // Esconde os campo de contrato se a vaga foi encerrada
-                        $j('#canal_fechamento').on('change', function(){
-                            var Canal = $j(this).val();
-                            
-                            if(Canal == 'Preenchida pela Prime Control' || Canal == 'Preenchida por terceiros'){
-                                $j('#dta_inicio, #str_obs, #str_contratado_nome').parents('.form-group').show();
-                            } else {
-                                $j('#dta_inicio, #str_obs, #str_contratado_nome').parents('.form-group').hide();
-                            }
-                            
-                        }).change();
-                        
-                    });
-                    
-                </script>
-                <!-- Fim do Modal -->
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_status" class="control-label col-lg-3">Status<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_status-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_status-description"><div class="alert alert-info">Selecione o status da vaga</div></span>
+
+						<%%COMBO(str_status)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="canal_fechamento" class="control-label col-lg-3">Canal de Fechamento</label>
+					<div class="col-lg-9">
+						<%%COMBO(canal_fechamento)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_obs" class="control-label col-lg-3">Observa&#231;&#245;es</label>
+					<div class="col-lg-9">
+						<textarea class="form-control" name="str_obs" id="str_obs" rows="5"><%%VALUE(str_obs)%%></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_inicio" class="control-label col-lg-3">Data de admiss&#227;o/in&#237;cio</label>
+					<div class="col-lg-9">
+						<%%COMBO(dta_inicio)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contratado</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_contratado_nome)%%><%%PLINK(str_contratado_nome)%%><%%ADDNEW(tb_contratacao)%%></div>
+					</div>
+				</div>
 
 			</fieldset>
 		</div>

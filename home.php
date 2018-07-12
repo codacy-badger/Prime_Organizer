@@ -64,7 +64,7 @@
 			/* hide current table in homepage? */
 			$tChkHL = array_search($tn, array('tb_campanha_contato','tb_acompanhamento_colaborador','tb_indicador_periodo'));
 			/* allow homepage 'add new' for current table? */
-			$tChkAHAN = array_search($tn, array('tb_entrevista','tb_contratacao','tb_empresa','tb_contato','tb_oportunidade','tb_atendimento','tb_acompanhamento','tb_ajuste_colaborador','tb_requerimento'));
+			$tChkAHAN = array_search($tn, array('tb_entrevista','tb_contratacao','tb_empresa','tb_contato','tb_oportunidade','tb_atendimento','tb_acompanhamento','tb_ajuste_colaborador'));
 
 			/* homepageShowCount for current table? */
 			$count_badge = '';

@@ -14,7 +14,7 @@ function tb_requerimento_insert(){
 		return false;
 	}
 
-	$data['dta_requisicao'] = parseMySQLDate('', '<%%editingDate%%>');
+	$data['dta_requisicao'] = parseMySQLDate('', '<%%editingTime%%>');
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
@@ -55,20 +55,17 @@ function tb_requerimento_insert(){
 	$data['str_descricao'] = br2nl(makeSafe($_REQUEST['str_descricao']));
 	if($data['str_status'] == '') $data['str_status'] = "Pendente";
 	if($data['str_posicao']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Posi&#231;&#227;o': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Nome da Posi&#231;&#227;o': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
+	if($data['int_n_vagas'] == '') $data['int_n_vagas'] = "1";
 	if($data['int_n_vagas']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'N&#250;mero de Vagas': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Quantidade de Vagas': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['str_reposicao']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Reposi&#231;&#227;o': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
+	if($data['str_reposicao'] == '') $data['str_reposicao'] = "N&#195;O";
 	if($data['time_horario_entrada']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Hor&#225;rio de Entrada': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -80,7 +77,7 @@ function tb_requerimento_insert(){
 		exit;
 	}
 	if($data['empresa_id']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Empresa/Cliente Solicitante': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Nome da Empresa Solicitante/Cliente': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -90,12 +87,12 @@ function tb_requerimento_insert(){
 		exit;
 	}
 	if($data['str_telefone']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Tel. do Solicitante': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Telefone do Contato': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	if($data['str_email']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Email do Solicitante': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Email do Contato': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -104,15 +101,8 @@ function tb_requerimento_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['int_maquinas'] == '') $data['int_maquinas'] = "0";
-	if($data['int_maquinas']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Quantas m&#225;quinas ser&#227;o necess&#225;rias?': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
-	if($data['bool_abertura'] == '') $data['bool_abertura'] = "Abertura imediata";
 	if($data['bool_abertura']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Abertura da vaga': " . $Translation['field not null'] . '<br><br>';
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Abertura da Vaga': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -221,7 +211,7 @@ function tb_requerimento_update($selected_id){
 		return false;
 	}
 
-	$data['dta_requisicao'] = parseCode('<%%editingDate%%>', false, true);
+	$data['dta_requisicao'] = parseCode('<%%editingTime%%>', false, true);
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
@@ -231,24 +221,19 @@ function tb_requerimento_update($selected_id){
 	$data['str_posicao'] = makeSafe($_REQUEST['str_posicao']);
 		if($data['str_posicao'] == empty_lookup_value){ $data['str_posicao'] = ''; }
 	if($data['str_posicao']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Posi&#231;&#227;o': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Nome da Posi&#231;&#227;o': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	$data['int_n_vagas'] = makeSafe($_REQUEST['int_n_vagas']);
 		if($data['int_n_vagas'] == empty_lookup_value){ $data['int_n_vagas'] = ''; }
 	if($data['int_n_vagas']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'N&#250;mero de Vagas': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Quantidade de Vagas': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	$data['str_reposicao'] = makeSafe($_REQUEST['str_reposicao']);
 		if($data['str_reposicao'] == empty_lookup_value){ $data['str_reposicao'] = ''; }
-	if($data['str_reposicao']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Reposi&#231;&#227;o': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['str_recurso'] = makeSafe($_REQUEST['str_recurso']);
 		if($data['str_recurso'] == empty_lookup_value){ $data['str_recurso'] = ''; }
 	$data['time_horario_entrada'] = makeSafe($_REQUEST['time_horario_entrada']);
@@ -268,7 +253,7 @@ function tb_requerimento_update($selected_id){
 	$data['empresa_id'] = makeSafe($_REQUEST['empresa_id']);
 		if($data['empresa_id'] == empty_lookup_value){ $data['empresa_id'] = ''; }
 	if($data['empresa_id']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Empresa/Cliente Solicitante': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Nome da Empresa Solicitante/Cliente': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -284,14 +269,14 @@ function tb_requerimento_update($selected_id){
 	$data['str_telefone'] = makeSafe($_REQUEST['str_telefone']);
 		if($data['str_telefone'] == empty_lookup_value){ $data['str_telefone'] = ''; }
 	if($data['str_telefone']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Tel. do Solicitante': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Telefone do Contato': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
 	$data['str_email'] = makeSafe($_REQUEST['str_email']);
 		if($data['str_email'] == empty_lookup_value){ $data['str_email'] = ''; }
 	if($data['str_email']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Email do Solicitante': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Email do Contato': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -304,16 +289,11 @@ function tb_requerimento_update($selected_id){
 	}
 	$data['int_maquinas'] = makeSafe($_REQUEST['int_maquinas']);
 		if($data['int_maquinas'] == empty_lookup_value){ $data['int_maquinas'] = ''; }
-	if($data['int_maquinas']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Quantas m&#225;quinas ser&#227;o necess&#225;rias?': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['str_beneficios'] = br2nl(makeSafe($_REQUEST['str_beneficios']));
 	$data['bool_abertura'] = makeSafe($_REQUEST['bool_abertura']);
 		if($data['bool_abertura'] == empty_lookup_value){ $data['bool_abertura'] = ''; }
 	if($data['bool_abertura']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Abertura da vaga': {$Translation['field not null']}<br><br>";
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Abertura da Vaga': {$Translation['field not null']}<br><br>";
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -392,7 +372,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$combo_dta_requisicao->DateFormat = "dmy";
 	$combo_dta_requisicao->MinYear = 1900;
 	$combo_dta_requisicao->MaxYear = 2100;
-	$combo_dta_requisicao->DefaultDate = parseMySQLDate('<%%editingDate%%>', '<%%editingDate%%>');
+	$combo_dta_requisicao->DefaultDate = parseMySQLDate('<%%editingTime%%>', '<%%editingTime%%>');
 	$combo_dta_requisicao->MonthNames = $Translation['month names'];
 	$combo_dta_requisicao->NamePrefix = 'dta_requisicao';
 	// combobox: dta_abertura
@@ -451,7 +431,6 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$combo_str_reposicao->ListData = $combo_str_reposicao->ListItem;
 	}
 	$combo_str_reposicao->SelectName = 'str_reposicao';
-	$combo_str_reposicao->AllowNull = false;
 	// combobox: empresa_id
 	$combo_empresa_id = new DataCombo;
 	// combobox: str_alocacao, filterable by: empresa_id
@@ -527,11 +506,11 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}else{
 		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='5' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Pendente");
 		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
-		$combo_str_reposicao->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_str_reposicao->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "N&#195;O");
 		$combo_empresa_id->SelectedData = $filterer_empresa_id;
 		$combo_str_alocacao->SelectedData = $filterer_str_alocacao;
 		$combo_contato_id->SelectedData = $filterer_contato_id;
-		$combo_bool_abertura->SelectedText = ( $_REQUEST['FilterField'][1]=='22' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Abertura imediata");
+		$combo_bool_abertura->SelectedText = ( $_REQUEST['FilterField'][1]=='22' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 	}
 	$combo_str_status->Render();
 	$combo_recrutador_id->HTML = '<span id="recrutador_id-container' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
@@ -1000,7 +979,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$templateCode = str_replace('<%%COMBOTEXT(dta_indicacao)%%>', $combo_dta_indicacao->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'recrutador_id' => array('tb_recrutador', 'Gestor Imediato'), 'empresa_id' => array('tb_empresa', 'Empresa/Cliente Solicitante'), 'str_alocacao' => array('tb_alocacao', 'Aloca&#231;&#227;o'), 'contato_id' => array('tb_contato', 'Nome do Contato'));
+	$lookup_fields = array(  'recrutador_id' => array('tb_recrutador', 'Gestor Imediato'), 'empresa_id' => array('tb_empresa', 'Nome da Empresa Solicitante/Cliente'), 'str_alocacao' => array('tb_alocacao', 'Aloca&#231;&#227;o do Recurso em'), 'contato_id' => array('tb_contato', 'Nome do Contato'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1043,8 +1022,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 
 	// process values
 	if($selected_id){
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(id)%%>', html_attr($row['id']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(id)%%>', safe_html($urow['id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_requisicao)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_requisicao']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_requisicao)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_requisicao'])))), $templateCode);
@@ -1119,8 +1097,8 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dta_requisicao)%%>', '<%%editingDate%%>', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dta_requisicao)%%>', urlencode('<%%editingDate%%>'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dta_requisicao)%%>', '<%%editingTime%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dta_requisicao)%%>', urlencode('<%%editingTime%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', '', $templateCode);
@@ -1133,10 +1111,10 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(int_n_vagas)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(int_n_vagas)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_reposicao)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_reposicao)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(int_n_vagas)%%>', '1', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(int_n_vagas)%%>', urlencode('1'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_reposicao)%%>', 'N&#195;O', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_reposicao)%%>', urlencode('N&#195;O'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_recurso)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_recurso)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(time_horario_entrada)%%>', '', $templateCode);
@@ -1155,12 +1133,12 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 		$templateCode = str_replace('<%%URLVALUE(str_email)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(float_salario)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(float_salario)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(int_maquinas)%%>', '0', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(int_maquinas)%%>', urlencode('0'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(int_maquinas)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(int_maquinas)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_beneficios)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_beneficios)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(bool_abertura)%%>', 'Abertura imediata', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(bool_abertura)%%>', urlencode('Abertura imediata'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(bool_abertura)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(bool_abertura)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_indicacao)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_indicacao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_descricao)%%>', '', $templateCode);

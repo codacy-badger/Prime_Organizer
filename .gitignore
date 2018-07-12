@@ -1,5 +1,7 @@
 # Lista de ignorados
 *.sql
+*.zip
+*.rar
 installer
 hooks/mautic-conn.php
 hooks/organizer-conn.php

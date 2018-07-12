@@ -16,7 +16,7 @@
 	 */
     
     $local = "";
-        
+    // Link para indicadores  
     $homeLinks[] = array(
         'url' => 'http://indicadores.primecontrol.com.br', 
         'title' => 'Indicadores', 
@@ -29,6 +29,7 @@
         'table_group' => '' // optional name of the table group you wish to add the link to. If the table group name contains non-Latin characters, you should convert them to html entities.
     );
 
+    // Link para os filtros de vagas
     $homeLinks[] = array(
         'url' => './tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta', 
         'title' => 'Vagas Abertas', 

@@ -30,17 +30,17 @@
     );
 
     $homeLinks[] = array(
-        'url' => 'http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta', 
+        'url' => 'http://organizer-test.primecontrol.com.br/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta', 
         'title' => 'Vagas Abertas', 
         'description' => 'Mostrar vagas abertas de:<br>'.
         
-                         '<a href="http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Est%C3%A9fane+Braga&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Estéfane Braga<a>&nbsp;| '. // Estéfane
+                         '<a href="http://organizer-test.primecontrol.com.br/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Est%C3%A9fane+Braga&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Estéfane Braga<a>&nbsp;| '. // Estéfane
         
-                         '<a href="http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Fernanda+Lessa&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Fernanda Lessa<a>&nbsp;| '. // Fernanda
+                         '<a href="http://organizer-test.primecontrol.com.br/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Fernanda+Lessa&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Fernanda Lessa<a>&nbsp;| '. // Fernanda
                          
-                         '<a href="http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Hadelen+Lima&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Hadelen Lima<a>&nbsp;| '. // Hadelen
+                         '<a href="http://organizer-test.primecontrol.com.br/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Hadelen+Lima&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Hadelen Lima<a>&nbsp;| '. // Hadelen
                          
-                         '<a href="http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Rafael+Silva&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Rafael Silva<a>&nbsp;| '. // Rafael
+                         '<a href="http://organizer-test.primecontrol.com.br/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Rafael+Silva&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Rafael Silva<a>&nbsp;| '. // Rafael
         
                          '<a href="http://localhost/prime_organizer/tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=Raquel+Costa&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">Raquel Costa<a>', // Raquel
         'groups' => array('Admins','RH'), // Mudar para ('RH','Comercial','Financeiro', 'Admins') no servidor

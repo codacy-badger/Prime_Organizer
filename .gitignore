@@ -5,3 +5,4 @@ hooks/mautic-conn.php
 hooks/organizer-conn.php
 hooks/mautic-redirect.php
 plugins/projects/prime_organizer-1.axp
+config.php

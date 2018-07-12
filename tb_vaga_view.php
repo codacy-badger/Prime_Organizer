@@ -34,6 +34,7 @@
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"`tb_vaga`.`canal_fechamento`" => "canal_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
 		"IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') /* Nome do Contratado */" => "str_contratado_nome"
@@ -53,8 +54,9 @@
 		11 => 11,
 		12 => 12,
 		13 => 13,
-		14 => '`tb_vaga`.`dta_inicio`',
-		15 => 15
+		14 => 14,
+		15 => '`tb_vaga`.`dta_inicio`',
+		16 => 16
 	);
 
 	// Fields that can be displayed in the csv file
@@ -71,6 +73,7 @@
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"`tb_vaga`.`canal_fechamento`" => "canal_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
 		"IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') /* Nome do Contratado */" => "str_contratado_nome"
@@ -89,6 +92,7 @@
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') /* Recrutador */" => "Recrutador",
 		"`tb_vaga`.`str_prioridade`" => "Prioridade",
 		"`tb_vaga`.`str_status`" => "Status",
+		"`tb_vaga`.`canal_fechamento`" => "Canal de Fechamento",
 		"`tb_vaga`.`str_obs`" => "Observa&#231;&#245;es",
 		"`tb_vaga`.`dta_inicio`" => "Data de admiss&#227;o/in&#237;cio",
 		"IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') /* Nome do Contratado */" => "Nome do Contratado"
@@ -108,6 +112,7 @@
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') /* Recrutador */" => "recrutador_id",
 		"`tb_vaga`.`str_prioridade`" => "str_prioridade",
 		"`tb_vaga`.`str_status`" => "str_status",
+		"`tb_vaga`.`canal_fechamento`" => "canal_fechamento",
 		"`tb_vaga`.`str_obs`" => "str_obs",
 		"if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'')" => "dta_inicio",
 		"IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') /* Nome do Contratado */" => "str_contratado_nome"
@@ -145,10 +150,10 @@
 	$x->DefaultSortField = '`tb_vaga`.`dta_abertura`';
 	$x->DefaultSortDirection = 'desc';
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("REQ", "Vaga", "Data de abertura", "Data fechamento", "Posi&#231;&#227;o", "Empresa", "Recrutador", "Prioridade", "Status", "Observa&#231;&#245;es");
-	$x->ColFieldName = array('requerimento_id', 'int_vaga_numero', 'dta_abertura', 'dta_fechamento', 'str_posicao', 'empresa_id', 'recrutador_id', 'str_prioridade', 'str_status', 'str_obs');
-	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 10, 11, 12, 13);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("REQ", "Vaga", "Data de abertura", "Data fechamento", "Posi&#231;&#227;o", "Empresa", "Recrutador", "Prioridade", "Status", "Canal de Fechamento", "Observa&#231;&#245;es");
+	$x->ColFieldName = array('requerimento_id', 'int_vaga_numero', 'dta_abertura', 'dta_fechamento', 'str_posicao', 'empresa_id', 'recrutador_id', 'str_prioridade', 'str_status', 'canal_fechamento', 'str_obs');
+	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 10, 11, 12, 13, 14);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_vaga_templateTV.html';

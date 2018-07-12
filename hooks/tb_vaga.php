@@ -239,27 +239,39 @@
         
         // Fecha o requerimento se todas as vagas foram preenchidas ou canceladas
         $id_vaga = $data['selectedID'];
-        $requerimento = $data['requerimento_id'];
+        
+        if(empty($data['requerimento_id'])){
+            $requerimento = 0;
+        } else{
+            $requerimento = $data['requerimento_id'];
+        }
+        
         $data = date('Y-m-d');
         
-        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND (str_status LIKE 'Preenchida%' OR str_status LIKE 'Cancelada')");
+        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND str_status LIKE 'Encerrada'");
         
         $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
         
         if($vagas_preenchidas == $vagas_totais){
             $sql = "UPDATE tb_requerimento
-            SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}';
-            UPDATE tb_vaga
             SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}'";
+            
+            sql($sql, $eo);
+            
+            $sql = "UPDATE tb_vaga
+            SET dta_fechamento = '{$data}' WHERE requerimento_id = '{$requerimento}'";
             
             sql($sql, $eo);
         }
         
         if($vagas_preenchidas != $vagas_totais){
             $sql = "UPDATE tb_requerimento
-            SET dta_fechamento = NULL WHERE id = '{$requerimento}';
-            UPDATE tb_vaga
             SET dta_fechamento = NULL WHERE id = '{$requerimento}'";
+            
+            sql($sql, $eo);
+            
+            $sql = "UPDATE tb_vaga
+            SET dta_fechamento = NULL WHERE requerimento_id = '{$requerimento}'";
             
             sql($sql, $eo);
         }
@@ -270,13 +282,7 @@
             $data_abertura = NULL;
         }
         
-        $sql = "UPDATE tb_vaga
-        SET dta_abertura = '{$data_abertura}'
-        WHERE id = '{$id_vaga}'";
-        
-        sql($sql, $eo);
-        
-		return TRUE;
+        return TRUE;
 	}
 
 	/**
@@ -362,7 +368,7 @@
                     '<p></p>' +
                     '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
                         '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#fecharVaga">' +
-                            '<i class="glyphicon glyphicon-pencil"></i> Editar Status' +
+                            '<i class="glyphicon glyphicon-pencil"></i> Alterar Status' +
                         '</button>' +
                     '</div>' +
                 '<p></p>'

@@ -23,6 +23,7 @@
 			'recrutador_id' => array('appgini' => 'INT unsigned not null '),
 			'str_prioridade' => array('appgini' => 'VARCHAR(150) not null '),
 			'str_status' => array('appgini' => 'VARCHAR(150) not null '),
+			'canal_fechamento' => array('appgini' => 'VARCHAR(40) '),
 			'str_obs' => array('appgini' => 'VARCHAR(255) '),
 			'dta_inicio' => array('appgini' => 'DATE '),
 			'str_contratado_nome' => array('appgini' => 'INT unsigned ')

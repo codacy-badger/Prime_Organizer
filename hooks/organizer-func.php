@@ -101,7 +101,7 @@
         $query = $conn -> query($sql);
             
         // Se o Funcionário existe, retorna o ID do mesmo de acordo com o Mautic
-        if($res = $query -> fetch_array(MYSQLI_BOTH){
+        if($res = $query -> fetch_array(MYSQLI_BOTH)){
             $conn -> close();
 
             return $res['id'];

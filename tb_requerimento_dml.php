@@ -14,7 +14,7 @@ function tb_requerimento_insert(){
 		return false;
 	}
 
-	$data['dta_requisicao'] = parseMySQLDate('', '<%%editingTime%%>');
+	$data['dta_requisicao'] = parseMySQLDate('', '<%%editingDate%%>');
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
@@ -211,7 +211,7 @@ function tb_requerimento_update($selected_id){
 		return false;
 	}
 
-	$data['dta_requisicao'] = parseCode('<%%editingTime%%>', false, true);
+	$data['dta_requisicao'] = parseCode('<%%editingDate%%>', false, true);
 	$data['str_status'] = makeSafe($_REQUEST['str_status']);
 		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
@@ -372,7 +372,7 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	$combo_dta_requisicao->DateFormat = "dmy";
 	$combo_dta_requisicao->MinYear = 1900;
 	$combo_dta_requisicao->MaxYear = 2100;
-	$combo_dta_requisicao->DefaultDate = parseMySQLDate('<%%editingTime%%>', '<%%editingTime%%>');
+	$combo_dta_requisicao->DefaultDate = parseMySQLDate('<%%editingDate%%>', '<%%editingDate%%>');
 	$combo_dta_requisicao->MonthNames = $Translation['month names'];
 	$combo_dta_requisicao->NamePrefix = 'dta_requisicao';
 	// combobox: dta_abertura
@@ -1097,8 +1097,8 @@ function tb_requerimento_form($selected_id = '', $AllowUpdate = 1, $AllowInsert 
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(dta_requisicao)%%>', '<%%editingTime%%>', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(dta_requisicao)%%>', urlencode('<%%editingTime%%>'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(dta_requisicao)%%>', '<%%editingDate%%>', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(dta_requisicao)%%>', urlencode('<%%editingDate%%>'), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_abertura)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_abertura)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', '', $templateCode);

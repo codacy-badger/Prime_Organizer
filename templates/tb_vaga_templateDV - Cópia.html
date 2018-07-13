@@ -1,0 +1,445 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<a name="detail-view"></a>
+<div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
+
+<div class="panel-body" id="tb_vaga_dv_container">
+	<!-- child links -->
+	<div class="row vspacer-md">
+		<div class="col-xs-12">
+			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="tb_entrevista_view.php?filterer_vaga_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="tb_entrevista_link"><i class="glyphicon glyphicon-list-alt"></i> Atividades de R&S</a>
+			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="tb_entrevista_view.php?filterer_vaga_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_tb_entrevista_link"><i class="glyphicon glyphicon-list-alt"></i> Atividades de R&S</a>
+			<input type="hidden" id="tb_entrevista_hclink" value="tb_entrevista_view.php?filterer_vaga_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<hr class="hidden-xs hidden-sm">
+
+	<div class="row">
+		<!-- form inputs -->
+		<div class="col-md-8 col-lg-10" id="tb_vaga_dv_form">
+			<fieldset class="form-horizontal">
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="requerimento_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">REQ</label>
+					<div class="col-lg-9">
+						<div class="form-control-static"><span id="requerimento_id-readonly"><%%COMBOTEXT(requerimento_id)%%></span> <%%PLINK(requerimento_id)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="int_vaga_numero" class="control-label col-lg-3">Vaga</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="int_vaga_numero"><%%VALUE(int_vaga_numero)%%></div>
+					</div>
+				</div>
+                
+                <div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="recrutador_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Recrutador<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#recrutador_id-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="recrutador_id-description"><div class="alert alert-info">Informe o nome do recrutador respons&#225;vel</div></span>
+
+						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(recrutador_id)%%><%%PLINK(recrutador_id)%%><%%ADDNEW(tb_recrutador)%%></div>
+					</div>
+				</div>
+                            
+                <div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_prioridade" class="control-label col-lg-3">Prioridade<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<div class="col-lg-9">
+						<%%COMBO(str_prioridade)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_abertura" class="control-label col-lg-3">Data de abertura <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_abertura-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dta_abertura-description"><div class="alert alert-info">Data de abertura da vaga</div></span>
+
+						<div class="form-control-static" id="dta_abertura"><%%COMBOTEXT(dta_abertura)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_previsao_fechamento" class="control-label col-lg-3">Data de previs&#227;o de fechamento</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="dta_previsao_fechamento"><%%COMBOTEXT(dta_previsao_fechamento)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_fechamento" class="control-label col-lg-3">Data fechamento <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#dta_fechamento-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="dta_fechamento-description"><div class="alert alert-info">Data de fechamento da vaga. Preenchido automaticamente no fechamento do requerimento.</div></span>
+
+						<div class="form-control-static" id="dta_fechamento"><%%COMBOTEXT(dta_fechamento)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_posicao" class="control-label col-lg-3">Posi&#231;&#227;o</label>
+					<div class="col-lg-9">
+						<div class="form-control-static" id="str_posicao"><%%VALUE(str_posicao)%%></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="empresa_id" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Empresa</label>
+					<div class="col-lg-9">
+						
+						<div class="form-control-static"><span id="empresa_id-readonly"><%%COMBOTEXT(empresa_id)%%></span> </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_alocacao" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Aloca&#231;&#227;o</label>
+					<div class="col-lg-9">						
+						<div class="form-control-static"><span id="str_alocacao-readonly"><%%COMBOTEXT(str_alocacao)%%></span> </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_status" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Status<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#str_status-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="str_status-description"><div class="alert alert-info">Selecione o status da vaga</div></span>
+
+						<div class="form-control-static"><span id="str_status-readonly"><%%COMBOTEXT(str_status)%%></span> </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="canal_fechamento" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Canal de Fechamento</label>
+					<div class="col-lg-9">
+						<div class="form-control-static"><span id="canal_fechamento-readonly"><%%COMBOTEXT(canal_fechamento)%%></span> </div>
+					</div>
+				</div>
+                    
+                <div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="dta_inicio" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Data de admiss&#227;o/in&#237;cio</label>
+					<div class="col-lg-9">
+						<div class="form-control-static"><span id="dta_inicio-readonly"><%%COMBOTEXT(dta_inicio)%%></span> </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Nome do Contratado</label>
+					<div class="col-lg-9">
+						<div class="form-control-static"><span id="dta_inicio-readonly"><%%COMBOTEXT(str_contratado_nome)%%></span> </div>
+					</div>
+				</div>
+                            
+                <div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="str_obs" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Observa&#231;&#245;es</label>
+					<div class="col-lg-9">
+						<div class="form-control-static"><span id="str_obs-readonly"><%%VALUE(str_obs)%%></span> </div>
+					</div>
+				</div>
+                
+                <!-- -->
+                <!-- Modal -->
+                <div class="modal fade" id="fecharVaga" tabindex="-1" role="dialog" aria-labelledby="fecharVagaCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="fecharVagaLongTitle">Alterar Status da Vaga</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+		                        <fieldset class="form-horizontal">
+                                <!-- Conteúdo do modal -->
+                                    
+                                <div class="form-group">
+                                    <hr class="hidden-md hidden-lg">
+                                    <label for="str_status" class="control-label col-lg-3">
+                                        Status<span class="text-danger"><%%TRANSLATION(*)%%></span>
+                                    </label>
+                                    <div class="col-lg-9">
+                                        <span class="help-block collapse" id="str_status-description"><div class="alert alert-info">Selecione o status da vaga</div></span>
+
+                                        <%%COMBO(str_status)%%>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <hr class="hidden-md hidden-lg">
+                                    <label for="canal_fechamento" class="control-label col-lg-3">Canal de Fechamento</label>
+                                    <div class="col-lg-9">
+                                        <%%COMBO(canal_fechamento)%%>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <hr class="hidden-md hidden-lg">
+                                    <label for="dta_inicio" class="control-label col-lg-3">Data de admiss&#227;o/in&#237;cio</label>
+                                    <div class="col-lg-9">
+                                        <%%COMBO(dta_inicio)%%>
+                                    </div>
+                                </div>
+                                        
+                                <div class="form-group">
+                                    <hr class="hidden-md hidden-lg">
+                                    <label for="str_contratado_nome" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contratado</label>
+                                    <div class="col-lg-9">
+                                        <div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_contratado_nome)%%><%%PLINK(str_contratado_nome)%%><%%ADDNEW(tb_contratacao)%%></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <hr class="hidden-md hidden-lg">
+                                    <label for="str_obs" class="control-label col-lg-3">Observa&#231;&#245;es</label>
+                                    <div class="col-lg-9">
+                                        <textarea class="form-control" name="str_obs" id="str_obs" rows="5"><%%VALUE(str_obs)%%></textarea>
+                                    </div>
+                                </div>
+                                
+                                <!-- Fim do conteúdo do Modal -->
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" id='update' type="button" class="btn btn-success" name="update_x" value="1" onclick="return tb_vaga_validateData();" title="Salvar">Salvar alterações</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    
+                    $j(function(){
+                        
+                        // Esconde o campo Canal de Fechamento se a vaga não está marcada como Encerrada
+                        $j('#str_status').on('change', function(){
+                            var Status = $j(this).val();
+                            
+                            if(Status == 'Encerrada'){
+                                $j('#canal_fechamento').parents('.form-group').show();
+                            } else {
+                                $j('#canal_fechamento, #dta_inicio, #str_obs, #str_contratado_nome').val("");
+                                $j('#canal_fechamento, #dta_inicio, #str_obs, #str_contratado_nome').parents('.form-group').hide();
+                            }
+                            
+                        }).change();
+                        
+                        // Esconde os campo de contrato se a vaga foi encerrada
+                        $j('#canal_fechamento').on('change', function(){
+                            var Canal = $j(this).val();
+                            
+                            // Se a vaga é preenchida
+                            if(Canal == 'Preenchida pela Prime Control' || Canal == 'Preenchida por terceiros'){
+                                // Mostra os campos data, observação e nome do contratado
+                                $j('#dta_inicio, #str_obs, #str_contratado_nome').parents('.form-group').show();
+                                
+                            // Se a vaga é cancelada
+                            } else if(Canal == 'Cancelada'){
+                                // Limpa os campos data e contratado
+                                $j('#dta_inicio, #str_contratado_nome').val("");
+                                $j('#dta_inicio, #str_contratado_nome').parents('.form-group').hide();
+                                
+                                // E mostra o campo observação
+                                $j('#str_obs').parents('.form-group').show();
+                            
+                            // Senão
+                            } else{
+                                // Limpa e esconde todos os campos
+                                $j('#dta_inicio, #str_obs, #str_contratado_nome').val("");
+                                $j('#dta_inicio, #str_obs, #str_contratado_nome').parents('.form-group').hide();
+                            }
+                            
+                        }).change();
+                        
+                    });
+                    
+                </script>
+                <!-- Fim do Modal -->
+
+			</fieldset>
+		</div>
+
+		<!-- DV action buttons -->
+		<hr class="hidden-md hidden-lg">
+		<div class="col-md-4 col-lg-2" id="tb_vaga_dv_action_buttons">
+			<div class="btn-toolbar">
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%UPDATE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%DESELECT_BUTTON%%>
+					<%%DVPRINT_BUTTON%%>
+					<%%DELETE_BUTTON%%>
+				</div><p></p>
+				<div class="btn-group-vertical btn-group-lg" style="width: 100%;">
+					<%%INSERT_BUTTON%%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- child records -->
+	<hr>
+	<div class="row">
+		<div class="col-lg-10 col-lg-offset-1">
+			<div id="tb_vaga-children" class="children-tabs"></div>
+		</div>
+	</div>
+
+</div><!-- /div class="panel-body" -->
+	<script>
+		$j(function() {
+			var add_new_mode = (!$j('input[name=SelectedID]').val());
+			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
+
+			/* auto-close embedded page? */
+			var autoclose_mode = ($j('input[name=AutoClose]').val() == 1);
+			var record_added_ok = (location.search.split('record-added-ok=').length == 2);
+			var record_updated_ok = (location.search.split('record-updated-ok=').length == 2);
+			if((record_added_ok || record_updated_ok) && embedded_mode && autoclose_mode){
+				setTimeout(AppGini.closeParentModal, 2000);
+			}
+
+			/* enable DV action buttons to float on scrolling down the form */
+			enable_dvab_floating();
+
+			if(!(embedded_mode && AppGini.mobileDevice())){
+				$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
+			}
+
+			$j('form').eq(0).change(function(){
+				if($j(this).data('already_changed')) return;
+				if($j('#deselect').length) $j('#deselect').removeClass('btn-default').addClass('btn-warning').get(0).lastChild.data = " <%%TRANSLATION(Cancel)%%>";
+				$j(this).data('already_changed', true);
+			});
+
+			$j('a[href="<%%TRANSLATION(ImageFolder)%%>"]').click(function(){ /* */ return false; });
+
+			if(embedded_mode){
+				/* hide links to children tables in embedded mode */
+				$j('.detail_view a[id$=_link]').remove();
+
+				/* append embedded mode to all links */
+				var append_embedded = function(){
+					$j('a[href]:not([href^="#"]):not([href^="javascript"]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
+						function(){
+							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
+						}
+					);
+				}
+				setTimeout(append_embedded, 500);
+				setTimeout(append_embedded, 1500);
+				setTimeout(append_embedded, 2500);
+				setTimeout(append_embedded, 3500);
+			}
+
+			/* when no record is selected ('add new' mode) */
+			if(add_new_mode){
+				/* hide links to children tables */
+				$j('.detail_view a[id$=_link]').remove();
+			}else{
+				post(
+					'parent-children.php', {
+						ParentTable: 'tb_vaga',
+						SelectedID: '<%%VALUE(id)%%>',
+						Operation: 'show-children'
+					},
+					'tb_vaga-children'
+				);
+			}
+
+			if(!embedded_mode){
+				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
+
+				$j('.add_new_parent').click(function(){
+					var pt = $j(this).attr('id').replace(/_add_new$/, '');
+					modal_window({
+						url: pt + '_view.php?addNew_x=1&Embedded=1',
+						close: function(){
+							var field_id = $j('#' + pt + '_add_new').prevAll('input:hidden').eq(0).attr('id');
+							$j('#' + field_id + '-container').select2('focus').select2('focus');
+						},
+						size: 'full',
+						title: $j(this).attr('title')
+					});
+				});
+			}
+
+			AppGini.hideViewParentLinks();
+
+			$j('form').on('click', '.view_parent', function(){
+				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
+
+				/* handle radio lookups */
+				if($j(this).prevAll('[type=radio]').length){
+					parent_id = $j(this).prevAll('[type=radio]').eq(0).val();
+				}
+
+				if(parent_id != '{empty_value}' && parent_id != undefined && parent_id != ''){
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
+				}
+			});
+
+
+			/* load admin tools for admin user */
+			if(!add_new_mode){
+				$j('body').append('<div id="admin-tools-appendix"></div>');
+				$j('#admin-tools-appendix').load(
+					'ajax_admin_tools.php?table=tb_vaga&id=<%%URLVALUE(id)%%>',
+					function(resp){
+						if(!resp.length) return;
+						$j.ajax('ajax_admin_tools.php?action=get_admin_tools_js&table=tb_vaga&id=<%%URLVALUE(id)%%>');
+					}
+				);
+			}
+
+			/* warn user if 'add new' clicked while unsaved changes exist */
+			$j('#addNew').click(function(){
+				if($j('#deselect.btn-warning').length){
+					return confirm('<%%TRANSLATION(discard changes confirm)%%>');
+				}
+			});
+
+		});
+	</script>

@@ -311,6 +311,7 @@
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
         require 'organizer-func.php';
+        
         $email = $data['str_email1'];
         
         // Se o contato existe, atualiza o mesmo

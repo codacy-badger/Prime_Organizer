@@ -179,12 +179,13 @@
 	*/
 
 	function tb_contato_after_insert($data, $memberInfo, &$args){
+        require 'organizer-func.php';
+        
         $email = $data['str_email1'];
         
         // Se o contato existe, atualiza o mesmo
         if($lead_id = get_lead_id_by_email_mautic($email)){
-            require 'organizer-func.php';
-        
+            
             $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
             $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
 
@@ -236,9 +237,6 @@
         // Senão, cria o contato no Mautic   
         } else{
             
-            // Funções para a integração Organizer-Mautic
-            require 'organizer-func.php';
-
             // Captura dos dados do Organizer
             $nome = retira_caracter_especial($data['str_primeiro_nome']);
             $sobrenome = retira_caracter_especial($data['str_sobrenome']);
@@ -312,11 +310,11 @@
 	*/
 
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
+        require 'organizer-func.php';
         $email = $data['str_email1'];
         
         // Se o contato existe, atualiza o mesmo
         if($lead_id = get_lead_id_by_email_mautic($email)){
-            require 'organizer-func.php';
         
             $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
             $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
@@ -369,9 +367,6 @@
         // Senão, cria o contato no Mautic   
         } else{
             
-            // Funções para a integração Organizer-Mautic
-            require 'organizer-func.php';
-
             // Captura dos dados do Organizer
             $nome = retira_caracter_especial($data['str_primeiro_nome']);
             $sobrenome = retira_caracter_especial($data['str_sobrenome']);

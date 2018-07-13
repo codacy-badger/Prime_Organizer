@@ -248,10 +248,12 @@
         
         $data = date('Y-m-d');
         
+        // Vagas preenchidas/canceladas
         $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND str_status LIKE 'Encerrada'");
-        
+        // Total de vagas do requerimento
         $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
         
+        // Se as vagas foram ecnerradas (preenchidas/canceladas), fecha o requerimento
         if($vagas_preenchidas == $vagas_totais){
             $sql = "UPDATE tb_requerimento
             SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}'";
@@ -264,6 +266,7 @@
             sql($sql, $eo);
         }
         
+        // Se as vagas não foram encerradas, deixa o requerimento aberto
         if($vagas_preenchidas != $vagas_totais){
             $sql = "UPDATE tb_requerimento
             SET dta_fechamento = NULL WHERE id = '{$requerimento}'";
@@ -276,11 +279,6 @@
             sql($sql, $eo);
         }
         
-        if($data['bool_abertura'] == 'Abertura imediata'){
-            $data_abertura = date('Y-m-d');
-        } else{
-            $data_abertura = NULL;
-        }
         
         return TRUE;
 	}

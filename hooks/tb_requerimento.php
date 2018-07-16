@@ -295,11 +295,23 @@
                 // Status de abertura da vaga
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';
-                    $data_abertura_vaga = date('Y-m-d');
-                    $data_abertura_vaga = "'$data_abertura_vaga'";
+                    
+                    if(empty($data['dta_abertura'])){
+                        $data_abertura_vaga = date('Y-m-d');
+                        $data_abertura_vaga = "'$data_abertura_vaga'";
+                    } else{
+                        $data_abertura_vaga = $data['dta_abertura'];
+                    }
+                    
                 } else{
                     $status_vaga = 'Congelada';
-                    $data_abertura_vaga = 'NULL';
+                    
+                    if(empty($data['dta_abertura'])){
+                        $data_abertura_vaga = 'NULL';
+                    } else{
+                        $data_abertura_vaga = $data['dta_abertura'];
+                    }
+                    
                 }
 
                 // Atualiza a quantidade de vagas
@@ -338,7 +350,7 @@
                 // Atualiza as vagas
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "UPDATE tb_vaga
-                    SET str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_previsao_fechamento = '{$previsao}'
+                    SET dta_abertura = $data_abertura_vaga, str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_previsao_fechamento = '{$previsao}'
                     WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$i}'";
 
                     sql($sql, $eo);

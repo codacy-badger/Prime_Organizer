@@ -30,7 +30,7 @@
     );
     
     // Link para os filtros de vagas
-    $query = sql("SELECT str_nome FROM tb_recrutador", $eo);
+    $query = sql("SELECT str_nome FROM tb_recrutador WHERE 1", $eo);
     $res = db_fetch_assoc($query);
     
     for($i = 0; $i < count($res); $i++){

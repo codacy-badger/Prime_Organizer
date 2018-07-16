@@ -30,11 +30,10 @@
     );
     
     // Link para os filtros de vagas
-    $query = sql("SELECT str_nome FROM tb_recrutador WHERE 1", $eo);
-    $res = db_fetch_assoc($query);
+    $query = sql("SELECT str_nome FROM tb_recrutador", $eo);
     
-    for($i = 0; $i < count($res); $i++){
-        $recrutadores = $recrutadores . '<a href="./tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D='. urlencode($res[$i]) .'&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">'. $res[$i] .'<a>&nbsp;| ';
+    while($res = db_fetch_assoc($query)){
+        $recrutadores = $recrutadores . '<a href="./tb_vaga_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=10&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D='. urlencode($res['str_nome']) .'&FilterAnd%5B2%5D=and&FilterField%5B2%5D=12&FilterOperator%5B2%5D=equal-to&FilterValue%5B2%5D=Aberta">'. $res['str_nome'] .'<a>&nbsp;| ';
     }
 
     $homeLinks[] = array(

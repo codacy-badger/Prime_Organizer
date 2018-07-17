@@ -27,17 +27,17 @@
             // Se o cookie já existe, reseta o mesmo
             // Grupos válidos = 2 (admin), 3 (RH), 8 (Vagas)
         if(isset($_COOKIE['groupID'])){
-            setcookie('groupID', '', time()-36000);
+            setcookie('groupID', '', time()-3600*24*365);
         }
         
         if($memberInfo['groupID'] == 2 || $memberInfo['groupID'] == 3 || $memberInfo['groupID'] == 8){
-            setcookie('groupID', $memberInfo['groupID'], time()+36000);
+            setcookie('groupID', $memberInfo['groupID'], time()+3600*24*365);
         }
         
         
         // Cria um cookie com a Info do Admin para liberar acesso à área administrativa do site
         if(isset($_COOKIE['admin_user'])){
-            setcookie('admin_user', '', time()-36000);
+            setcookie('admin_user', '', time()-3600*24*365);
         }
         
         if($memberInfo['groupID'] == 2){
@@ -45,7 +45,7 @@
             $memberInfo['adminPassword'] = sqlValue("SELECT passMD5 FROM membership_users WHERE memberID LIKE '{$user}'");
             
             $admin = serialize($memberInfo);
-            setcookie('admin_user', $admin, time()+36000);
+            setcookie('admin_user', $admin, time()+3600*24*365);
         }
         
 		return '';

@@ -64,6 +64,7 @@
         if($conn -> multi_query($sql)){
             echo 'Insert Lead in Company OK<br/>';            
         }
+        
     }
     
 ?>

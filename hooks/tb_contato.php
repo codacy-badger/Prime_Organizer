@@ -542,7 +542,7 @@
                 $j('#tb_contato_dv_action_buttons .btn-toolbar').append(
                     '<p></p>' +
                     '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
-                        '<button type="button" class="btn btn-default btn-lg" onclick="teste()">' +
+                        '<button type="button" class="btn btn-default btn-lg" onclick="mautic()">' +
                             '<i class="glyphicon glyphicon-send"></i> Mautic' +
                         '</button>' +
                     '</div>' +
@@ -551,7 +551,7 @@
                 <?php } ?>
             });
 
-            function teste(){
+            function mautic(){
                 var selectedID = '<?php echo $selectedID; ?>';
                 window.location = 'hooks/mautic-redirect.php?SelectedID=' + selectedID;
             }

@@ -480,10 +480,10 @@
 				'parent_caption' => '`tb_recrutador`.`str_nome`',
 				'parent_from' => '`tb_recrutador` ',
 				'filterers' => array(),
-				'custom_query' => '',
+				'custom_query' => 'SELECT `tb_recrutador`.`id`, `tb_recrutador`.`str_nome` FROM `tb_recrutador` WHERE bol_recrutador = 1 AND bol_status = 1 ORDER BY 2',
 				'inherit_permissions' => false,
 				'list_type' => 0,
-				'not_null' => false
+				'not_null' => true
 			),
 			'empresa_id' => array(
 				'parent_table' => 'tb_empresa',

@@ -7,8 +7,6 @@
 	<!-- child links -->
 	<div class="row vspacer-md">
 		<div class="col-xs-12">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="tb_vaga_link"><i class="glyphicon glyphicon-list-alt"></i> Vagas</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_tb_vaga_link"><i class="glyphicon glyphicon-list-alt"></i> Vagas</a>
 			<input type="hidden" id="tb_vaga_hclink" value="tb_vaga_view.php?filterer_requerimento_id=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
@@ -38,22 +36,6 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_abertura" class="control-label col-lg-3">Data de Abertura</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="dta_abertura"><%%COMBOTEXT(dta_abertura)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="dta_fechamento" class="control-label col-lg-3">Data de Fechamento</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="dta_fechamento"><%%COMBOTEXT(dta_fechamento)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
 					<label for="str_status" class="control-label col-lg-3">Status da Requisi&#231;&#227;o</label>
 					<div class="col-lg-9">
 						<%%COMBO(str_status)%%>
@@ -62,15 +44,23 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_previsao_fechamento" class="control-label col-lg-3">Data de Previs&#227;o de Fechamento</label>
+					<label for="dta_abertura" class="control-label col-lg-3">Data de Abertura</label>
 					<div class="col-lg-9">
-						<%%COMBO(dta_previsao_fechamento)%%>
+						<%%COMBO(dta_abertura)%%>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="recrutador_id" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Gestor Imediato</label>
+					<label for="dta_fechamento" class="control-label col-lg-3">Data de Fechamento</label>
+					<div class="col-lg-9">
+						<%%COMBO(dta_fechamento)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label for="recrutador_id" class="control-label col-lg-3" data-parent_link="view_parent_hidden">Gestor Imediato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(recrutador_id)%%><%%ADDNEW(tb_recrutador)%%></div>
 					</div>
@@ -94,7 +84,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="str_reposicao" class="control-label col-lg-3">Trata-se de uma reposi&#231;&#227;o?</label>
+					<label for="str_reposicao" class="control-label col-lg-3">Trata-se de uma reposi&#231;&#227;o?<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<%%COMBO(str_reposicao)%%>
 					</div>
@@ -110,17 +100,9 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="time_horario_entrada" class="control-label col-lg-3">Hor&#225;rio de Entrada<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="str_horario" class="control-label col-lg-3">Hor&#225;rio de Entrada/Sa&#237;da<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="time_horario_entrada" id="time_horario_entrada" value="<%%VALUE(time_horario_entrada)%%>" required>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="time_horario_saida" class="control-label col-lg-3">Hor&#225;rio de Sa&#237;da<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<input maxlength="" type="text" class="form-control" name="time_horario_saida" id="time_horario_saida" value="<%%VALUE(time_horario_saida)%%>" required>
+						<input maxlength="20" type="text" class="form-control" name="str_horario" id="str_horario" value="<%%VALUE(str_horario)%%>" required>
 					</div>
 				</div>
 
@@ -134,7 +116,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="str_alocacao" class="control-label col-lg-3" data-parent_link="view_parent_modal">Aloca&#231;&#227;o do Recurso em</label>
+					<label for="str_alocacao" class="control-label col-lg-3" data-parent_link="view_parent_modal">Aloca&#231;&#227;o do Recurso</label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(str_alocacao)%%><%%PLINK(str_alocacao)%%><%%ADDNEW(tb_alocacao)%%></div>
 					</div>
@@ -145,32 +127,6 @@
 					<label for="contato_id" class="control-label col-lg-3" data-parent_link="view_parent_modal">Nome do Contato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<div class="form-control-static" style="white-space: nowrap; overflow-x: hidden;"><%%COMBO(contato_id)%%><%%PLINK(contato_id)%%><%%ADDNEW(tb_contato)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_telefone" class="control-label col-lg-3">Telefone do Contato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<input maxlength="15" type="text" class="form-control" name="str_telefone" id="str_telefone" value="<%%VALUE(str_telefone)%%>" required>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="str_email" class="control-label col-lg-3">Email do Contato<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
-					<div class="col-lg-9">
-						<input maxlength="40" type="text" class="form-control" name="str_email" id="str_email" value="<%%VALUE(str_email)%%>" required>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<hr class="hidden-md hidden-lg">
-					<label for="float_salario" class="control-label col-lg-3">Sal&#225;rio/Budget<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#float_salario-description"></i></label>
-					<div class="col-lg-9">
-						<span class="help-block collapse" id="float_salario-description"><div class="alert alert-info">Em reais (R$)</div></span>
-
-						<input maxlength="13" type="text" class="form-control" name="float_salario" id="float_salario" value="<%%VALUE(float_salario)%%>" required>
 					</div>
 				</div>
 
@@ -192,6 +148,16 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
+					<label for="int_salario" class="control-label col-lg-3">Sal&#225;rio/Budget<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#int_salario-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="int_salario-description"><div class="alert alert-info">Em R$</div></span>
+
+						<input maxlength="" type="text" class="form-control" name="int_salario" id="int_salario" value="<%%VALUE(int_salario)%%>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
 					<label for="bool_abertura" class="control-label col-lg-3">Abertura da Vaga<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
 					<div class="col-lg-9">
 						<%%COMBO(bool_abertura)%%>
@@ -200,7 +166,7 @@
 
 				<div class="form-group">
 					<hr class="hidden-md hidden-lg">
-					<label for="dta_indicacao" class="control-label col-lg-3">Prazo para indica&#231;&#227;o de candidatos<span class="text-danger"><%%TRANSLATION(*)%%></span></label>
+					<label for="dta_indicacao" class="control-label col-lg-3">Prazo para indica&#231;&#227;o de candidatos</label>
 					<div class="col-lg-9">
 						<%%COMBO(dta_indicacao)%%>
 					</div>

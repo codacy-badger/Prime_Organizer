@@ -47,8 +47,15 @@ function getCookie(cname) {
     return "";
 }
 
-
 $j(function(){
+    
+    
+    // Desabilita o campo 'str_status'
+    $j('#str_status').on('change', function(){
+        $j('#str_status').prop({
+           disabled: true 
+        });
+    }).change();
     
     
     // Esconde o campo 'str_recurso' se o campo 'str_reposicao' está marcado como "NÃO"
@@ -64,19 +71,41 @@ $j(function(){
     }).change();
     
     
-    // Esconde o campo Data de Previsão de Fechamento se o usuário não pertence ao grupo RH, Vagas ou Admin
-    $j('#dta_previsao_fechamento').on('change', function(){
-        var GroupID = parseInt(getCookie('groupID'));
+    // Esconde os botões Aprovar/Rejeitar se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
+    $j('#aprovar, #rejeitar').on('change', function(){
+        var groupID = parseInt(getCookie('groupID'));
         
-        // groupID válidos: 2 (Admins), 3 (RH), 8 (Vagas)
-        if(GroupID == 2 || GroupID == 3 || GroupID == 8){
-            $j('#dta_previsao_fechamento').parents('.form-group').show();
-        } else{
-            $j('#dta_previsao_fechamento').parents('.form-group').hide();
+        if(groupID == 2 || groupID == 3 || groupID == 8){
+            $j(this).parents('.btn-group-vertical').show();
+        } else {
+            $j(this).parents('.btn-group-vertical').hide();
         }
     }).change();
     
     
+    // Esconde o campo Alocação de Recurso se a empresa não tem alocações cadastradas
+    $j('#empresa_id').on('change', function(){
+        $j('#str_alocacao').trigger('atualizaCampo');
+    }).change();
+    
+    // Implementar trigger('click') em empresa_id que ativa o campo str_aclocacao e checa a quantidade de li na ul .select2-results
+    $j('#str_alocacao').on('atualizaCampo', function(){
+        $j('#str_alocacao').parents('.form-group').show();
+    });
+    
+    
+    // Esconde os campos Data de Abertura e Data de Fechamento se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
+    $j('#dta_abertura, #dta_fechamento').on('change', function(){
+        var groupID = parseInt(getCookie('groupID'));
+        
+        if(groupID == 2 || groupID == 3 || groupID == 8){
+            $j(this).parents('.form-group').show();
+        } else {
+            $j(this).parents('.form-group').hide();
+        }
+    }).change();
+    
+
     // Verifica se a quantidade de vagas é um número maior que 0
     $j('#update, #insert').click(function(){
         var Quantidade = $j('#int_n_vagas').val();
@@ -86,50 +115,6 @@ $j(function(){
         }
     });
 
-    
-    // Verifica se a data de indicação é atual ou futura
-    $j('#update, #insert').click(function(){
-        var Hoje = new Date();
-        Hoje.setHours(0,0,0,0);
-        
-        var DataIndicacao = get_data('dta_indicacao');
-        DataIndicacao.setHours(0,0,0,0);
-
-        if(DataIndicacao < Hoje){
-            return show_error('dta_indicacao', 'Data para Indicação','A data para indicação deve ser atual ou futura.');
-        }
-    });
-    
-    
-    // Verifica se a data de previsão de fechamento é igual ou futura à de indicação
-    $j('#update, #insert').click(function(){
-        var DataIndicacao = get_data('dta_indicacao');
-        var DataPrev = get_data('dta_previsao_fechamento');
-
-        if(DataPrev < DataIndicacao){
-            return show_error('dta_previsao_fechamento', 'Data de Previsao de Fechamento','A Data de Previsão de Fechamento deve ser igual ou futura à Data de Indicação.');
-        }
-    });
-    
-    
-    // Desabilita o select de Status do Requerimento se o usuário não pertence ao grupo de usuários válido
-    $j('#str_status').on('change', function(){
-        var GroupID = parseInt(getCookie('groupID'));
-        
-        // groupID válidos: 2 (Admins), 3 (RH), 8 (Vagas)
-        if(GroupID == 2 || GroupID == 3 || GroupID == 8){
-            // Habilita o Select
-            $j(this).prop({
-                disabled: false
-            });
-        } else{
-            // Desabilita o Select
-            $j(this).prop({
-                disabled: true
-            });            
-        }
-    }).change();
-    
     
 });
 

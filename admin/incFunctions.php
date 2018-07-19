@@ -233,8 +233,8 @@
 					'homepageShowCount' => 0
 				),
 				'tb_requerimento' => array(
-					'Caption' => 'Requerimento de Vagas',
-					'Description' => 'Requerimento de vagas por clientes e parceiros',
+					'Caption' => 'Requisi&#231;&#227;o de Vagas',
+					'Description' => 'Requisi&#231;&#227;o de vagas por clientes e parceiros',
 					'tableIcon' => 'resources/table_icons/group_add.png',
 					'group' => $tg[0],
 					'homepageShowCount' => 0
@@ -276,7 +276,7 @@
 				'tb_indicador_periodo' => 'Per&#237;odos dos indicadores',
 				'tb_fatura' => 'Faturamento',
 				'tb_ajuste_colaborador' => 'Ajustes do Colaborador',
-				'tb_requerimento' => 'Requerimento de Vagas'
+				'tb_requerimento' => 'Requisi&#231;&#227;o de Vagas'
 			);
 
 			return $arrTables;

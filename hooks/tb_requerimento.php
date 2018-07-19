@@ -3,7 +3,7 @@
 	/**
 	 * @file
 	 * This file contains hook functions that get called when data operations are performed on 'tb_requerimento' table. 
-	 * For example, when a new record is added, when a record is edited, when a record is deleted, Ö etc.
+	 * For example, when a new record is added, when a record is edited, when a record is deleted, ‚Ä¶ etc.
 	*/
 
 	/**
@@ -180,7 +180,7 @@
 	*/
 
 	function tb_requerimento_after_insert($data, $memberInfo, &$args){
-        // Checa se o status do Requerimento È aprovado
+        // Checa se o status do Requerimento √© aprovado
             // Se sim, inclui as vagas na tabela Vaga
         $status = $data['str_status'];
         
@@ -189,50 +189,48 @@
         if($status == "Aprovado"){
             
             // Quantidade de Vagas // ID da vaga
-            $quantidade = $data['int_n_vagas'];
-            // Data de previs„o de fechamento
-            $previsao = $data['dta_previsao_fechamento'];
-            
-            // Cargo da vaga
-            $posicao = $data['str_posicao'];
-            // Empresa solicitante
-            $empresa = $data['empresa_id'];
-            // Local de alocaÁ„o na empresa
-            $alocacao = $data['str_alocacao'];
-            
-            // Recrutador respons·vel
-            $recrutador = $data['recrutador_id'];
-            
-            // Status de abertura da vaga
-            if($data['bool_abertura'] == 'Abertura imediata'){
-                $status_vaga = 'Aberta';
-                $data_abertura_vaga = date('Y-m-d');
-                $data_abertura_vaga = "'$data_abertura_vaga'";
-            } else{
-                $status_vaga = 'Congelada';
-                $data_abertura_vaga = 'NULL';
-            }
-            
-            // Cria as vagas de acordo com a quantidade proposta
-            for($i = 1; $i <= $quantidade; $i++){
-                $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
-                VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
+                $quantidade = $data['int_n_vagas'];
                 
-                sql($sql, $eo);
-            }
-            
-            // Data de abertura da Vaga
-            $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
-            if(!$data_abertura){
-                $data_abertura = date('Y-m-d');
+                // Cargo da vaga
+                $posicao = $data['str_posicao'];
+                // Empresa solicitante
+                $empresa = $data['empresa_id'];
+                // Local de aloca√ß√£o na empresa
+                $alocacao = $data['str_alocacao'];
 
-                // Insere a data de Abertura do Requerimento
-                $sql = "UPDATE tb_requerimento
-                SET dta_abertura = '{$data_abertura}'
-                WHERE id = '{$requerimento}'";
+                // Recrutador respons√°vel
+                $recrutador = $data['recrutador_id'];
+                
+                // Status de abertura da vaga
+                $data_abertura_vaga = $data['dta_abertura'];
+                if($data['bool_abertura'] == 'Abertura imediata'){
+                    $status_vaga = 'Aberta';                    
+                } else{
+                    $status_vaga = 'Congelada';
+                }
 
-                sql($sql, $eo);
-            }
+                // Cria as vagas de acordo com a quantidade proposta
+                for($i = 1; $i <= $quantidade; $i++){
+                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade)
+                    VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 M√©dia')";
+
+                    sql($sql, $eo);
+                }
+                
+                
+                /* Data de abertura do Requerimento
+                $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
+                if(!$data_abertura){
+                    $data_abertura = date('Y-m-d');
+
+                    // Insere a data de Abertura do Requerimento
+                    $sql = "UPDATE tb_requerimento
+                    SET dta_abertura = '{$data_abertura}'
+                    WHERE id = '{$requerimento}'";
+
+                    sql($sql, $eo);
+                }
+                */
             
         }
         
@@ -269,49 +267,34 @@
         // Status do Requerimento
         $status = $data['str_status'];
         
-        // Se o requerimento est· aprovado, atualiza ou cria as vagas
+        // Se o requerimento est√° aprovado, atualiza ou cria as vagas
         if($status == "Aprovado"){
             
             $query = sql("SELECT requerimento_id FROM tb_vaga WHERE requerimento_id = '{$requerimento}'", $eo);
             
-            // Se as vagas j· existem, atualiza as mesmas
+            // Se as vagas j√° existem, atualiza as mesmas
             if(db_fetch_assoc($query)){
                 
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
-                // Data de previs„o de fechamento
-                $previsao = $data['dta_previsao_fechamento'];
 
                 // Cargo da vaga
                 $posicao = $data['str_posicao'];
                 // Empresa solicitante
                 $empresa = $data['empresa_id'];
-                // Local de alocaÁ„o na empresa
+                // Local de aloca√ß√£o na empresa
                 $alocacao = $data['str_alocacao'];
 
-                // Recrutador respons·vel
+                // Recrutador respons√°vel
                 $recrutador = $data['recrutador_id'];
 
                 // Status de abertura da vaga
+                $data_abertura_vaga = $data['dta_abertura'];
+                
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';
-                    
-                    if(empty($data['dta_abertura'])){
-                        $data_abertura_vaga = date('Y-m-d');
-                        $data_abertura_vaga = "'$data_abertura_vaga'";
-                    } else{
-                        $data_abertura_vaga = $data['dta_abertura'];
-                    }
-                    
                 } else{
                     $status_vaga = 'Congelada';
-                    
-                    if(empty($data['dta_abertura'])){
-                        $data_abertura_vaga = 'NULL';
-                    } else{
-                        $data_abertura_vaga = $data['dta_abertura'];
-                    }
-                    
                 }
 
                 // Atualiza a quantidade de vagas
@@ -320,25 +303,24 @@
                 // Se a quantidade for maior, deleta o excesso de vagas
                 if($quantidade < $quantidade_old){
                         
-                    // $quantidade_old = 10 ==> ⁄ltima vaga era R01-10
-                    // $quantidade = 3 ==> ⁄ltima vaga ser· R01-3
-                    // $quantidade < i <= $quantidade_old ==> O que for maior que $squantidade ser· apagado
+                    // $quantidade_old = 10 ==> √öltima vaga era R01-10
+                    // $quantidade = 3 ==> √öltima vaga ser√° R01-3
+                    // $quantidade < i <= $quantidade_old ==> O que for maior que $squantidade ser√° apagado
                     sql("DELETE FROM tb_vaga WHERE int_vaga_numero > '{$quantidade}' AND requerimento_id = '{$requerimento}'", $eo);
 
-                // Se for menor, cria mais linhas na tabela
                 }
-                
+                // Se for menor, cria mais linhas na tabela
                 if($quantidade > $quantidade_old){
                         
-                    // $quantidade_old = 3 => ⁄ltima vaga era R01-3
-                    // $quantidade = 10 => ⁄ltima vaga ser· R01-10
-                    // $i = 4 => Primeira vaga a iterar ser· R01-4
+                    // $quantidade_old = 3 => √öltima vaga era R01-3
+                    // $quantidade = 10 => √öltima vaga ser√° R01-10
+                    // $i = 4 => Primeira vaga a iterar ser√° R01-4
                     for($i = $quantidade_old + 1; $i <= $quantidade; $i++){
                         $j = $i - 1;
                         
                         $sql = "
-                        INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
-                        SELECT requerimento_id, '{$i}', dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento
+                        INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade)
+                        SELECT requerimento_id, '{$i}', dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade
                         FROM tb_vaga
                         WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$j}'";
                         
@@ -350,13 +332,13 @@
                 // Atualiza as vagas
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "UPDATE tb_vaga
-                    SET dta_abertura = $data_abertura_vaga, str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}', dta_previsao_fechamento = '{$previsao}'
+                    SET dta_abertura = $data_abertura_vaga, str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}'
                     WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$i}'";
 
                     sql($sql, $eo);
                 }
                 
-                // Data de abertura do Requerimento
+                /* Data de abertura do Requerimento
                 $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
                 if(!$data_abertura){
                     $data_abertura = date('Y-m-d');
@@ -368,44 +350,41 @@
 
                     sql($sql, $eo);
                 }
+                */
                 
-            // Sen„o, cria as vagas   
+            // Sen√£o, cria as vagas   
             } else{        
                 // Quantidade de Vagas // ID da vaga
                 $quantidade = $data['int_n_vagas'];
-                // Data de previs„o de fechamento
-                $previsao = $data['dta_previsao_fechamento'];
-
+                
                 // Cargo da vaga
                 $posicao = $data['str_posicao'];
                 // Empresa solicitante
                 $empresa = $data['empresa_id'];
-                // Local de alocaÁ„o na empresa
+                // Local de aloca√ß√£o na empresa
                 $alocacao = $data['str_alocacao'];
 
-                // Recrutador respons·vel
+                // Recrutador respons√°vel
                 $recrutador = $data['recrutador_id'];
-
+                
                 // Status de abertura da vaga
+                $data_abertura_vaga = $data['dta_abertura'];
                 if($data['bool_abertura'] == 'Abertura imediata'){
-                    $status_vaga = 'Aberta';
-                    $data_abertura_vaga = date('Y-m-d');
-                    $data_abertura_vaga = "'$data_abertura_vaga'";
+                    $status_vaga = 'Aberta';                    
                 } else{
                     $status_vaga = 'Congelada';
-                    $data_abertura_vaga = 'NULL';
                 }
 
                 // Cria as vagas de acordo com a quantidade proposta
                 for($i = 1; $i <= $quantidade; $i++){
-                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, dta_previsao_fechamento)
-                    VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '{$previsao}')";
+                    $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade)
+                    VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 M√©dia')";
 
                     sql($sql, $eo);
                 }
                 
                 
-                // Data de abertura do Requerimento
+                /* Data de abertura do Requerimento
                 $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
                 if(!$data_abertura){
                     $data_abertura = date('Y-m-d');
@@ -417,6 +396,7 @@
 
                     sql($sql, $eo);
                 }
+                */
                 
             }
         }
@@ -512,7 +492,7 @@
 	 * 
 	 * @param $html
 	 * (passed by reference) the HTML code of the form ready to be displayed. This could be useful for manipulating 
-	 * the code before displaying it using regular expressions, Ö etc.
+	 * the code before displaying it using regular expressions, ‚Ä¶ etc.
 	 * 
 	 * @param $args
 	 * An empty array that is passed by reference. It's currently not used but is reserved for future uses.
@@ -522,7 +502,68 @@
 	*/
 
 	function tb_requerimento_dv($selectedID, $memberInfo, &$html, &$args){
+        if(isset($_REQUEST['dvprint_x'])) return;
+        
+        ob_start(); ?>
 
+		<script>
+            
+            // Aprova a requisi√ß√£o
+            function aprovar(){
+                
+            }
+            
+            // Rejeita a requisi√ß√£o
+            function rejeitar(){
+                $("<p>Estou funcionando</p>").dialog();
+                $j('#str_status').val("Aprovado");
+                    
+                $j('#update').trigger("click");
+            }
+            
+            $j(function(){
+                <?php if($selectedID){ ?>
+                
+                // Adiciona os bot√µes Aprovar e Rejeitar
+                $j('#tb_requerimento_dv_action_buttons .btn-toolbar').append(
+                    '<p></p>' +
+                    '<div class="btn-group-vertical btn-group-lg" id="aprovacao" style="width: 100%;">' +
+                        '<button type="button" class="btn btn-success btn-lg" id="aprovar">' +
+                            '<i class="glyphicon glyphicon-thumbs-up"></i> Abrir Vagas' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-danger btn-lg" id="rejeitar">' +
+                            '<i class="glyphicon glyphicon-thumbs-down"></i> Rejeitar Requisi√ß√£o' +
+                        '</button>' +
+                    '</div>' +
+                    '<p></p>'
+                );
+                
+                // Aprova a requisi√ß√£o
+                $j('#aprovar').click(function(){
+                    
+                    $j('#str_status').val("Aprovado");
+                    $j('#update').trigger("click");
+                    
+                });
+                
+                // Rejeita a requisi√ß√£o
+                $j('#rejeitar').click(function(){
+                    
+                    $j('#str_status').val("Rejeitado");
+                    $j('#update').trigger("click");
+                    
+                });
+                
+                <?php } ?>
+                
+            });
+            
+        </script><?php
+        
+        $botao = ob_get_contents();
+		ob_end_clean();
+
+		$html .= $botao;
 	}
 
 	/**

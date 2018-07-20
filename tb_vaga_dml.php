@@ -69,11 +69,6 @@ function tb_vaga_insert(){
 		sql("update `tb_vaga` set `empresa_id`='" . makeSafe($_REQUEST['filterer_empresa_id']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
 	}
 
-	// automatic str_alocacao
-	if($_REQUEST['filterer_str_alocacao']){
-		sql("update `tb_vaga` set `str_alocacao`='" . makeSafe($_REQUEST['filterer_str_alocacao']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
-	}
-
 	// hook: tb_vaga_after_insert
 	if(function_exists('tb_vaga_after_insert')){
 		$res = sql("select * from `tb_vaga` where `id`='" . makeSafe($recID, false) . "' limit 1", $eo);
@@ -238,7 +233,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 
 	$filterer_requerimento_id = thisOr(undo_magic_quotes($_REQUEST['filterer_requerimento_id']), '');
 	$filterer_empresa_id = thisOr(undo_magic_quotes($_REQUEST['filterer_empresa_id']), '');
-	$filterer_str_alocacao = thisOr(undo_magic_quotes($_REQUEST['filterer_str_alocacao']), '');
 	$filterer_recrutador_id = thisOr(undo_magic_quotes($_REQUEST['filterer_recrutador_id']), '');
 	$filterer_str_contratado_nome = thisOr(undo_magic_quotes($_REQUEST['filterer_str_contratado_nome']), '');
 
@@ -274,8 +268,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$combo_dta_fechamento->NamePrefix = 'dta_fechamento';
 	// combobox: empresa_id
 	$combo_empresa_id = new DataCombo;
-	// combobox: str_alocacao
-	$combo_str_alocacao = new DataCombo;
 	// combobox: recrutador_id
 	$combo_recrutador_id = new DataCombo;
 	// combobox: str_prioridade
@@ -370,7 +362,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$combo_dta_previsao_fechamento->DefaultDate = $row['dta_previsao_fechamento'];
 		$combo_dta_fechamento->DefaultDate = $row['dta_fechamento'];
 		$combo_empresa_id->SelectedData = $row['empresa_id'];
-		$combo_str_alocacao->SelectedData = $row['str_alocacao'];
 		$combo_recrutador_id->SelectedData = $row['recrutador_id'];
 		$combo_str_prioridade->SelectedData = $row['str_prioridade'];
 		$combo_str_status->SelectedData = $row['str_status'];
@@ -380,7 +371,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}else{
 		$combo_requerimento_id->SelectedData = $filterer_requerimento_id;
 		$combo_empresa_id->SelectedData = $filterer_empresa_id;
-		$combo_str_alocacao->SelectedData = $filterer_str_alocacao;
 		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
 		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='12' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
@@ -391,8 +381,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$combo_requerimento_id->MatchText = '<span id="requerimento_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="requerimento_id" id="requerimento_id' . $rnd1 . '" value="' . html_attr($combo_requerimento_id->SelectedData) . '">';
 	$combo_empresa_id->HTML = '<span id="empresa_id-container' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
 	$combo_empresa_id->MatchText = '<span id="empresa_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
-	$combo_str_alocacao->HTML = '<span id="str_alocacao-container' . $rnd1 . '"></span><input type="hidden" name="str_alocacao" id="str_alocacao' . $rnd1 . '" value="' . html_attr($combo_str_alocacao->SelectedData) . '">';
-	$combo_str_alocacao->MatchText = '<span id="str_alocacao-container-readonly' . $rnd1 . '"></span><input type="hidden" name="str_alocacao" id="str_alocacao' . $rnd1 . '" value="' . html_attr($combo_str_alocacao->SelectedData) . '">';
 	$combo_recrutador_id->HTML = '<span id="recrutador_id-container' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
 	$combo_recrutador_id->MatchText = '<span id="recrutador_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
 	$combo_str_prioridade->Render();
@@ -408,7 +396,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		// initial lookup values
 		AppGini.current_requerimento_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['requerimento_id'] : $filterer_requerimento_id); ?>"};
 		AppGini.current_empresa_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['empresa_id'] : $filterer_empresa_id); ?>"};
-		AppGini.current_str_alocacao__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['str_alocacao'] : $filterer_str_alocacao); ?>"};
 		AppGini.current_recrutador_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['recrutador_id'] : $filterer_recrutador_id); ?>"};
 		AppGini.current_str_contratado_nome__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['str_contratado_nome'] : $filterer_str_contratado_nome); ?>"};
 
@@ -416,7 +403,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 			setTimeout(function(){
 				if(typeof(requerimento_id_reload__RAND__) == 'function') requerimento_id_reload__RAND__();
 				if(typeof(empresa_id_reload__RAND__) == 'function') empresa_id_reload__RAND__();
-				if(typeof(str_alocacao_reload__RAND__) == 'function') str_alocacao_reload__RAND__();
 				if(typeof(recrutador_id_reload__RAND__) == 'function') recrutador_id_reload__RAND__();
 				if(typeof(str_contratado_nome_reload__RAND__) == 'function') str_contratado_nome_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
@@ -570,83 +556,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
 					if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
-				}
-			});
-		<?php } ?>
-
-		}
-		function str_alocacao_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			$j("#str_alocacao-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					$j.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_vaga', f: 'str_alocacao' },
-						success: function(resp){
-							c({
-								id: resp.results[0].id,
-								text: resp.results[0].text
-							});
-							$j('[name="str_alocacao"]').val(resp.results[0].id);
-							$j('[id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
-
-
-							if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
-						}
-					});
-				},
-				width: '100%',
-				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'tb_vaga', f: 'str_alocacao' }; },
-					results: function(resp, page){ /* */ return resp; }
-				},
-				escapeMarkup: function(str){ /* */ return str; }
-			}).on('change', function(e){
-				AppGini.current_str_alocacao__RAND__.value = e.added.id;
-				AppGini.current_str_alocacao__RAND__.text = e.added.text;
-				$j('[name="str_alocacao"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
-
-
-				if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
-			});
-
-			if(!$j("#str_alocacao-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_vaga', f: 'str_alocacao' },
-					success: function(resp){
-						$j('[name="str_alocacao"]').val(resp.results[0].id);
-						$j('[id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
-
-						if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
-					}
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: AppGini.current_str_alocacao__RAND__.value, t: 'tb_vaga', f: 'str_alocacao' },
-				success: function(resp){
-					$j('[id=str_alocacao-container__RAND__], [id=str_alocacao-container-readonly__RAND__]').html('<span id="str_alocacao-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_alocacao_view_parent]').hide(); }else{ $j('.btn[id=tb_alocacao_view_parent]').show(); }
-
-					if(typeof(str_alocacao_update_autofills__RAND__) == 'function') str_alocacao_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -895,9 +804,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%COMBO(empresa_id)%%>', $combo_empresa_id->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(empresa_id)%%>', $combo_empresa_id->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(empresa_id)%%>', urlencode($combo_empresa_id->MatchText), $templateCode);
-	$templateCode = str_replace('<%%COMBO(str_alocacao)%%>', $combo_str_alocacao->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(str_alocacao)%%>', $combo_str_alocacao->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(str_alocacao)%%>', urlencode($combo_str_alocacao->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(recrutador_id)%%>', $combo_recrutador_id->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(recrutador_id)%%>', $combo_recrutador_id->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(recrutador_id)%%>', urlencode($combo_recrutador_id->MatchText), $templateCode);
@@ -914,7 +820,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%URLCOMBOTEXT(str_contratado_nome)%%>', urlencode($combo_str_contratado_nome->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'requerimento_id' => array('tb_requerimento', 'REQ'), 'empresa_id' => array('tb_empresa', 'Empresa'), 'str_alocacao' => array('tb_alocacao', 'Aloca&#231;&#227;o'), 'recrutador_id' => array('tb_recrutador', 'Recrutador'), 'str_contratado_nome' => array('tb_contratacao', 'Nome do Contratado'));
+	$lookup_fields = array(  'requerimento_id' => array('tb_requerimento', 'REQ'), 'empresa_id' => array('tb_empresa', 'Empresa'), 'recrutador_id' => array('tb_recrutador', 'Recrutador'), 'str_contratado_nome' => array('tb_contratacao', 'Nome do Contratado'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -1068,9 +974,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}
 	if( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>'){
 		$templateCode.="\n<input type=hidden name=empresa_id value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
-	}
-	if( $_REQUEST['FilterField'][1]=='9' && $_REQUEST['FilterOperator'][1]=='<=>'){
-		$templateCode.="\n<input type=hidden name=str_alocacao value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
 	}
 
 	// don't include blank images in lightbox gallery

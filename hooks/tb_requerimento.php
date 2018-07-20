@@ -202,7 +202,9 @@
                 $recrutador = $data['recrutador_id'];
                 
                 // Status de abertura da vaga
-                $data_abertura_vaga = $data['dta_abertura'];
+                
+                $data_abertura_vaga = date('Y-m-d');
+            
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';                    
                 } else{
@@ -212,26 +214,11 @@
                 // Cria as vagas de acordo com a quantidade proposta
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade)
-                    VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 Média')";
+                    VALUES ('{$requerimento}', '{$i}', '{$data_abertura_vaga}', '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 Média')";
 
                     sql($sql, $eo);
                 }
                 
-                
-                /* Data de abertura do Requerimento
-                $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
-                if(!$data_abertura){
-                    $data_abertura = date('Y-m-d');
-
-                    // Insere a data de Abertura do Requerimento
-                    $sql = "UPDATE tb_requerimento
-                    SET dta_abertura = '{$data_abertura}'
-                    WHERE id = '{$requerimento}'";
-
-                    sql($sql, $eo);
-                }
-                */
-            
         }
         
         
@@ -289,7 +276,7 @@
                 $recrutador = $data['recrutador_id'];
 
                 // Status de abertura da vaga
-                $data_abertura_vaga = $data['dta_abertura'];
+                $data_abertura_vaga = date("Y-m-d");
                 
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';
@@ -338,19 +325,6 @@
                     sql($sql, $eo);
                 }
                 
-                /* Data de abertura do Requerimento
-                $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
-                if(!$data_abertura){
-                    $data_abertura = date('Y-m-d');
-
-                    // Insere a data de Abertura do Requerimento
-                    $sql = "UPDATE tb_requerimento
-                    SET dta_abertura = '{$data_abertura}'
-                    WHERE id = '{$requerimento}'";
-
-                    sql($sql, $eo);
-                }
-                */
                 
             // Senão, cria as vagas   
             } else{        
@@ -368,7 +342,7 @@
                 $recrutador = $data['recrutador_id'];
                 
                 // Status de abertura da vaga
-                $data_abertura_vaga = $data['dta_abertura'];
+                $data_abertura_vaga = date("Y-m-d");
                 if($data['bool_abertura'] == 'Abertura imediata'){
                     $status_vaga = 'Aberta';                    
                 } else{
@@ -378,25 +352,10 @@
                 // Cria as vagas de acordo com a quantidade proposta
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "INSERT INTO tb_vaga(requerimento_id, int_vaga_numero, dta_abertura, str_alocacao, str_posicao, recrutador_id, empresa_id, str_status, str_prioridade)
-                    VALUES ('{$requerimento}', '{$i}', $data_abertura_vaga, '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 Média')";
+                    VALUES ('{$requerimento}', '{$i}', '{$data_abertura_vaga}', '{$alocacao}', '{$posicao}', '{$recrutador}', '{$empresa}', '{$status_vaga}', '3 Média')";
 
                     sql($sql, $eo);
                 }
-                
-                
-                /* Data de abertura do Requerimento
-                $data_abertura = sqlValue("SELECT dta_abertura FROM tb_requerimento WHERE id = '{$requerimento}'");
-                if(!$data_abertura){
-                    $data_abertura = date('Y-m-d');
-
-                    // Insere a data de Abertura do Requerimento
-                    $sql = "UPDATE tb_requerimento
-                    SET dta_abertura = '{$data_abertura}'
-                    WHERE id = '{$requerimento}'";
-
-                    sql($sql, $eo);
-                }
-                */
                 
             }
         }
@@ -504,22 +463,9 @@
 	function tb_requerimento_dv($selectedID, $memberInfo, &$html, &$args){
         if(isset($_REQUEST['dvprint_x'])) return;
         
-        ob_start(); ?>
+        ob_start();
 
-		<script>
-            
-            // Aprova a requisição
-            function aprovar(){
-                
-            }
-            
-            // Rejeita a requisição
-            function rejeitar(){
-                $("<p>Estou funcionando</p>").dialog();
-                $j('#str_status').val("Aprovado");
-                    
-                $j('#update').trigger("click");
-            }
+        ?><script>
             
             $j(function(){
                 <?php if($selectedID){ ?>
@@ -527,32 +473,16 @@
                 // Adiciona os botões Aprovar e Rejeitar
                 $j('#tb_requerimento_dv_action_buttons .btn-toolbar').append(
                     '<p></p>' +
-                    '<div class="btn-group-vertical btn-group-lg" id="aprovacao" style="width: 100%;">' +
-                        '<button type="button" class="btn btn-success btn-lg" id="aprovar">' +
+                    '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
+                        '<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#confirmarAprovar" id="yes">' +
                             '<i class="glyphicon glyphicon-thumbs-up"></i> Abrir Vagas' +
                         '</button>' +
-                        '<button type="button" class="btn btn-danger btn-lg" id="rejeitar">' +
+                        '<button type="button" class="btn btn-danger btn-lg"data-toggle="modal" data-target="#confirmarRejeitar" id="no">' +
                             '<i class="glyphicon glyphicon-thumbs-down"></i> Rejeitar Requisição' +
                         '</button>' +
                     '</div>' +
                     '<p></p>'
                 );
-                
-                // Aprova a requisição
-                $j('#aprovar').click(function(){
-                    
-                    $j('#str_status').val("Aprovado");
-                    $j('#update').trigger("click");
-                    
-                });
-                
-                // Rejeita a requisição
-                $j('#rejeitar').click(function(){
-                    
-                    $j('#str_status').val("Rejeitado");
-                    $j('#update').trigger("click");
-                    
-                });
                 
                 <?php } ?>
                 

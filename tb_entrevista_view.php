@@ -24,7 +24,7 @@
 	$x->QueryFieldsTV = array(   
 		"`tb_entrevista`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_alocacao1`.`str_nome`), '') /* Vaga */" => "vaga_id",
+		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_vaga1`.`str_alocacao`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_vaga1`.`str_alocacao`), '') /* Vaga */" => "vaga_id",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"if(`tb_entrevista`.`dta`,date_format(`tb_entrevista`.`dta`,'%d/%m/%Y'),'')" => "dta",
 		"`tb_entrevista`.`int_qtd_contatos`" => "int_qtd_contatos",
@@ -47,7 +47,7 @@
 	$x->QueryFieldsCSV = array(   
 		"`tb_entrevista`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_alocacao1`.`str_nome`), '') /* Vaga */" => "vaga_id",
+		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_vaga1`.`str_alocacao`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_vaga1`.`str_alocacao`), '') /* Vaga */" => "vaga_id",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"if(`tb_entrevista`.`dta`,date_format(`tb_entrevista`.`dta`,'%d/%m/%Y'),'')" => "dta",
 		"`tb_entrevista`.`int_qtd_contatos`" => "int_qtd_contatos",
@@ -58,7 +58,7 @@
 	$x->QueryFieldsFilters = array(   
 		"`tb_entrevista`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "Empresa",
-		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_alocacao1`.`str_nome`), '') /* Vaga */" => "Vaga",
+		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_vaga1`.`str_alocacao`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_vaga1`.`str_alocacao`), '') /* Vaga */" => "Vaga",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "Recrutador",
 		"`tb_entrevista`.`dta`" => "Data",
 		"`tb_entrevista`.`int_qtd_contatos`" => "Qtd. de contatos",
@@ -70,7 +70,7 @@
 	$x->QueryFieldsQS = array(   
 		"`tb_entrevista`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Empresa */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_alocacao1`.`str_nome`), '') /* Vaga */" => "vaga_id",
+		"IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_vaga1`.`str_alocacao`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_vaga1`.`str_alocacao`), '') /* Vaga */" => "vaga_id",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Recrutador */" => "recrutador_id",
 		"if(`tb_entrevista`.`dta`,date_format(`tb_entrevista`.`dta`,'%d/%m/%Y'),'')" => "dta",
 		"`tb_entrevista`.`int_qtd_contatos`" => "int_qtd_contatos",
@@ -81,7 +81,7 @@
 	// Lookup fields that can be used as filterers
 	$x->filterers = array(  'empresa_id' => 'Empresa', 'vaga_id' => 'Vaga', 'recrutador_id' => 'Recrutador');
 
-	$x->QueryFrom = "`tb_entrevista` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_entrevista`.`empresa_id` LEFT JOIN `tb_vaga` as tb_vaga1 ON `tb_vaga1`.`id`=`tb_entrevista`.`vaga_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_vaga1`.`str_alocacao` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_entrevista`.`recrutador_id` ";
+	$x->QueryFrom = "`tb_entrevista` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_entrevista`.`empresa_id` LEFT JOIN `tb_vaga` as tb_vaga1 ON `tb_vaga1`.`id`=`tb_entrevista`.`vaga_id` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_entrevista`.`recrutador_id` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 

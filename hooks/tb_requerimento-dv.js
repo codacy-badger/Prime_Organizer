@@ -47,6 +47,7 @@ function getCookie(cname) {
     return "";
 }
 
+
 $j(function(){
     
     
@@ -54,7 +55,7 @@ $j(function(){
     $j('#str_status').on('change', function(){
         $j('#str_status').prop({
            disabled: true 
-        });
+        });          
     }).change();
     
     
@@ -71,50 +72,86 @@ $j(function(){
     }).change();
     
     
-    // Esconde os botões Aprovar/Rejeitar se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
-    $j('#aprovar, #rejeitar').on('change', function(){
+    // Esconde os botões Salvar/Inserir se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
+    $j('#update, #insert, #delete').on('change', function(){
         var groupID = parseInt(getCookie('groupID'));
         
         if(groupID == 2 || groupID == 3 || groupID == 8){
-            $j(this).parents('.btn-group-vertical').show();
+            // Esconde os botões Salvar/Inserir se o requerimento já está aprovado/rejeitado
+            var Status = $j('#str_status').val();
+        
+            if(Status != "Pendente"){
+                $j('#update, #insert').parents('.btn-group-vertical').hide();
+                $j('#delete').hide();
+            }
         } else {
             $j(this).parents('.btn-group-vertical').hide();
         }
+        
     }).change();
     
     
-    // Esconde o campo Alocação de Recurso se a empresa não tem alocações cadastradas
-    $j('#empresa_id').on('change', function(){
-        $j('#str_alocacao').trigger('atualizaCampo');
-    }).change();
-    
-    // Implementar trigger('click') em empresa_id que ativa o campo str_aclocacao e checa a quantidade de li na ul .select2-results
-    $j('#str_alocacao').on('atualizaCampo', function(){
-        $j('#str_alocacao').parents('.form-group').show();
-    });
-    
-    
-    // Esconde os campos Data de Abertura e Data de Fechamento se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
-    $j('#dta_abertura, #dta_fechamento').on('change', function(){
+    // Esconde os botões Abrir Vagas/Rejeitar Requisição se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
+    $j('#yes').on('change', function(){
         var groupID = parseInt(getCookie('groupID'));
         
         if(groupID == 2 || groupID == 3 || groupID == 8){
-            $j(this).parents('.form-group').show();
+            // Esconde os botões Abrir Vagas/Rejeitar Requisição se o requerimento já está aprovado/rejeitado
+            var Status = $j('#str_status').val();
+        
+            if(Status != "Pendente"){
+                $j(this).parents('.btn-group-vertical').hide();
+            }
         } else {
-            $j(this).parents('.form-group').hide();
+            $j(this).parents('.btn-group-vertical').hide();
         }
+        
     }).change();
     
-
-    // Verifica se a quantidade de vagas é um número maior que 0
+        
+    // Verifica se o salário/budget é um número maior que 0
     $j('#update, #insert').click(function(){
+        var Salario = $j('#int_salario').val();
         var Quantidade = $j('#int_n_vagas').val();
 
+        // Verifica se a quantidade de vagas é um número maior que 0
         if(isNaN(Quantidade) || Quantidade <= 0){
             return show_error('int_n_vagas', 'Quantidade de Vagas', 'A quantidade de vagas deve ser um número válido maior que 0.');
         }
+        
+        // Verifica se o salário/budget é um número maior que 0
+        if(isNaN(Salario) || Salario <= 0){
+            return show_error('int_salario', 'Salário/Budget', 'Salário/Budget deve ser um número maior ou igual à 0.');
+        }
+        
+    });
+    
+    
+    // Aprova a requisição
+    $j('#aprovar').click(function(){
+        
+        $j('#str_status').prop({
+            disabled: false
+        });
+        
+        $j('#str_status').val("Aprovado");
+        $j('#update').trigger("click");
+
     });
 
+    
+    // Rejeita a requisição
+    $j('#rejeitar').click(function(){
+        
+        $j('#str_status').prop({
+            disabled: false
+        });
+        
+        $j('#str_status').val("Rejeitado");
+        $j('#update').trigger("click");
+
+    });
+    
     
 });
 

@@ -25,8 +25,6 @@
 		"`tb_requerimento`.`id`" => "id",
 		"if(`tb_requerimento`.`dta_requisicao`,date_format(`tb_requerimento`.`dta_requisicao`,'%d/%m/%Y'),'')" => "dta_requisicao",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
-		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -34,7 +32,7 @@
 		"`tb_requerimento`.`str_recurso`" => "str_recurso",
 		"`tb_requerimento`.`str_horario`" => "str_horario",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Nome da Empresa Solicitante/Cliente */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o do Recurso */" => "str_alocacao",
+		"`tb_requerimento`.`str_alocacao`" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_contato1`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato1`.`str_sobrenome`), CONCAT_WS('',   `tb_contato1`.`str_primeiro_nome`, ' ', `tb_contato1`.`str_sobrenome`), '') /* Nome do Contato */" => "contato_id",
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
@@ -48,23 +46,21 @@
 		1 => '`tb_requerimento`.`id`',
 		2 => '`tb_requerimento`.`dta_requisicao`',
 		3 => 3,
-		4 => '`tb_requerimento`.`dta_abertura`',
-		5 => '`tb_requerimento`.`dta_fechamento`',
-		6 => '`tb_recrutador1`.`str_nome`',
+		4 => '`tb_recrutador1`.`str_nome`',
+		5 => 5,
+		6 => '`tb_requerimento`.`int_n_vagas`',
 		7 => 7,
-		8 => '`tb_requerimento`.`int_n_vagas`',
+		8 => 8,
 		9 => 9,
-		10 => 10,
+		10 => '`tb_empresa1`.`str_nome_fantasia`',
 		11 => 11,
-		12 => '`tb_empresa1`.`str_nome_fantasia`',
-		13 => '`tb_alocacao1`.`str_nome`',
+		12 => 12,
+		13 => '`tb_requerimento`.`int_maquinas`',
 		14 => 14,
-		15 => '`tb_requerimento`.`int_maquinas`',
+		15 => '`tb_requerimento`.`int_salario`',
 		16 => 16,
-		17 => '`tb_requerimento`.`int_salario`',
-		18 => 18,
-		19 => '`tb_requerimento`.`dta_indicacao`',
-		20 => 20
+		17 => '`tb_requerimento`.`dta_indicacao`',
+		18 => 18
 	);
 
 	// Fields that can be displayed in the csv file
@@ -72,8 +68,6 @@
 		"`tb_requerimento`.`id`" => "id",
 		"if(`tb_requerimento`.`dta_requisicao`,date_format(`tb_requerimento`.`dta_requisicao`,'%d/%m/%Y'),'')" => "dta_requisicao",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
-		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -81,7 +75,7 @@
 		"`tb_requerimento`.`str_recurso`" => "str_recurso",
 		"`tb_requerimento`.`str_horario`" => "str_horario",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Nome da Empresa Solicitante/Cliente */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o do Recurso */" => "str_alocacao",
+		"`tb_requerimento`.`str_alocacao`" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_contato1`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato1`.`str_sobrenome`), CONCAT_WS('',   `tb_contato1`.`str_primeiro_nome`, ' ', `tb_contato1`.`str_sobrenome`), '') /* Nome do Contato */" => "contato_id",
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
@@ -92,11 +86,9 @@
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = array(   
-		"`tb_requerimento`.`id`" => "Requerimento",
+		"`tb_requerimento`.`id`" => "Requisi&#231;&#227;o",
 		"`tb_requerimento`.`dta_requisicao`" => "Data da Requisi&#231;&#227;o",
 		"`tb_requerimento`.`str_status`" => "Status da Requisi&#231;&#227;o",
-		"`tb_requerimento`.`dta_abertura`" => "Data de Abertura",
-		"`tb_requerimento`.`dta_fechamento`" => "Data de Fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "Gestor Imediato",
 		"`tb_requerimento`.`str_posicao`" => "Nome da Posi&#231;&#227;o",
 		"`tb_requerimento`.`int_n_vagas`" => "Quantidade de Vagas",
@@ -104,7 +96,7 @@
 		"`tb_requerimento`.`str_recurso`" => "Em caso de reposi&#231;&#227;o, informe o nome do recurso que ser&#225; substitu&#237;do",
 		"`tb_requerimento`.`str_horario`" => "Hor&#225;rio de Entrada/Sa&#237;da",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Nome da Empresa Solicitante/Cliente */" => "Nome da Empresa Solicitante/Cliente",
-		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o do Recurso */" => "Aloca&#231;&#227;o do Recurso",
+		"`tb_requerimento`.`str_alocacao`" => "Aloca&#231;&#227;o do Recurso",
 		"IF(    CHAR_LENGTH(`tb_contato1`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato1`.`str_sobrenome`), CONCAT_WS('',   `tb_contato1`.`str_primeiro_nome`, ' ', `tb_contato1`.`str_sobrenome`), '') /* Nome do Contato */" => "Nome do Contato",
 		"`tb_requerimento`.`int_maquinas`" => "Quantas m&#225;quinas ser&#227;o necess&#225;rias?",
 		"`tb_requerimento`.`str_beneficios`" => "Benef&#237;cios oferecidos",
@@ -119,8 +111,6 @@
 		"`tb_requerimento`.`id`" => "id",
 		"if(`tb_requerimento`.`dta_requisicao`,date_format(`tb_requerimento`.`dta_requisicao`,'%d/%m/%Y'),'')" => "dta_requisicao",
 		"`tb_requerimento`.`str_status`" => "str_status",
-		"if(`tb_requerimento`.`dta_abertura`,date_format(`tb_requerimento`.`dta_abertura`,'%d/%m/%Y'),'')" => "dta_abertura",
-		"if(`tb_requerimento`.`dta_fechamento`,date_format(`tb_requerimento`.`dta_fechamento`,'%d/%m/%Y'),'')" => "dta_fechamento",
 		"IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') /* Gestor Imediato */" => "recrutador_id",
 		"`tb_requerimento`.`str_posicao`" => "str_posicao",
 		"`tb_requerimento`.`int_n_vagas`" => "int_n_vagas",
@@ -128,7 +118,7 @@
 		"`tb_requerimento`.`str_recurso`" => "str_recurso",
 		"`tb_requerimento`.`str_horario`" => "str_horario",
 		"IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') /* Nome da Empresa Solicitante/Cliente */" => "empresa_id",
-		"IF(    CHAR_LENGTH(`tb_alocacao1`.`str_nome`), CONCAT_WS('',   `tb_alocacao1`.`str_nome`), '') /* Aloca&#231;&#227;o do Recurso */" => "str_alocacao",
+		"`tb_requerimento`.`str_alocacao`" => "str_alocacao",
 		"IF(    CHAR_LENGTH(`tb_contato1`.`str_primeiro_nome`) || CHAR_LENGTH(`tb_contato1`.`str_sobrenome`), CONCAT_WS('',   `tb_contato1`.`str_primeiro_nome`, ' ', `tb_contato1`.`str_sobrenome`), '') /* Nome do Contato */" => "contato_id",
 		"`tb_requerimento`.`int_maquinas`" => "int_maquinas",
 		"`tb_requerimento`.`str_beneficios`" => "str_beneficios",
@@ -139,9 +129,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'recrutador_id' => 'Gestor Imediato', 'empresa_id' => 'Nome da Empresa Solicitante/Cliente', 'str_alocacao' => 'Aloca&#231;&#227;o do Recurso', 'contato_id' => 'Nome do Contato');
+	$x->filterers = array(  'recrutador_id' => 'Gestor Imediato', 'empresa_id' => 'Nome da Empresa Solicitante/Cliente', 'contato_id' => 'Nome do Contato');
 
-	$x->QueryFrom = "`tb_requerimento` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_alocacao` as tb_alocacao1 ON `tb_alocacao1`.`id`=`tb_requerimento`.`str_alocacao` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` ";
+	$x->QueryFrom = "`tb_requerimento` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_requerimento`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_requerimento`.`empresa_id` LEFT JOIN `tb_contato` as tb_contato1 ON `tb_contato1`.`id`=`tb_requerimento`.`contato_id` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -168,10 +158,10 @@
 	$x->TableIcon = "resources/table_icons/group_add.png";
 	$x->PrimaryKey = "`tb_requerimento`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Data da Requisi&#231;&#227;o", "Status da Requisi&#231;&#227;o", "Data de Abertura", "Data de Fechamento", "Gestor Imediato", "Nome da Posi&#231;&#227;o", "Quantidade de Vagas", "Nome da Empresa Solicitante/Cliente", "Nome do Contato", "Abertura da Vaga", "Prazo para indica&#231;&#227;o de candidatos");
-	$x->ColFieldName = array('dta_requisicao', 'str_status', 'dta_abertura', 'dta_fechamento', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'bool_abertura', 'dta_indicacao');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 12, 14, 18, 19);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Requisi&#231;&#227;o", "Data da Requisi&#231;&#227;o", "Status da Requisi&#231;&#227;o", "Gestor Imediato", "Nome da Posi&#231;&#227;o", "Quantidade de Vagas", "Nome da Empresa Solicitante/Cliente", "Nome do Contato", "Abertura da Vaga", "Prazo para indica&#231;&#227;o de candidatos");
+	$x->ColFieldName = array('id', 'dta_requisicao', 'str_status', 'recrutador_id', 'str_posicao', 'int_n_vagas', 'empresa_id', 'contato_id', 'bool_abertura', 'dta_indicacao');
+	$x->ColNumber  = array(1, 2, 3, 4, 5, 6, 10, 12, 16, 17);
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/tb_requerimento_templateTV.html';

@@ -10,7 +10,6 @@
 		var data = {
 			requerimento_id: <?php echo json_encode(array('id' => $rdata['requerimento_id'], 'value' => $rdata['requerimento_id'], 'text' => $jdata['requerimento_id'])); ?>,
 			empresa_id: <?php echo json_encode(array('id' => $rdata['empresa_id'], 'value' => $rdata['empresa_id'], 'text' => $jdata['empresa_id'])); ?>,
-			str_alocacao: <?php echo json_encode(array('id' => $rdata['str_alocacao'], 'value' => $rdata['str_alocacao'], 'text' => $jdata['str_alocacao'])); ?>,
 			recrutador_id: <?php echo json_encode(array('id' => $rdata['recrutador_id'], 'value' => $rdata['recrutador_id'], 'text' => $jdata['recrutador_id'])); ?>,
 			str_contratado_nome: <?php echo json_encode(array('id' => $rdata['str_contratado_nome'], 'value' => $rdata['str_contratado_nome'], 'text' => $jdata['str_contratado_nome'])); ?>
 		};
@@ -33,14 +32,6 @@
 			if(u != 'ajax_combo.php') return false;
 			if(d.t == tn && d.f == 'empresa_id' && d.id == data.empresa_id.id)
 				return { results: [ data.empresa_id ], more: false, elapsed: 0.01 };
-			return false;
-		});
-
-		/* saved value for str_alocacao */
-		cache.addCheck(function(u, d){
-			if(u != 'ajax_combo.php') return false;
-			if(d.t == tn && d.f == 'str_alocacao' && d.id == data.str_alocacao.id)
-				return { results: [ data.str_alocacao ], more: false, elapsed: 0.01 };
 			return false;
 		});
 

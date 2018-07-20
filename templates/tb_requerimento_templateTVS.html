@@ -5,10 +5,9 @@
 <!-- add the following to the tb_requerimento_init() hook (in hooks/tb_requerimento.php file) -->
 <!--     $options->ShowTableHeader = 0;     -->
 
+		<td id="tb_requerimento-id-<%%VALUE(id)%%>" class="tb_requerimento-id text-right"><%%VALUE(id)%%></td>
 		<td id="tb_requerimento-dta_requisicao-<%%VALUE(id)%%>" class="tb_requerimento-dta_requisicao"><%%VALUE(dta_requisicao)%%></td>
 		<td id="tb_requerimento-str_status-<%%VALUE(id)%%>" class="tb_requerimento-str_status"><%%VALUE(str_status)%%></td>
-		<td id="tb_requerimento-dta_abertura-<%%VALUE(id)%%>" class="tb_requerimento-dta_abertura"><%%VALUE(dta_abertura)%%></td>
-		<td id="tb_requerimento-dta_fechamento-<%%VALUE(id)%%>" class="tb_requerimento-dta_fechamento"><%%VALUE(dta_fechamento)%%></td>
 		<td id="tb_requerimento-recrutador_id-<%%VALUE(id)%%>" class="tb_requerimento-recrutador_id"><%%VALUE(recrutador_id)%%></td>
 		<td id="tb_requerimento-str_posicao-<%%VALUE(id)%%>" class="tb_requerimento-str_posicao"><%%VALUE(str_posicao)%%></td>
 		<td id="tb_requerimento-int_n_vagas-<%%VALUE(id)%%>" class="tb_requerimento-int_n_vagas text-right"><%%VALUE(int_n_vagas)%%></td>

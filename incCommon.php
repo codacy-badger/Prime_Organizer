@@ -154,7 +154,7 @@
 
 	function get_sql_fields($table_name){
 		$sql_fields = array(   
-			'tb_vaga' => "`tb_vaga`.`id` as 'id', IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') as 'requerimento_id', `tb_vaga`.`int_vaga_numero` as 'int_vaga_numero', if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'') as 'dta_previsao_fechamento', if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', `tb_vaga`.`str_posicao` as 'str_posicao', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', `tb_vaga`.`str_alocacao` as 'str_alocacao', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') as 'recrutador_id', `tb_vaga`.`str_prioridade` as 'str_prioridade', `tb_vaga`.`str_status` as 'str_status', `tb_vaga`.`canal_fechamento` as 'canal_fechamento', `tb_vaga`.`str_obs` as 'str_obs', if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'') as 'dta_inicio', IF(    CHAR_LENGTH(`tb_contratacao1`.`str_candidato_nome`) || CHAR_LENGTH(`tb_contratacao1`.`int_cpf`), CONCAT_WS('',   `tb_contratacao1`.`str_candidato_nome`, ' - ', `tb_contratacao1`.`int_cpf`), '') as 'str_contratado_nome'",
+			'tb_vaga' => "`tb_vaga`.`id` as 'id', IF(    CHAR_LENGTH(`tb_requerimento1`.`id`), CONCAT_WS('',   `tb_requerimento1`.`id`), '') as 'requerimento_id', `tb_vaga`.`int_vaga_numero` as 'int_vaga_numero', if(`tb_vaga`.`dta_abertura`,date_format(`tb_vaga`.`dta_abertura`,'%d/%m/%Y'),'') as 'dta_abertura', if(`tb_vaga`.`dta_previsao_fechamento`,date_format(`tb_vaga`.`dta_previsao_fechamento`,'%d/%m/%Y'),'') as 'dta_previsao_fechamento', if(`tb_vaga`.`dta_fechamento`,date_format(`tb_vaga`.`dta_fechamento`,'%d/%m/%Y'),'') as 'dta_fechamento', `tb_vaga`.`str_status` as 'str_status', `tb_vaga`.`str_detalhe_status` as 'str_detalhe_status', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`) || CHAR_LENGTH(`tb_recrutador1`.`bol_comercial`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`, `tb_recrutador1`.`bol_comercial`), '') as 'recrutador_id', `tb_vaga`.`str_prioridade` as 'str_prioridade', `tb_vaga`.`str_posicao` as 'str_posicao', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', `tb_vaga`.`str_alocacao` as 'str_alocacao', `tb_vaga`.`canal_fechamento` as 'canal_fechamento', `tb_vaga`.`str_obs` as 'str_obs', if(`tb_vaga`.`dta_inicio`,date_format(`tb_vaga`.`dta_inicio`,'%d/%m/%Y'),'') as 'dta_inicio'",
 			'tb_entrevista' => "`tb_entrevista`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'empresa_id', IF(    CHAR_LENGTH(`tb_vaga1`.`str_posicao`) || CHAR_LENGTH(`tb_vaga1`.`str_alocacao`), CONCAT_WS('',   `tb_vaga1`.`str_posicao`, ' - ', `tb_vaga1`.`str_alocacao`), '') as 'vaga_id', IF(    CHAR_LENGTH(`tb_recrutador1`.`str_nome`), CONCAT_WS('',   `tb_recrutador1`.`str_nome`), '') as 'recrutador_id', if(`tb_entrevista`.`dta`,date_format(`tb_entrevista`.`dta`,'%d/%m/%Y'),'') as 'dta', `tb_entrevista`.`int_qtd_contatos` as 'int_qtd_contatos', `tb_entrevista`.`int_qtd_entrevistas` as 'int_qtd_entrevistas', `tb_entrevista`.`int_qtd_encaminhamentos` as 'int_qtd_encaminhamentos'",
 			'tb_contratacao' => "`tb_contratacao`.`id` as 'id', `tb_contratacao`.`str_candidato_nome` as 'str_candidato_nome', `tb_contratacao`.`int_cpf` as 'int_cpf', if(`tb_contratacao`.`dta_contratacao`,date_format(`tb_contratacao`.`dta_contratacao`,'%d/%m/%Y'),'') as 'dta_contratacao', if(`tb_contratacao`.`dta_demissao`,date_format(`tb_contratacao`.`dta_demissao`,'%d/%m/%Y'),'') as 'dta_demissao', `tb_contratacao`.`bol_gestor` as 'bol_gestor'",
 			'tb_alocacao' => "`tb_alocacao`.`id` as 'id', IF(    CHAR_LENGTH(`tb_empresa1`.`str_nome_fantasia`), CONCAT_WS('',   `tb_empresa1`.`str_nome_fantasia`), '') as 'int_empresa', `tb_alocacao`.`str_nome` as 'str_nome'",
@@ -190,7 +190,7 @@
 
 	function get_sql_from($table_name, $skip_permissions = false){
 		$sql_from = array(   
-			'tb_vaga' => "`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` LEFT JOIN `tb_contratacao` as tb_contratacao1 ON `tb_contratacao1`.`id`=`tb_vaga`.`str_contratado_nome` ",
+			'tb_vaga' => "`tb_vaga` LEFT JOIN `tb_requerimento` as tb_requerimento1 ON `tb_requerimento1`.`id`=`tb_vaga`.`requerimento_id` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_vaga`.`recrutador_id` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_vaga`.`empresa_id` ",
 			'tb_entrevista' => "`tb_entrevista` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_entrevista`.`empresa_id` LEFT JOIN `tb_vaga` as tb_vaga1 ON `tb_vaga1`.`id`=`tb_entrevista`.`vaga_id` LEFT JOIN `tb_recrutador` as tb_recrutador1 ON `tb_recrutador1`.`id`=`tb_entrevista`.`recrutador_id` ",
 			'tb_contratacao' => "`tb_contratacao` ",
 			'tb_alocacao' => "`tb_alocacao` LEFT JOIN `tb_empresa` as tb_empresa1 ON `tb_empresa1`.`id`=`tb_alocacao`.`int_empresa` ",
@@ -293,16 +293,16 @@
 				'dta_abertura' => '',
 				'dta_previsao_fechamento' => '',
 				'dta_fechamento' => '',
+				'str_status' => 'Encerrada',
+				'str_detalhe_status' => 'Preenchida pela Prime Control',
+				'recrutador_id' => '',
+				'str_prioridade' => '',
 				'str_posicao' => '',
 				'empresa_id' => '',
 				'str_alocacao' => '',
-				'recrutador_id' => '',
-				'str_prioridade' => '',
-				'str_status' => '',
 				'canal_fechamento' => '',
 				'str_obs' => '',
-				'dta_inicio' => '',
-				'str_contratado_nome' => ''
+				'dta_inicio' => ''
 			),
 			'tb_entrevista' => array(
 				'id' => '',

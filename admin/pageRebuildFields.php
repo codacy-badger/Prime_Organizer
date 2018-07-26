@@ -17,16 +17,16 @@
 			'dta_abertura' => array('appgini' => 'DATE '),
 			'dta_previsao_fechamento' => array('appgini' => 'DATE '),
 			'dta_fechamento' => array('appgini' => 'DATE '),
+			'str_status' => array('appgini' => 'VARCHAR(40) not null default \'Encerrada\' '),
+			'str_detalhe_status' => array('appgini' => 'VARCHAR(40) default \'Preenchida pela Prime Control\' '),
+			'recrutador_id' => array('appgini' => 'INT unsigned not null '),
+			'str_prioridade' => array('appgini' => 'VARCHAR(150) not null '),
 			'str_posicao' => array('appgini' => 'VARCHAR(150) '),
 			'empresa_id' => array('appgini' => 'INT unsigned '),
 			'str_alocacao' => array('appgini' => 'VARCHAR(40) '),
-			'recrutador_id' => array('appgini' => 'INT unsigned not null '),
-			'str_prioridade' => array('appgini' => 'VARCHAR(150) not null '),
-			'str_status' => array('appgini' => 'VARCHAR(150) not null '),
-			'canal_fechamento' => array('appgini' => 'VARCHAR(40) '),
+			'canal_fechamento' => array('appgini' => 'VARCHAR(50) '),
 			'str_obs' => array('appgini' => 'VARCHAR(255) '),
-			'dta_inicio' => array('appgini' => 'DATE '),
-			'str_contratado_nome' => array('appgini' => 'INT unsigned ')
+			'dta_inicio' => array('appgini' => 'DATE ')
 		),
 		'tb_entrevista' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

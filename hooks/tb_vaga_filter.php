@@ -36,13 +36,13 @@
 		
 		
 		<div class="col-md-8 col-lg-6 vspacer-md">
-			<div id="filter_10" class="vspacer-lg"><span></span></div>
+			<div id="filter_9" class="vspacer-lg"><span></span></div>
 
 			<input type="hidden" class="populatedLookupData" name="1" value="<?php echo htmlspecialchars($FilterValue[1]); ?>" >
 			<input type="hidden" name="FilterAnd[1]" value="and">
-			<input type="hidden" name="FilterField[1]" value="10">  
-			<input type="hidden" id="lookupoperator_10" name="FilterOperator[1]" value="equal-to">
-			<input type="hidden" id="filterfield_10" name="FilterValue[1]" value="<?php echo htmlspecialchars($FilterValue[1]); ?>" size="3">
+			<input type="hidden" name="FilterField[1]" value="9">  
+			<input type="hidden" id="lookupoperator_9" name="FilterOperator[1]" value="equal-to">
+			<input type="hidden" id="filterfield_9" name="FilterValue[1]" value="<?php echo htmlspecialchars($FilterValue[1]); ?>" size="3">
 		</div>
 		
 		
@@ -56,7 +56,7 @@
 
 		$j(function(){
 			/* display a drop-down of categories that populates its content from ajax_combo.php */
-			$j("#filter_10").select2({
+			$j("#filter_9").select2({
 				ajax: {
 					url: "ajax_combo.php",
 					dataType: 'json',
@@ -65,38 +65,38 @@
 					results: function (resp, page) { return resp; }
 				}
 			}).on('change', function(e){
-				$j("#filterfield_10").val(e.added.text);
-				$j("#lookupoperator_10").val('equal-to');
+				$j("#filterfield_9").val(e.added.text);
+				$j("#lookupoperator_9").val('equal-to');
 				if (e.added.id=='{empty_value}'){
-					$j("#lookupoperator_10").val('is-empty');
+					$j("#lookupoperator_9").val('is-empty');
 				}
 			});
 
 
 			/* preserve the applied category filter and show it when re-opening the filters page */
-			if ($j("#filterfield_10").val().length){
+			if ($j("#filterfield_9").val().length){
 				
 				//None case 
-				if ($j("#filterfield_10").val() == '<None>'){
-					$j("#filter_10").select2( 'data' , {
+				if ($j("#filterfield_9").val() == '<None>'){
+					$j("#filter_9").select2( 'data' , {
 						id: '{empty-value}',
 						text: '<None>'
 					});
-					$j("#lookupoperator_10").val('is-empty');
+					$j("#lookupoperator_9").val('is-empty');
 					return;
 				}
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					data: {
-						s: $j("#filterfield_10").val(),  //search term
+						s: $j("#filterfield_9").val(),  //search term
 						p: 1,                                         //page number
 						t:"tb_vaga",                //table name
 						f:"recrutador_id"               //field name
 					}
 				}).done(function(response){
 					if (response.results.length){
-						$j("#filter_10").select2( 'data' , {
+						$j("#filter_9").select2( 'data' , {
 							id: response.results[1].id,
 							text: response.results[1].text
 						});
@@ -116,42 +116,42 @@
 		<div class="hidden-md hidden-lg col-xs-12 vspacer-lg"><label for="">Status</label></div>
 		
 		
-		<input type="hidden" class="optionsData" name="FilterField[2]" value="12">
+		<input type="hidden" class="optionsData" name="FilterField[2]" value="7">
 		<div class="col-xs-10 col-sm-11 col-md-8 col-lg-6">
 
 			<input type="hidden" name="FilterAnd[2]" value="and">
 			<input type="hidden" name="FilterOperator[2]" value="equal-to">
-			<input type="hidden" name="FilterValue[2]" id="12_currValue" value="<?php echo htmlspecialchars($FilterValue[2]); ?>" size="3">
+			<input type="hidden" name="FilterValue[2]" id="7_currValue" value="<?php echo htmlspecialchars($FilterValue[2]); ?>" size="3">
 
 	
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Aberta'>Aberta				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Aberta'>Aberta				</label>
 			</div>
 	 
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Recrutamento inicial'>Recrutamento inicial				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Recrutamento inicial'>Recrutamento inicial				</label>
 			</div>
 	 
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Aguardando o cliente'>Aguardando o cliente				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Aguardando o cliente'>Aguardando o cliente				</label>
 			</div>
 	 
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Recrutamento adicional'>Recrutamento adicional				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Recrutamento adicional'>Recrutamento adicional				</label>
 			</div>
 	 
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Encerrada'>Encerrada				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Encerrada'>Encerrada				</label>
 			</div>
 	 
 			<div class="radio">
 				<label>
-					 <input type="radio" name="FilterValue[2]" class="filter_12" value='Congelada'>Congelada				</label>
+					 <input type="radio" name="FilterValue[2]" class="filter_7" value='Congelada'>Congelada				</label>
 			</div>
 	 		</div>
 
@@ -163,10 +163,10 @@
 			</div>
 	<script>
 		//for population
-		var filterValue_12 = '<?php echo htmlspecialchars($FilterValue[ 2 ]); ?>';
+		var filterValue_7 = '<?php echo htmlspecialchars($FilterValue[ 2 ]); ?>';
 		$j(function () {
-			if (filterValue_12) {
-				$j("input[class =filter_12][value ='" + filterValue_12 + "']").attr("checked", "checked");
+			if (filterValue_7) {
+				$j("input[class =filter_7][value ='" + filterValue_7 + "']").attr("checked", "checked");
 			}
 		})
 	</script>

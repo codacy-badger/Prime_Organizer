@@ -14,19 +14,28 @@ function tb_vaga_insert(){
 		return false;
 	}
 
+	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
+	$data['dta_previsao_fechamento'] = parseMySQLDate($data['dta_previsao_fechamento'], '');
+	$data['str_status'] = makeSafe($_REQUEST['str_status']);
+		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
+	$data['str_detalhe_status'] = makeSafe($_REQUEST['str_detalhe_status']);
+		if($data['str_detalhe_status'] == empty_lookup_value){ $data['str_detalhe_status'] = ''; }
 	$data['recrutador_id'] = makeSafe($_REQUEST['recrutador_id']);
 		if($data['recrutador_id'] == empty_lookup_value){ $data['recrutador_id'] = ''; }
 	$data['str_prioridade'] = makeSafe($_REQUEST['str_prioridade']);
 		if($data['str_prioridade'] == empty_lookup_value){ $data['str_prioridade'] = ''; }
-	$data['str_status'] = makeSafe($_REQUEST['str_status']);
-		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
 	$data['canal_fechamento'] = makeSafe($_REQUEST['canal_fechamento']);
 		if($data['canal_fechamento'] == empty_lookup_value){ $data['canal_fechamento'] = ''; }
 	$data['str_obs'] = br2nl(makeSafe($_REQUEST['str_obs']));
 	$data['dta_inicio'] = intval($_REQUEST['dta_inicioYear']) . '-' . intval($_REQUEST['dta_inicioMonth']) . '-' . intval($_REQUEST['dta_inicioDay']);
 	$data['dta_inicio'] = parseMySQLDate($data['dta_inicio'], '');
-	$data['str_contratado_nome'] = makeSafe($_REQUEST['str_contratado_nome']);
-		if($data['str_contratado_nome'] == empty_lookup_value){ $data['str_contratado_nome'] = ''; }
+	if($data['str_status'] == '') $data['str_status'] = "Encerrada";
+	if($data['str_status']== ''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
+	if($data['str_detalhe_status'] == '') $data['str_detalhe_status'] = "Preenchida pela Prime Control";
 	if($data['recrutador_id']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Recrutador': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -34,11 +43,6 @@ function tb_vaga_insert(){
 	}
 	if($data['str_prioridade']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Prioridade': " . $Translation['field not null'] . '<br><br>';
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
-	if($data['str_status']== ''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
@@ -50,7 +54,7 @@ function tb_vaga_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `tb_vaga` set       `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `canal_fechamento`=' . (($data['canal_fechamento'] !== '' && $data['canal_fechamento'] !== NULL) ? "'{$data['canal_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL'), $o);
+	sql('insert into `tb_vaga` set       `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_detalhe_status`=' . (($data['str_detalhe_status'] !== '' && $data['str_detalhe_status'] !== NULL) ? "'{$data['str_detalhe_status']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `canal_fechamento`=' . (($data['canal_fechamento'] !== '' && $data['canal_fechamento'] !== NULL) ? "'{$data['canal_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"tb_vaga_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -152,6 +156,17 @@ function tb_vaga_update($selected_id){
 		return false;
 	}
 
+	$data['dta_previsao_fechamento'] = intval($_REQUEST['dta_previsao_fechamentoYear']) . '-' . intval($_REQUEST['dta_previsao_fechamentoMonth']) . '-' . intval($_REQUEST['dta_previsao_fechamentoDay']);
+	$data['dta_previsao_fechamento'] = parseMySQLDate($data['dta_previsao_fechamento'], '');
+	$data['str_status'] = makeSafe($_REQUEST['str_status']);
+		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
+	if($data['str_status']==''){
+		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Status': {$Translation['field not null']}<br><br>";
+		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
+		exit;
+	}
+	$data['str_detalhe_status'] = makeSafe($_REQUEST['str_detalhe_status']);
+		if($data['str_detalhe_status'] == empty_lookup_value){ $data['str_detalhe_status'] = ''; }
 	$data['recrutador_id'] = makeSafe($_REQUEST['recrutador_id']);
 		if($data['recrutador_id'] == empty_lookup_value){ $data['recrutador_id'] = ''; }
 	if($data['recrutador_id']==''){
@@ -166,20 +181,11 @@ function tb_vaga_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['str_status'] = makeSafe($_REQUEST['str_status']);
-		if($data['str_status'] == empty_lookup_value){ $data['str_status'] = ''; }
-	if($data['str_status']==''){
-		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">{$Translation['error:']} 'Status': {$Translation['field not null']}<br><br>";
-		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
-		exit;
-	}
 	$data['canal_fechamento'] = makeSafe($_REQUEST['canal_fechamento']);
 		if($data['canal_fechamento'] == empty_lookup_value){ $data['canal_fechamento'] = ''; }
 	$data['str_obs'] = br2nl(makeSafe($_REQUEST['str_obs']));
 	$data['dta_inicio'] = intval($_REQUEST['dta_inicioYear']) . '-' . intval($_REQUEST['dta_inicioMonth']) . '-' . intval($_REQUEST['dta_inicioDay']);
 	$data['dta_inicio'] = parseMySQLDate($data['dta_inicio'], '');
-	$data['str_contratado_nome'] = makeSafe($_REQUEST['str_contratado_nome']);
-		if($data['str_contratado_nome'] == empty_lookup_value){ $data['str_contratado_nome'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: tb_vaga_before_update
@@ -189,7 +195,7 @@ function tb_vaga_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `tb_vaga` set       `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `canal_fechamento`=' . (($data['canal_fechamento'] !== '' && $data['canal_fechamento'] !== NULL) ? "'{$data['canal_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . ', `str_contratado_nome`=' . (($data['str_contratado_nome'] !== '' && $data['str_contratado_nome'] !== NULL) ? "'{$data['str_contratado_nome']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `tb_vaga` set       `dta_previsao_fechamento`=' . (($data['dta_previsao_fechamento'] !== '' && $data['dta_previsao_fechamento'] !== NULL) ? "'{$data['dta_previsao_fechamento']}'" : 'NULL') . ', `str_status`=' . (($data['str_status'] !== '' && $data['str_status'] !== NULL) ? "'{$data['str_status']}'" : 'NULL') . ', `str_detalhe_status`=' . (($data['str_detalhe_status'] !== '' && $data['str_detalhe_status'] !== NULL) ? "'{$data['str_detalhe_status']}'" : 'NULL') . ', `recrutador_id`=' . (($data['recrutador_id'] !== '' && $data['recrutador_id'] !== NULL) ? "'{$data['recrutador_id']}'" : 'NULL') . ', `str_prioridade`=' . (($data['str_prioridade'] !== '' && $data['str_prioridade'] !== NULL) ? "'{$data['str_prioridade']}'" : 'NULL') . ', `canal_fechamento`=' . (($data['canal_fechamento'] !== '' && $data['canal_fechamento'] !== NULL) ? "'{$data['canal_fechamento']}'" : 'NULL') . ', `str_obs`=' . (($data['str_obs'] !== '' && $data['str_obs'] !== NULL) ? "'{$data['str_obs']}'" : 'NULL') . ', `dta_inicio`=' . (($data['dta_inicio'] !== '' && $data['dta_inicio'] !== NULL) ? "'{$data['dta_inicio']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="tb_vaga_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -232,9 +238,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}
 
 	$filterer_requerimento_id = thisOr(undo_magic_quotes($_REQUEST['filterer_requerimento_id']), '');
-	$filterer_empresa_id = thisOr(undo_magic_quotes($_REQUEST['filterer_empresa_id']), '');
 	$filterer_recrutador_id = thisOr(undo_magic_quotes($_REQUEST['filterer_recrutador_id']), '');
-	$filterer_str_contratado_nome = thisOr(undo_magic_quotes($_REQUEST['filterer_str_contratado_nome']), '');
+	$filterer_empresa_id = thisOr(undo_magic_quotes($_REQUEST['filterer_empresa_id']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -266,8 +271,37 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$combo_dta_fechamento->DefaultDate = parseMySQLDate('', '');
 	$combo_dta_fechamento->MonthNames = $Translation['month names'];
 	$combo_dta_fechamento->NamePrefix = 'dta_fechamento';
-	// combobox: empresa_id
-	$combo_empresa_id = new DataCombo;
+	// combobox: str_status
+	$combo_str_status = new Combo;
+	$combo_str_status->ListType = 0;
+	$combo_str_status->MultipleSeparator = ', ';
+	$combo_str_status->ListBoxHeight = 10;
+	$combo_str_status->RadiosPerLine = 1;
+	if(is_file(dirname(__FILE__).'/hooks/tb_vaga.str_status.csv')){
+		$str_status_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/tb_vaga.str_status.csv')));
+		$combo_str_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($str_status_data)));
+		$combo_str_status->ListData = $combo_str_status->ListItem;
+	}else{
+		$combo_str_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Aberta;;Recrutamento inicial;;Aguardando o cliente;;Recrutamento adicional;;Encerrada;;Congelada")));
+		$combo_str_status->ListData = $combo_str_status->ListItem;
+	}
+	$combo_str_status->SelectName = 'str_status';
+	$combo_str_status->AllowNull = false;
+	// combobox: str_detalhe_status
+	$combo_str_detalhe_status = new Combo;
+	$combo_str_detalhe_status->ListType = 0;
+	$combo_str_detalhe_status->MultipleSeparator = ', ';
+	$combo_str_detalhe_status->ListBoxHeight = 10;
+	$combo_str_detalhe_status->RadiosPerLine = 1;
+	if(is_file(dirname(__FILE__).'/hooks/tb_vaga.str_detalhe_status.csv')){
+		$str_detalhe_status_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/tb_vaga.str_detalhe_status.csv')));
+		$combo_str_detalhe_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($str_detalhe_status_data)));
+		$combo_str_detalhe_status->ListData = $combo_str_detalhe_status->ListItem;
+	}else{
+		$combo_str_detalhe_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Preenchida pela Prime Control;;Preenchida por terceiros;;Cancelada")));
+		$combo_str_detalhe_status->ListData = $combo_str_detalhe_status->ListItem;
+	}
+	$combo_str_detalhe_status->SelectName = 'str_detalhe_status';
 	// combobox: recrutador_id
 	$combo_recrutador_id = new DataCombo;
 	// combobox: str_prioridade
@@ -286,37 +320,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}
 	$combo_str_prioridade->SelectName = 'str_prioridade';
 	$combo_str_prioridade->AllowNull = false;
-	// combobox: str_status
-	$combo_str_status = new Combo;
-	$combo_str_status->ListType = 0;
-	$combo_str_status->MultipleSeparator = ', ';
-	$combo_str_status->ListBoxHeight = 10;
-	$combo_str_status->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/tb_vaga.str_status.csv')){
-		$str_status_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/tb_vaga.str_status.csv')));
-		$combo_str_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($str_status_data)));
-		$combo_str_status->ListData = $combo_str_status->ListItem;
-	}else{
-		$combo_str_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Aberta;;Recrutamento inicial;;Aguardando o cliente;;Recrutamento adicional;;Encerrada;;Congelada")));
-		$combo_str_status->ListData = $combo_str_status->ListItem;
-	}
-	$combo_str_status->SelectName = 'str_status';
-	$combo_str_status->AllowNull = false;
-	// combobox: canal_fechamento
-	$combo_canal_fechamento = new Combo;
-	$combo_canal_fechamento->ListType = 0;
-	$combo_canal_fechamento->MultipleSeparator = ', ';
-	$combo_canal_fechamento->ListBoxHeight = 10;
-	$combo_canal_fechamento->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/tb_vaga.canal_fechamento.csv')){
-		$canal_fechamento_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/tb_vaga.canal_fechamento.csv')));
-		$combo_canal_fechamento->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($canal_fechamento_data)));
-		$combo_canal_fechamento->ListData = $combo_canal_fechamento->ListItem;
-	}else{
-		$combo_canal_fechamento->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Preenchida pela Prime Control;;Preenchida por terceiros;;Cancelada")));
-		$combo_canal_fechamento->ListData = $combo_canal_fechamento->ListItem;
-	}
-	$combo_canal_fechamento->SelectName = 'canal_fechamento';
+	// combobox: empresa_id
+	$combo_empresa_id = new DataCombo;
 	// combobox: dta_inicio
 	$combo_dta_inicio = new DateCombo;
 	$combo_dta_inicio->DateFormat = "dmy";
@@ -325,8 +330,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$combo_dta_inicio->DefaultDate = parseMySQLDate('', '');
 	$combo_dta_inicio->MonthNames = $Translation['month names'];
 	$combo_dta_inicio->NamePrefix = 'dta_inicio';
-	// combobox: str_contratado_nome
-	$combo_str_contratado_nome = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -361,33 +364,29 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$combo_dta_abertura->DefaultDate = $row['dta_abertura'];
 		$combo_dta_previsao_fechamento->DefaultDate = $row['dta_previsao_fechamento'];
 		$combo_dta_fechamento->DefaultDate = $row['dta_fechamento'];
-		$combo_empresa_id->SelectedData = $row['empresa_id'];
+		$combo_str_status->SelectedData = $row['str_status'];
+		$combo_str_detalhe_status->SelectedData = $row['str_detalhe_status'];
 		$combo_recrutador_id->SelectedData = $row['recrutador_id'];
 		$combo_str_prioridade->SelectedData = $row['str_prioridade'];
-		$combo_str_status->SelectedData = $row['str_status'];
-		$combo_canal_fechamento->SelectedData = $row['canal_fechamento'];
+		$combo_empresa_id->SelectedData = $row['empresa_id'];
 		$combo_dta_inicio->DefaultDate = $row['dta_inicio'];
-		$combo_str_contratado_nome->SelectedData = $row['str_contratado_nome'];
 	}else{
 		$combo_requerimento_id->SelectedData = $filterer_requerimento_id;
-		$combo_empresa_id->SelectedData = $filterer_empresa_id;
+		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Encerrada");
+		$combo_str_detalhe_status->SelectedText = ( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Preenchida pela Prime Control");
 		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
-		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='11' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='12' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_canal_fechamento->SelectedText = ( $_REQUEST['FilterField'][1]=='13' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_str_contratado_nome->SelectedData = $filterer_str_contratado_nome;
+		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_empresa_id->SelectedData = $filterer_empresa_id;
 	}
 	$combo_requerimento_id->HTML = '<span id="requerimento_id-container' . $rnd1 . '"></span><input type="hidden" name="requerimento_id" id="requerimento_id' . $rnd1 . '" value="' . html_attr($combo_requerimento_id->SelectedData) . '">';
 	$combo_requerimento_id->MatchText = '<span id="requerimento_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="requerimento_id" id="requerimento_id' . $rnd1 . '" value="' . html_attr($combo_requerimento_id->SelectedData) . '">';
-	$combo_empresa_id->HTML = '<span id="empresa_id-container' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
-	$combo_empresa_id->MatchText = '<span id="empresa_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
+	$combo_str_status->Render();
+	$combo_str_detalhe_status->Render();
 	$combo_recrutador_id->HTML = '<span id="recrutador_id-container' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
 	$combo_recrutador_id->MatchText = '<span id="recrutador_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="recrutador_id" id="recrutador_id' . $rnd1 . '" value="' . html_attr($combo_recrutador_id->SelectedData) . '">';
 	$combo_str_prioridade->Render();
-	$combo_str_status->Render();
-	$combo_canal_fechamento->Render();
-	$combo_str_contratado_nome->HTML = '<span id="str_contratado_nome-container' . $rnd1 . '"></span><input type="hidden" name="str_contratado_nome" id="str_contratado_nome' . $rnd1 . '" value="' . html_attr($combo_str_contratado_nome->SelectedData) . '">';
-	$combo_str_contratado_nome->MatchText = '<span id="str_contratado_nome-container-readonly' . $rnd1 . '"></span><input type="hidden" name="str_contratado_nome" id="str_contratado_nome' . $rnd1 . '" value="' . html_attr($combo_str_contratado_nome->SelectedData) . '">';
+	$combo_empresa_id->HTML = '<span id="empresa_id-container' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
+	$combo_empresa_id->MatchText = '<span id="empresa_id-container-readonly' . $rnd1 . '"></span><input type="hidden" name="empresa_id" id="empresa_id' . $rnd1 . '" value="' . html_attr($combo_empresa_id->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -395,16 +394,14 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	<script>
 		// initial lookup values
 		AppGini.current_requerimento_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['requerimento_id'] : $filterer_requerimento_id); ?>"};
-		AppGini.current_empresa_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['empresa_id'] : $filterer_empresa_id); ?>"};
 		AppGini.current_recrutador_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['recrutador_id'] : $filterer_recrutador_id); ?>"};
-		AppGini.current_str_contratado_nome__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['str_contratado_nome'] : $filterer_str_contratado_nome); ?>"};
+		AppGini.current_empresa_id__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['empresa_id'] : $filterer_empresa_id); ?>"};
 
 		jQuery(function() {
 			setTimeout(function(){
 				if(typeof(requerimento_id_reload__RAND__) == 'function') requerimento_id_reload__RAND__();
-				if(typeof(empresa_id_reload__RAND__) == 'function') empresa_id_reload__RAND__();
 				if(typeof(recrutador_id_reload__RAND__) == 'function') recrutador_id_reload__RAND__();
-				if(typeof(str_contratado_nome_reload__RAND__) == 'function') str_contratado_nome_reload__RAND__();
+				if(typeof(empresa_id_reload__RAND__) == 'function') empresa_id_reload__RAND__();
 			}, 10); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
 		});
 		function requerimento_id_reload__RAND__(){
@@ -479,83 +476,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_requerimento_view_parent]').hide(); }else{ $j('.btn[id=tb_requerimento_view_parent]').show(); }
 
 					if(typeof(requerimento_id_update_autofills__RAND__) == 'function') requerimento_id_update_autofills__RAND__();
-				}
-			});
-		<?php } ?>
-
-		}
-		function empresa_id_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			$j("#empresa_id-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					$j.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
-						success: function(resp){
-							c({
-								id: resp.results[0].id,
-								text: resp.results[0].text
-							});
-							$j('[name="empresa_id"]').val(resp.results[0].id);
-							$j('[id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
-
-
-							if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
-						}
-					});
-				},
-				width: '100%',
-				formatNoMatches: function(term){ /* */ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'tb_vaga', f: 'empresa_id' }; },
-					results: function(resp, page){ /* */ return resp; }
-				},
-				escapeMarkup: function(str){ /* */ return str; }
-			}).on('change', function(e){
-				AppGini.current_empresa_id__RAND__.value = e.added.id;
-				AppGini.current_empresa_id__RAND__.text = e.added.text;
-				$j('[name="empresa_id"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
-
-
-				if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
-			});
-
-			if(!$j("#empresa_id-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
-					success: function(resp){
-						$j('[name="empresa_id"]').val(resp.results[0].id);
-						$j('[id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
-
-						if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
-					}
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
-				success: function(resp){
-					$j('[id=empresa_id-container__RAND__], [id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
-
-					if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -638,27 +558,27 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		<?php } ?>
 
 		}
-		function str_contratado_nome_reload__RAND__(){
+		function empresa_id_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
 
-			$j("#str_contratado_nome-container__RAND__").select2({
+			$j("#empresa_id-container__RAND__").select2({
 				/* initial default value */
 				initSelection: function(e, c){
 					$j.ajax({
 						url: 'ajax_combo.php',
 						dataType: 'json',
-						data: { id: AppGini.current_str_contratado_nome__RAND__.value, t: 'tb_vaga', f: 'str_contratado_nome' },
+						data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
 						success: function(resp){
 							c({
 								id: resp.results[0].id,
 								text: resp.results[0].text
 							});
-							$j('[name="str_contratado_nome"]').val(resp.results[0].id);
-							$j('[id=str_contratado_nome-container-readonly__RAND__]').html('<span id="str_contratado_nome-match-text">' + resp.results[0].text + '</span>');
-							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_contratacao_view_parent]').hide(); }else{ $j('.btn[id=tb_contratacao_view_parent]').show(); }
+							$j('[name="empresa_id"]').val(resp.results[0].id);
+							$j('[id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
 
-							if(typeof(str_contratado_nome_update_autofills__RAND__) == 'function') str_contratado_nome_update_autofills__RAND__();
+							if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
 						}
 					});
 				},
@@ -670,31 +590,31 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 					url: 'ajax_combo.php',
 					dataType: 'json',
 					cache: true,
-					data: function(term, page){ /* */ return { s: term, p: page, t: 'tb_vaga', f: 'str_contratado_nome' }; },
+					data: function(term, page){ /* */ return { s: term, p: page, t: 'tb_vaga', f: 'empresa_id' }; },
 					results: function(resp, page){ /* */ return resp; }
 				},
 				escapeMarkup: function(str){ /* */ return str; }
 			}).on('change', function(e){
-				AppGini.current_str_contratado_nome__RAND__.value = e.added.id;
-				AppGini.current_str_contratado_nome__RAND__.text = e.added.text;
-				$j('[name="str_contratado_nome"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_contratacao_view_parent]').hide(); }else{ $j('.btn[id=tb_contratacao_view_parent]').show(); }
+				AppGini.current_empresa_id__RAND__.value = e.added.id;
+				AppGini.current_empresa_id__RAND__.text = e.added.text;
+				$j('[name="empresa_id"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
 
-				if(typeof(str_contratado_nome_update_autofills__RAND__) == 'function') str_contratado_nome_update_autofills__RAND__();
+				if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
 			});
 
-			if(!$j("#str_contratado_nome-container__RAND__").length){
+			if(!$j("#empresa_id-container__RAND__").length){
 				$j.ajax({
 					url: 'ajax_combo.php',
 					dataType: 'json',
-					data: { id: AppGini.current_str_contratado_nome__RAND__.value, t: 'tb_vaga', f: 'str_contratado_nome' },
+					data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
 					success: function(resp){
-						$j('[name="str_contratado_nome"]').val(resp.results[0].id);
-						$j('[id=str_contratado_nome-container-readonly__RAND__]').html('<span id="str_contratado_nome-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_contratacao_view_parent]').hide(); }else{ $j('.btn[id=tb_contratacao_view_parent]').show(); }
+						$j('[name="empresa_id"]').val(resp.results[0].id);
+						$j('[id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
-						if(typeof(str_contratado_nome_update_autofills__RAND__) == 'function') str_contratado_nome_update_autofills__RAND__();
+						if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
 					}
 				});
 			}
@@ -704,12 +624,12 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 			$j.ajax({
 				url: 'ajax_combo.php',
 				dataType: 'json',
-				data: { id: AppGini.current_str_contratado_nome__RAND__.value, t: 'tb_vaga', f: 'str_contratado_nome' },
+				data: { id: AppGini.current_empresa_id__RAND__.value, t: 'tb_vaga', f: 'empresa_id' },
 				success: function(resp){
-					$j('[id=str_contratado_nome-container__RAND__], [id=str_contratado_nome-container-readonly__RAND__]').html('<span id="str_contratado_nome-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_contratacao_view_parent]').hide(); }else{ $j('.btn[id=tb_contratacao_view_parent]').show(); }
+					$j('[id=empresa_id-container__RAND__], [id=empresa_id-container-readonly__RAND__]').html('<span id="empresa_id-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=tb_empresa_view_parent]').hide(); }else{ $j('.btn[id=tb_empresa_view_parent]').show(); }
 
-					if(typeof(str_contratado_nome_update_autofills__RAND__) == 'function') str_contratado_nome_update_autofills__RAND__();
+					if(typeof(empresa_id_update_autofills__RAND__) == 'function') empresa_id_update_autofills__RAND__();
 				}
 			});
 		<?php } ?>
@@ -773,16 +693,17 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
+		$jsReadOnly .= "\tjQuery('#dta_previsao_fechamento').prop('readonly', true);\n";
+		$jsReadOnly .= "\tjQuery('#dta_previsao_fechamentoDay, #dta_previsao_fechamentoMonth, #dta_previsao_fechamentoYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#str_status').replaceWith('<div class=\"form-control-static\" id=\"str_status\">' + (jQuery('#str_status').val() || '') + '</div>'); jQuery('#str_status-multi-selection-help').hide();\n";
+		$jsReadOnly .= "\tjQuery('#str_detalhe_status').replaceWith('<div class=\"form-control-static\" id=\"str_detalhe_status\">' + (jQuery('#str_detalhe_status').val() || '') + '</div>'); jQuery('#str_detalhe_status-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#recrutador_id').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#recrutador_id_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#str_prioridade').replaceWith('<div class=\"form-control-static\" id=\"str_prioridade\">' + (jQuery('#str_prioridade').val() || '') + '</div>'); jQuery('#str_prioridade-multi-selection-help').hide();\n";
-		$jsReadOnly .= "\tjQuery('#str_status').replaceWith('<div class=\"form-control-static\" id=\"str_status\">' + (jQuery('#str_status').val() || '') + '</div>'); jQuery('#str_status-multi-selection-help').hide();\n";
-		$jsReadOnly .= "\tjQuery('#canal_fechamento').replaceWith('<div class=\"form-control-static\" id=\"canal_fechamento\">' + (jQuery('#canal_fechamento').val() || '') + '</div>'); jQuery('#canal_fechamento-multi-selection-help').hide();\n";
+		$jsReadOnly .= "\tjQuery('#canal_fechamento').replaceWith('<div class=\"form-control-static\" id=\"canal_fechamento\">' + (jQuery('#canal_fechamento').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#str_obs').replaceWith('<div class=\"form-control-static\" id=\"str_obs\">' + (jQuery('#str_obs').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#dta_inicio').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#dta_inicioDay, #dta_inicioMonth, #dta_inicioYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#str_contratado_nome').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#str_contratado_nome_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -801,26 +722,23 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%COMBOTEXT(dta_previsao_fechamento)%%>', $combo_dta_previsao_fechamento->GetHTML(true), $templateCode);
 	$templateCode = str_replace('<%%COMBO(dta_fechamento)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_fechamento->GetHTML(true) . '</div>' : $combo_dta_fechamento->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(dta_fechamento)%%>', $combo_dta_fechamento->GetHTML(true), $templateCode);
-	$templateCode = str_replace('<%%COMBO(empresa_id)%%>', $combo_empresa_id->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(empresa_id)%%>', $combo_empresa_id->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(empresa_id)%%>', urlencode($combo_empresa_id->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(str_status)%%>', $combo_str_status->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(str_status)%%>', $combo_str_status->SelectedData, $templateCode);
+	$templateCode = str_replace('<%%COMBO(str_detalhe_status)%%>', $combo_str_detalhe_status->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(str_detalhe_status)%%>', $combo_str_detalhe_status->SelectedData, $templateCode);
 	$templateCode = str_replace('<%%COMBO(recrutador_id)%%>', $combo_recrutador_id->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(recrutador_id)%%>', $combo_recrutador_id->MatchText, $templateCode);
 	$templateCode = str_replace('<%%URLCOMBOTEXT(recrutador_id)%%>', urlencode($combo_recrutador_id->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(str_prioridade)%%>', $combo_str_prioridade->HTML, $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(str_prioridade)%%>', $combo_str_prioridade->SelectedData, $templateCode);
-	$templateCode = str_replace('<%%COMBO(str_status)%%>', $combo_str_status->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(str_status)%%>', $combo_str_status->SelectedData, $templateCode);
-	$templateCode = str_replace('<%%COMBO(canal_fechamento)%%>', $combo_canal_fechamento->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(canal_fechamento)%%>', $combo_canal_fechamento->SelectedData, $templateCode);
+	$templateCode = str_replace('<%%COMBO(empresa_id)%%>', $combo_empresa_id->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(empresa_id)%%>', $combo_empresa_id->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(empresa_id)%%>', urlencode($combo_empresa_id->MatchText), $templateCode);
 	$templateCode = str_replace('<%%COMBO(dta_inicio)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_dta_inicio->GetHTML(true) . '</div>' : $combo_dta_inicio->GetHTML()), $templateCode);
 	$templateCode = str_replace('<%%COMBOTEXT(dta_inicio)%%>', $combo_dta_inicio->GetHTML(true), $templateCode);
-	$templateCode = str_replace('<%%COMBO(str_contratado_nome)%%>', $combo_str_contratado_nome->HTML, $templateCode);
-	$templateCode = str_replace('<%%COMBOTEXT(str_contratado_nome)%%>', $combo_str_contratado_nome->MatchText, $templateCode);
-	$templateCode = str_replace('<%%URLCOMBOTEXT(str_contratado_nome)%%>', urlencode($combo_str_contratado_nome->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'requerimento_id' => array('tb_requerimento', 'REQ'), 'empresa_id' => array('tb_empresa', 'Empresa'), 'recrutador_id' => array('tb_recrutador', 'Recrutador'), 'str_contratado_nome' => array('tb_contratacao', 'Nome do Contratado'));
+	$lookup_fields = array(  'requerimento_id' => array('tb_requerimento', 'REQ'), 'recrutador_id' => array('tb_recrutador', 'Recrutador'), 'empresa_id' => array('tb_empresa', 'Empresa'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -842,16 +760,16 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	$templateCode = str_replace('<%%UPLOADFILE(dta_abertura)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_previsao_fechamento)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_fechamento)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(str_status)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(str_detalhe_status)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(recrutador_id)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(str_prioridade)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_posicao)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(empresa_id)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_alocacao)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(recrutador_id)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(str_prioridade)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(str_status)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(canal_fechamento)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(str_obs)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(dta_inicio)%%>', '', $templateCode);
-	$templateCode = str_replace('<%%UPLOADFILE(str_contratado_nome)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -868,21 +786,24 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(dta_previsao_fechamento)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_previsao_fechamento'])))), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_fechamento']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_fechamento)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_fechamento'])))), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', safe_html($urow['str_posicao']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode($urow['str_posicao']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(empresa_id)%%>', safe_html($urow['empresa_id']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode($urow['empresa_id']), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_alocacao)%%>', safe_html($urow['str_alocacao']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_alocacao)%%>', urlencode($urow['str_alocacao']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_status)%%>', safe_html($urow['str_status']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_status)%%>', html_attr($row['str_status']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode($urow['str_status']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_detalhe_status)%%>', safe_html($urow['str_detalhe_status']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_detalhe_status)%%>', html_attr($row['str_detalhe_status']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_detalhe_status)%%>', urlencode($urow['str_detalhe_status']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(recrutador_id)%%>', safe_html($urow['recrutador_id']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(recrutador_id)%%>', html_attr($row['recrutador_id']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode($urow['recrutador_id']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_prioridade)%%>', safe_html($urow['str_prioridade']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_prioridade)%%>', html_attr($row['str_prioridade']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_prioridade)%%>', urlencode($urow['str_prioridade']), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_status)%%>', safe_html($urow['str_status']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_status)%%>', html_attr($row['str_status']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode($urow['str_status']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', safe_html($urow['str_posicao']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode($urow['str_posicao']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(empresa_id)%%>', safe_html($urow['empresa_id']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode($urow['empresa_id']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_alocacao)%%>', safe_html($urow['str_alocacao']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_alocacao)%%>', urlencode($urow['str_alocacao']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(canal_fechamento)%%>', safe_html($urow['canal_fechamento']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(canal_fechamento)%%>', html_attr($row['canal_fechamento']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(canal_fechamento)%%>', urlencode($urow['canal_fechamento']), $templateCode);
@@ -894,9 +815,6 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(str_obs)%%>', urlencode($urow['str_obs']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_inicio)%%>', @date('d/m/Y', @strtotime(html_attr($row['dta_inicio']))), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_inicio)%%>', urlencode(@date('d/m/Y', @strtotime(html_attr($urow['dta_inicio'])))), $templateCode);
-		if( $dvprint) $templateCode = str_replace('<%%VALUE(str_contratado_nome)%%>', safe_html($urow['str_contratado_nome']), $templateCode);
-		if(!$dvprint) $templateCode = str_replace('<%%VALUE(str_contratado_nome)%%>', html_attr($row['str_contratado_nome']), $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_contratado_nome)%%>', urlencode($urow['str_contratado_nome']), $templateCode);
 	}else{
 		$templateCode = str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -910,26 +828,26 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(dta_previsao_fechamento)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_fechamento)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_fechamento)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_status)%%>', 'Encerrada', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode('Encerrada'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_detalhe_status)%%>', 'Preenchida pela Prime Control', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_detalhe_status)%%>', urlencode('Preenchida pela Prime Control'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(recrutador_id)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_prioridade)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_prioridade)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_posicao)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_posicao)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(empresa_id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(empresa_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_alocacao)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_alocacao)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(recrutador_id)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_prioridade)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_prioridade)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_status)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(canal_fechamento)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(canal_fechamento)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_obs)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_obs)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(dta_inicio)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(dta_inicio)%%>', urlencode(''), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_contratado_nome)%%>', '', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_contratado_nome)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations
@@ -972,7 +890,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	if( $_REQUEST['FilterField'][1]=='2' && $_REQUEST['FilterOperator'][1]=='<=>'){
 		$templateCode.="\n<input type=hidden name=requerimento_id value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
 	}
-	if( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>'){
+	if( $_REQUEST['FilterField'][1]=='12' && $_REQUEST['FilterOperator'][1]=='<=>'){
 		$templateCode.="\n<input type=hidden name=empresa_id value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
 	}
 

@@ -39,9 +39,33 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Data fechamento</label>
+			<label class="col-xs-3 control-label">Data de fechamento</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%COMBOTEXT(dta_fechamento)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Status</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_status)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Detalhes do Status</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_detalhe_status)%%></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Recrutador</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><span id="recrutador_id<%%RND1%%>"><%%COMBOTEXT(recrutador_id)%%></span></div>
+			</div>
+		</div>
+		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">Prioridade</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%COMBOTEXT(str_prioridade)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -63,27 +87,9 @@
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Recrutador</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><span id="recrutador_id<%%RND1%%>"><%%COMBOTEXT(recrutador_id)%%></span></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Prioridade</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(str_prioridade)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Status</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(str_status)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">Canal de Fechamento</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%COMBOTEXT(canal_fechamento)%%></div>
+				<div class="form-control-static"><%%VALUE(canal_fechamento)%%></div>
 			</div>
 		</div>
 		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
@@ -96,12 +102,6 @@
 			<label class="col-xs-3 control-label">Data de admiss&#227;o/in&#237;cio</label>
 			<div class="col-xs-9">
 				<div class="form-control-static"><%%COMBOTEXT(dta_inicio)%%></div>
-			</div>
-		</div>
-		<div class="form-group" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">Nome do Contratado</label>
-			<div class="col-xs-9">
-				<div class="form-control-static"><span id="str_contratado_nome<%%RND1%%>"><%%COMBOTEXT(str_contratado_nome)%%></span></div>
 			</div>
 		</div>
 	</fieldset>

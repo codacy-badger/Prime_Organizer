@@ -26,11 +26,11 @@
 	*/
 
 	function tb_vaga_init(&$options, $memberInfo, &$args){
-		/* Inserted by Search Page Maker for AppGini on 2018-07-04 01:45:18 */
+		/* Inserted by Search Page Maker for AppGini on 2018-07-26 01:52:43 */
 		$options->FilterPage = 'hooks/tb_vaga_filter.php';
 		/* End of Search Page Maker for AppGini code */
 
-
+		
 		return TRUE;
 	}
 
@@ -237,48 +237,18 @@
 
 	function tb_vaga_after_update($data, $memberInfo, &$args){
         
-        // Fecha o requerimento se todas as vagas foram preenchidas ou canceladas
-        $id_vaga = $data['selectedID'];
+        // Acrescenta a data de encerramento da vaga se a mesma é marcada como encerrada
+        $id = $data['selectedID'];
+        $status = $data['str_status'];
         
-        if(empty($data['requerimento_id'])){
-            $requerimento = 0;
-        } else{
-            $requerimento = $data['requerimento_id'];
-        }
-        
-        $data = date('Y-m-d');
-        
-        // Vagas preenchidas/canceladas
-        $vagas_preenchidas = sqlValue("SELECT COUNT(str_status) FROM tb_vaga WHERE requerimento_id = '{$requerimento}' AND str_status LIKE 'Encerrada'");
-        // Total de vagas do requerimento
-        $vagas_totais = sqlValue("SELECT COUNT(int_vaga_numero) FROM tb_vaga WHERE requerimento_id = '{$requerimento}'");
-        
-        // Se as vagas foram ecnerradas (preenchidas/canceladas), fecha o requerimento
-        if($vagas_preenchidas == $vagas_totais){
-            $sql = "UPDATE tb_requerimento
-            SET dta_fechamento = '{$data}' WHERE id = '{$requerimento}'";
-            
-            sql($sql, $eo);
+        if($status == "Encerrada"){
+            $data_fechamento = date('Y-m-d');
             
             $sql = "UPDATE tb_vaga
-            SET dta_fechamento = '{$data}' WHERE requerimento_id = '{$requerimento}'";
+            SET dta_fechamento = '{$data_fechamento}' WHERE id = '{$id}'";
             
             sql($sql, $eo);
         }
-        
-        // Se as vagas não foram encerradas, deixa o requerimento aberto
-        if($vagas_preenchidas != $vagas_totais){
-            $sql = "UPDATE tb_requerimento
-            SET dta_fechamento = NULL WHERE id = '{$requerimento}'";
-            
-            sql($sql, $eo);
-            
-            $sql = "UPDATE tb_vaga
-            SET dta_fechamento = NULL WHERE requerimento_id = '{$requerimento}'";
-            
-            sql($sql, $eo);
-        }
-        
         
         return TRUE;
 	}
@@ -355,24 +325,28 @@
 	function tb_vaga_dv($selectedID, $memberInfo, &$html, &$args){
         if(isset($_REQUEST['dvprint_x'])) return;
         
-        ob_start(); ?>
+        ob_start();
 
-        
-
-		<script>
+        ?><script>
+            
             $j(function(){
                 <?php if($selectedID){ ?>
+                
+                // Adiciona os botões Aprovar e Rejeitar
                 $j('#tb_vaga_dv_action_buttons .btn-toolbar').append(
                     '<p></p>' +
                     '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
-                        '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#fecharVaga">' +
+                        '<button type="button" class="btn btn-warning btn-lg" id="editar" data-toggle="modal" data-target="#fecharVaga">' +
                             '<i class="glyphicon glyphicon-pencil"></i> Alterar Status' +
                         '</button>' +
                     '</div>' +
-                '<p></p>'
+                    '<p></p>'
                 );
-                <?php } ?> 
+                
+                <?php } ?>
+                
             });
+            
         </script><?php
         
         $botao = ob_get_contents();

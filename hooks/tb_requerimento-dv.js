@@ -59,19 +59,6 @@ $j(function(){
     }).change();
     
     
-    // Esconde o campo 'str_recurso' se o campo 'str_reposicao' está marcado como "NÃO"
-    $j('#str_reposicao').on('change', function(){
-        var Reposicao = $j('#str_reposicao').val();
-        
-        if(Reposicao == 'SIM'){
-            $j('#str_recurso').parents('.form-group').show();
-            $j('#str_recurso').focus().select();
-        } else {
-            $j('#str_recurso').parents('.form-group').hide();
-        }
-    }).change();
-    
-    
     // Esconde os botões Salvar/Inserir se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
     $j('#update, #insert, #delete').on('change', function(){
         var groupID = parseInt(getCookie('groupID'));
@@ -113,15 +100,25 @@ $j(function(){
     $j('#update, #insert').click(function(){
         var Salario = $j('#int_salario').val();
         var Quantidade = $j('#int_n_vagas').val();
+        var Ok = true;
 
         // Verifica se a quantidade de vagas é um número maior que 0
         if(isNaN(Quantidade) || Quantidade <= 0){
+            Ok = false;
             return show_error('int_n_vagas', 'Quantidade de Vagas', 'A quantidade de vagas deve ser um número válido maior que 0.');
         }
         
         // Verifica se o salário/budget é um número maior que 0
         if(isNaN(Salario) || Salario <= 0){
+            Ok = false;
             return show_error('int_salario', 'Salário/Budget', 'Salário/Budget deve ser um número maior ou igual à 0.');
+        }
+        
+        // Ativa o campo status para habilitar salvamento
+        if(Ok == true){
+            $j('#str_status').prop({
+                disabled: false
+            });
         }
         
     });

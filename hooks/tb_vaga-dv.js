@@ -37,7 +37,7 @@ $j(function(){
     
     
     // Desativa os campos se a vaga está encerrada
-    $j('#dta_previsao_fechamento, #recrutador_id, #str_prioridade').on('change', function(){
+    $j('#dta_previsao_fechamento, #dta_previsao_fechamento-mm, #dta_previsao_fechamento-dd, #recrutador_id, #str_prioridade').on('change', function(){
         var Status = $j('#str_status').val();
         
         if(Status == 'Encerrada'){

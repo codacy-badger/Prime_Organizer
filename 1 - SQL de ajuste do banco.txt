@@ -23,7 +23,7 @@ SET str_alocacao = transf;
 
 
 -- '
--- id é à última vaga sem requeirmento
+-- id é à primeira vaga com requeirmento
 -- '
 
 

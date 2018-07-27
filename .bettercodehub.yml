@@ -10,7 +10,7 @@ exclude:
 include:
 - /hooks/
 
-component_depth: 1
+component_depth: 2
 
 languages:
 - php

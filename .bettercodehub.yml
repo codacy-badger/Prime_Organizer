@@ -1,13 +1,16 @@
 exclude:
-- /admin/.*
-- /AppGini/.*
-- /images/.*
-- /plugins/.*
-- /resources/.*
-- /templates/.*
+- /admin/
+- /AppGini/
+- /images/
+- /plugins/
+- /resources/
+- /templates/
+- ./*.*
 
 include:
-- /hooks/.*
+- /hooks/
+
+component_depth: 1
 
 languages:
 - php

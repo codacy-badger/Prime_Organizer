@@ -1,0 +1,15 @@
+exclude:
+- /admin/.*
+- /AppGini/.*
+- /images/.*
+- /plugins/.*
+- /resources/.*
+- /templates/.*
+- .*/*\.*
+
+include:
+- /hooks/.*
+
+languages:
+- php
+- javascript

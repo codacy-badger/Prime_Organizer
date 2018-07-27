@@ -9,10 +9,14 @@ AFTER str_detalhe_status;
 
 
 -- '
--- Atualiza as alocacões da ID para VarChar
+-- Atualiza as alocacões de INT para VarChar
 -- '
 UPDATE tb_vaga
 SET transf = (SELECT str_nome FROM tb_alocacao WHERE tb_alocacao.id = tb_vaga.str_alocacao);
+
+ALTER TABLE tb_vaga
+CHANGE str_alocacao
+str_alocacao VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 UPDATE tb_vaga
 SET str_alocacao = transf;

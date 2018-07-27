@@ -1,0 +1,55 @@
+
+-- '
+-- Criar um campo de tranferência que receberá uma cópia dos dados
+-- '
+ALTER TABLE tb_vaga
+ADD transf VARCHAR(255) NULL
+AFTER str_detalhe_status;
+
+
+
+-- '
+-- Atualiza as alocacões da ID para VarChar
+-- '
+UPDATE tb_vaga
+SET transf = (SELECT str_nome FROM tb_alocacao WHERE tb_alocacao.id = tb_vaga.str_alocacao);
+
+UPDATE tb_vaga
+SET str_alocacao = transf;
+
+
+-- '
+-- id é à última vaga sem requeirmento
+-- '
+
+
+-- '
+-- Vagas antigas terão a quantidade de vagas no lugar de número da vaga
+-- '
+UPDATE tb_vaga
+SET int_vaga_numero = qtd_vagas
+WHERE id < 170;
+
+
+
+-- '
+-- Vagas antigas tem o Status e Detalhe do Status corrigido
+-- '
+UPDATE tb_vaga
+SET transf = str_status
+WHERE id < 170;
+
+UPDATE tb_vaga
+SET str_status = "Encerrada"
+WHERE (transf = "Preenchida pela Prime Control" OR transf = "Cancelada") AND id < 170;
+
+UPDATE tb_vaga
+SET str_detalhe_status = transf
+WHERE (transf = "Preenchida pela Prime Control" OR transf = "Cancelada") AND id < 170;
+
+
+-- '
+-- Exclui o campo de transferência
+-- '
+ALTER TABLE tb_vaga DROP transf;
+

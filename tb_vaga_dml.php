@@ -35,7 +35,6 @@ function tb_vaga_insert(){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	if($data['str_detalhe_status'] == '') $data['str_detalhe_status'] = "Preenchida pela Prime Control";
 	if($data['recrutador_id']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Recrutador': " . $Translation['field not null'] . '<br><br>';
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
@@ -373,7 +372,7 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 	}else{
 		$combo_requerimento_id->SelectedData = $filterer_requerimento_id;
 		$combo_str_status->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Encerrada");
-		$combo_str_detalhe_status->SelectedText = ( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Preenchida pela Prime Control");
+		$combo_str_detalhe_status->SelectedText = ( $_REQUEST['FilterField'][1]=='8' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_recrutador_id->SelectedData = $filterer_recrutador_id;
 		$combo_str_prioridade->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_empresa_id->SelectedData = $filterer_empresa_id;
@@ -830,8 +829,8 @@ function tb_vaga_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Al
 		$templateCode = str_replace('<%%URLVALUE(dta_fechamento)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_status)%%>', 'Encerrada', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(str_status)%%>', urlencode('Encerrada'), $templateCode);
-		$templateCode = str_replace('<%%VALUE(str_detalhe_status)%%>', 'Preenchida pela Prime Control', $templateCode);
-		$templateCode = str_replace('<%%URLVALUE(str_detalhe_status)%%>', urlencode('Preenchida pela Prime Control'), $templateCode);
+		$templateCode = str_replace('<%%VALUE(str_detalhe_status)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(str_detalhe_status)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(recrutador_id)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(recrutador_id)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(str_prioridade)%%>', '', $templateCode);

@@ -294,7 +294,7 @@
 				'dta_previsao_fechamento' => '',
 				'dta_fechamento' => '',
 				'str_status' => 'Encerrada',
-				'str_detalhe_status' => 'Preenchida pela Prime Control',
+				'str_detalhe_status' => '',
 				'recrutador_id' => '',
 				'str_prioridade' => '',
 				'str_posicao' => '',

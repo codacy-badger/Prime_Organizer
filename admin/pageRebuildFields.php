@@ -18,7 +18,7 @@
 			'dta_previsao_fechamento' => array('appgini' => 'DATE '),
 			'dta_fechamento' => array('appgini' => 'DATE '),
 			'str_status' => array('appgini' => 'VARCHAR(40) not null default \'Encerrada\' '),
-			'str_detalhe_status' => array('appgini' => 'VARCHAR(40) default \'Preenchida pela Prime Control\' '),
+			'str_detalhe_status' => array('appgini' => 'VARCHAR(40) '),
 			'recrutador_id' => array('appgini' => 'INT unsigned not null '),
 			'str_prioridade' => array('appgini' => 'VARCHAR(150) not null '),
 			'str_posicao' => array('appgini' => 'VARCHAR(150) '),

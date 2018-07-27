@@ -59,6 +59,19 @@ $j(function(){
     }).change();
     
     
+    // Esconde o campo str_recurso se str_reposicao é negativo
+    $j('#str_reposicao').on('change', function(){
+        var Reposicao = $j(this).val();
+        
+        if(Reposicao == 'NÃO'){
+            $j('#str_recurso').parents('.form-group').hide()
+        } else{
+            $j('#str_recurso').parents('.form-group').show()
+        }
+        
+    }).change();
+    
+    
     // Esconde os botões Salvar/Inserir se o usuário não é do grupo RH (2), ADMIN (3) ou Vagas (8)
     $j('#update, #insert, #delete').on('change', function(){
         var groupID = parseInt(getCookie('groupID'));

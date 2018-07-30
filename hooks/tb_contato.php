@@ -181,30 +181,29 @@
 	function tb_contato_after_insert($data, $memberInfo, &$args){
         require 'organizer-func.php';
         
+        // Captura dos dados do Organizer
         $email = $data['str_email1'];
+        $nome = retira_caracter_especial($data['str_primeiro_nome']);
+        $sobrenome = retira_caracter_especial($data['str_sobrenome']);
+
+        $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa_nome = retira_caracter_especial($empresa_org);
+        $empresa = check_company_existe_mautic($empresa_nome);
+
+        $cargo = retira_caracter_especial($data['str_nivel']);
+        $relacionamento = check_tag_mautic($data['tipo_id']);
+
+        $tel1 = $data['str_telefone1'];
+        $tel2 = $data['str_telefone2'];
+
+        $cidade = retira_caracter_especial($data['cidade']);
+        $estado = get_estado($data["uf"]);
         
         // Se o contato existe, atualiza o mesmo
         if($lead_id = get_lead_id_by_email_mautic($email)){
             
             $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
             $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
-
-            // Captura dos dados do Organizer
-            $nome = retira_caracter_especial($data['str_primeiro_nome']);
-            $sobrenome = retira_caracter_especial($data['str_sobrenome']);
-
-            $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
-            $empresa_nome = retira_caracter_especial($empresa_org);
-            $empresa = check_company_existe_mautic($empresa_nome);
-
-            $cargo = retira_caracter_especial($data['str_nivel']);
-            $relacionamento = check_tag_mautic($data['tipo_id']);
-
-            $tel1 = $data['str_telefone1'];
-            $tel2 = $data['str_telefone2'];
-
-            $cidade = retira_caracter_especial($data['cidade']);
-            $estado = get_estado($data["uf"]);
 
             // Inicio da Query
             require 'mautic-conn.php';
@@ -237,23 +236,6 @@
         // Senão, cria o contato no Mautic   
         } else{
             
-            // Captura dos dados do Organizer
-            $nome = retira_caracter_especial($data['str_primeiro_nome']);
-            $sobrenome = retira_caracter_especial($data['str_sobrenome']);
-
-            $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
-            $empresa_nome = retira_caracter_especial($empresa_org);
-            $empresa = check_company_existe_mautic($empresa_nome);
-
-            $cargo = retira_caracter_especial($data['str_nivel']);
-            $relacionamento = check_tag_mautic($data['tipo_id']);
-
-            $tel1 = $data['str_telefone1'];
-            $tel2 = $data['str_telefone2'];
-
-            $cidade = retira_caracter_especial($data['cidade']);
-            $estado = get_estado($data["uf"]);
-
             // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
             $hora = date('Y-m-d H:i:s', time());
             $vazio = array();
@@ -312,30 +294,29 @@
 	function tb_contato_before_update(&$data, $memberInfo, &$args){
         require 'organizer-func.php';
         
+        // Captura dos dados do Organizer
         $email = $data['str_email1'];
+        $nome = retira_caracter_especial($data['str_primeiro_nome']);
+        $sobrenome = retira_caracter_especial($data['str_sobrenome']);
+
+        $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
+        $empresa_nome = retira_caracter_especial($empresa_org);
+        $empresa = check_company_existe_mautic($empresa_nome);
+
+        $cargo = retira_caracter_especial($data['str_nivel']);
+        $relacionamento = check_tag_mautic($data['tipo_id']);
+
+        $tel1 = $data['str_telefone1'];
+        $tel2 = $data['str_telefone2'];
+
+        $cidade = retira_caracter_especial($data['cidade']);
+        $estado = get_estado($data["uf"]);
         
         // Se o contato existe, atualiza o mesmo
         if($lead_id = get_lead_id_by_email_mautic($email)){
         
             $empresa_old = get_companyname_by_lead_id_mautic($lead_id);
             $relacionamento_old = get_lead_tag_by_lead_id_mautic($lead_id);
-
-            // Captura dos dados do Organizer
-            $nome = retira_caracter_especial($data['str_primeiro_nome']);
-            $sobrenome = retira_caracter_especial($data['str_sobrenome']);
-
-            $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
-            $empresa_nome = retira_caracter_especial($empresa_org);
-            $empresa = check_company_existe_mautic($empresa_nome);
-
-            $cargo = retira_caracter_especial($data['str_nivel']);
-            $relacionamento = check_tag_mautic($data['tipo_id']);
-
-            $tel1 = $data['str_telefone1'];
-            $tel2 = $data['str_telefone2'];
-
-            $cidade = retira_caracter_especial($data['cidade']);
-            $estado = get_estado($data["uf"]);
 
             // Inicio da Query
             require 'mautic-conn.php';
@@ -368,23 +349,6 @@
         // Senão, cria o contato no Mautic   
         } else{
             
-            // Captura dos dados do Organizer
-            $nome = retira_caracter_especial($data['str_primeiro_nome']);
-            $sobrenome = retira_caracter_especial($data['str_sobrenome']);
-
-            $empresa_org = get_empresa_nome_organizer($data['empresa_id']);
-            $empresa_nome = retira_caracter_especial($empresa_org);
-            $empresa = check_company_existe_mautic($empresa_nome);
-
-            $cargo = retira_caracter_especial($data['str_nivel']);
-            $relacionamento = check_tag_mautic($data['tipo_id']);
-
-            $tel1 = $data['str_telefone1'];
-            $tel2 = $data['str_telefone2'];
-
-            $cidade = retira_caracter_especial($data['cidade']);
-            $estado = get_estado($data["uf"]);
-
             // Tempo para timestamp e array vazio serializado para funcionamento correto do Mautic
             $hora = date('Y-m-d H:i:s', time());
             $vazio = array();

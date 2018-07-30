@@ -1,4 +1,4 @@
-# Prime_Organizer [![Codacy Badge](https://api.codacy.com/project/badge/Grade/81c1582561ba413299cdf7f0ee8d5ac6)](https://www.codacy.com/project/rafinhacarneiro/Prime_Organizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rafinhacarneiro/Prime_Organizer&amp;utm_campaign=Badge_Grade_Dashboard)
+# Prime_Organizer [![Codacy Badge](https://api.codacy.com/project/badge/Grade/81c1582561ba413299cdf7f0ee8d5ac6)](https://www.codacy.com/project/rafinhacarneiro/Prime_Organizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rafinhacarneiro/Prime_Organizer&amp;utm_campaign=Badge_Grade_Dashboard) [![codebeat badge](https://codebeat.co/badges/3277f8d3-8ea1-4718-8cbd-7cc0f4b0b7c4)](https://codebeat.co/projects/github-com-rafinhacarneiro-prime_organizer-organizer-teste)
 App de RH da Prime Control. Feito com AppGini e customizado com PHP/HTML/JS/CSS (Bootstrap)
 
 Customização pelos arquivos na pasta _/hooks_.

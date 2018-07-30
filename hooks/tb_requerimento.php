@@ -320,7 +320,7 @@
                 // Atualiza as vagas
                 for($i = 1; $i <= $quantidade; $i++){
                     $sql = "UPDATE tb_vaga
-                    SET dta_abertura = $data_abertura_vaga, str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}'
+                    SET str_alocacao = '{$alocacao}', str_posicao = '{$posicao}', recrutador_id = '{$recrutador}', empresa_id = '{$empresa}', str_status = '{$status_vaga}'
                     WHERE requerimento_id = '{$requerimento}' AND int_vaga_numero = '{$i}'";
 
                     sql($sql, $eo);

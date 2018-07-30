@@ -15,7 +15,7 @@
         require 'organizer-conn.php';
         
         $sql = "SELECT `str_nome_fantasia` FROM `tb_empresa` WHERE id='{$id}'";
-        $query = $org -> query($sql);
+        $query = $organizer -> query($sql);
         $res = $query -> fetch_array(MYSQLI_BOTH);
         $nome_empresa = $res['str_nome_fantasia'];
     
@@ -119,11 +119,11 @@
         
         $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
         
-        $query = $org -> query($sql);
+        $query = $organizer -> query($sql);
             
         // Se o contato existe, retorna o email do mesmo
         $res = $query -> fetch_array(MYSQLI_BOTH);
-        $org -> close();
+        $organizer -> close();
         
         $email = $res['str_email1'];
         
@@ -231,9 +231,9 @@
         require 'organizer-conn.php';
         
         $sql = "SELECT id FROM tb_contato WHERE str_email1 LIKE '{$email}'";
-        $query = $org -> query($sql);
+        $query = $organizer -> query($sql);
         $data = $query -> fetch_array(MYSQLI_BOTH);
-        $org -> close();
+        $organizer -> close();
         
         return $data['id'];
     }
@@ -243,9 +243,9 @@
         require 'organizer-conn.php';
         
         $sql = "SELECT str_email1 FROM tb_contato WHERE id = '{$id}'";
-        $query = $org -> query($sql);
+        $query = $organizer -> query($sql);
         $data = $query -> fetch_array(MYSQLI_BOTH);
-        $org -> close();
+        $organizer -> close();
         
         return $data['str_email1'];
     }
@@ -258,9 +258,9 @@
         
         // Recupera o tipo de relacionamento no Organizer de acordo com o id correspondente
         $sql = "SELECT str_nome FROM tb_contato_tipo WHERE id = '{$relacionamento}'";
-        $query = $org -> query($sql);
+        $query = $organizer -> query($sql);
         $res = $query -> fetch_array(MYSQLI_BOTH);
-        $org -> close();
+        $organizer -> close();
         
         $tag = $res['str_nome'];
         

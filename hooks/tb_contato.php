@@ -260,7 +260,7 @@
             $vazio = serialize($vazio);
 
             // Inicio da Query
-            require('mautic-conn.php');
+            require 'mautic-conn.php';
 
             // Insere o contato como lead no Mautic
             $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
@@ -391,7 +391,7 @@
             $vazio = serialize($vazio);
 
             // Inicio da Query
-            require('mautic-conn.php');
+            require 'mautic-conn.php';
 
             // Insere o contato como lead no Mautic
             $sql = "INSERT INTO leads (owner_id, is_published, date_added, created_by, created_by_user, checked_out, checked_out_by, checked_out_by_user, points, internal, social_cache, date_identified, preferred_profile_image, firstname, lastname, company, position, email, phone, mobile, city, state, country)
@@ -472,7 +472,7 @@
         $empresa = get_companyname_by_lead_id_mautic($lead_id);
         
         if($lead_id){
-            require('mautic-conn.php');    
+            require 'mautic-conn.php';    
 
             // Deleta o registro do contato
             $sql = "DELETE FROM leads WHERE id = '{$lead_id}';";
